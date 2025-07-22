@@ -1,9 +1,15 @@
 import type { Config } from "tailwindcss";
+import colors from "./app/lib/tailwind/colors";
 
 const config: Config = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
+      colors,
       fontFamily: {
         roboto: ['"Roboto"', "sans-serif"],
         robotoCondensed: ['"Roboto Condensed"', "sans-serif"],

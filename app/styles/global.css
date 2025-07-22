@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-roboto;
+  @apply bg-neutral-background;
+}
+
+/* GRID */
+.default-grid-gap {
+  @apply gap-x-[1rem] md:gap-x-[1.5rem];
+}
+.default-grid {
+  @apply default-grid-gap grid h-full grid-cols-2 md:grid-cols-8 lg:grid-cols-12;
+}
+.grid-container {
+  @apply mx-4 md:mx-10 xl:mx-40;
+}
+
+/* TYPOGRAPHY */
+
+.heading-h1 {
+  @apply text-48 font-bold uppercase leading-120 lg:text-64;
+}
+
+.heading-h2 {
+  @apply text-28 font-bold uppercase leading-120;
+}
+
+.heading-h4 {
+  @apply text-18 font-semibold leading-200;
+}
+
+.body-xs {
+  @apply text-14 font-normal leading-150;
+}
+
+.body-md {
+  @apply text-18 font-normal leading-200;
+}
+
+.body-regular {
+  @apply text-16 font-normal leading-120 md:text-18 md:leading-200 lg:text-20 lg:leading-150;
+}
+
+.label-regular {
+  @apply text-14 font-semibold leading-150 md:text-20;
+}

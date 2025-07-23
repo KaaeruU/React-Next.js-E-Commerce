@@ -1,4 +1,4 @@
-import { OrbsVariant } from "@/app/lib/tailwind/orbs";
+/* import { OrbsVariant } from "@/app/lib/tailwind/orbs";
 import { cn } from "@/app/lib/tailwind/utils";
 import type { OrbProps, OrbType } from "./orb-type";
 
@@ -31,5 +31,29 @@ export const Orb = ({ className, color }: OrbProps) => {
         ></div>
       </div>
     </>
+  );
+}; */
+/* import { GreenOrb, OrangeOrb, PurpleOrb, RedOrb } from "./Orbs";
+
+export const Background = () => {
+  return (
+    <div className="min-h-scree absolute inset-0 -z-50 overflow-hidden">
+      <GreenOrb className="bottom-0 left-0" size={400} opacity={0.8} />
+      <RedOrb className="right-0 top-10" size={400} opacity={0.8} />{" "}
+      <PurpleOrb className="-bottom-52 right-0" size={700} opacity={0.8} />{" "}
+      <OrangeOrb className="-top-40 left-0" size={700} opacity={0.8} />
+    </div>
+  );
+}; */
+
+export const Background = () => {
+  return (
+    <div
+      className="fixed -z-50 h-full min-h-screen w-full overflow-hidden bg-no-repeat
+        md:bg-[url('/md-green-orb.svg'),url('/md-red-orb.svg'),url('/md-purple-orb.svg'),url('/md-orange-orb.svg')]
+        md:bg-[position:bottom_left_,top_15rem_right,bottom_right,top_left]
+        lg:bg-[url('/green-orb.svg'),url('/red-orb.svg'),url('/purple-orb.svg'),url('/orange-orb.svg')]
+        lg:bg-[position:bottom_left_5rem,top_20rem_right,bottom_right,top_left]"
+    ></div>
   );
 };

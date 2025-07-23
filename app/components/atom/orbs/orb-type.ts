@@ -3,7 +3,8 @@ import { OrbsVariant } from "@/app/lib/tailwind/orbs";
 
 export interface OrbProps extends VariantProps<typeof OrbsVariant> {
   className?: string;
-  color: OrbType;
+  size: number;
+  opacity: number;
 }
 
 export type OrbType = "green" | "purple" | "orange" | "red";

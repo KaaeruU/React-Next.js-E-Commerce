@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "./components/atom/buttons/Button";
 import { Heading } from "./components/atom/heading/Heading";
 import { Input } from "./components/atom/input/Input";
+import { Background } from "./components/atom/orbs/Orb";
 import {
   Form,
   FormControl,
@@ -29,6 +30,7 @@ export default function Home() {
   return (
     <>
       <div className="relative flex min-h-screen items-center overflow-hidden">
+        <Background />
         <div className="default-grid grid-container">
           <div
             className="col-span-2 flex flex-col flex-wrap content-center md:col-span-6 md:col-start-3

@@ -1,11 +1,25 @@
+import Image from "next/image";
+import Link from "next/link";
 import { Button } from "../../atom/buttons/Button";
 import { Icon } from "../../atom/icon/Icon";
+import { NavbarProps } from "./navbar-type";
 
-const Navbar = () => {
+const Navbar = ({ items = 0, className }: NavbarProps) => {
   return (
-    <div className="fixed z-50 flex min-w-full justify-between border border-black">
-      <div className="border-black px-5 md:border-r md:px-10 md:py-2">
-        <Icon name="Logo" size="67" weight="regular" />
+    <div
+      className={`fixed z-50 flex h-16 min-w-full justify-between border border-black md:h-20
+        ${className}`}
+    >
+      <div className="flex items-center border-black px-5 md:border-r md:px-10 md:py-2">
+        <Link href={"/"}>
+          <Image
+            src={"/logo.svg"}
+            alt={"flavioshop logo"}
+            priority={true}
+            width={67}
+            height={35}
+          />
+        </Link>
       </div>
       <div className="flex w-1/3 items-center justify-end border-black">
         <div className="relative flex h-full items-center justify-end border-x border-black px-6 md:px-8">
@@ -14,7 +28,8 @@ const Navbar = () => {
             className="absolute right-3 top-5 -z-10 flex h-4 w-4 items-center justify-center
               rounded-full bg-black text-xs text-white"
           >
-            <p className="z-10">0</p>
+            <p className="z-10">{items}</p>
+            {/*TODO assegnare items allo stato dello shop*/}
           </div>
         </div>
         <div className="hidden justify-end border-black md:flex">

@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { inputVariants } from "@/app/lib/tailwind/inputs";
-import { cn } from "@/app/lib/tailwind/utils";
 import { useFormField } from "../../molecules/Form";
 import { Icon } from "../icon/Icon";
 import type { InputProps } from "./input-type";
+import { inputVariants } from "@/src/lib/tailwind/inputs";
+import { cn } from "@/src/lib/tailwind/utils";
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (

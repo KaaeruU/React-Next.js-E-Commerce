@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
-import { cn } from "@/app/lib/tailwind/utils";
 import type { TextType, TextTypeProps, TextVariant } from "./text-type";
+import { cn } from "@/src/lib/tailwind/utils";
 
 const Text = <T extends TextType>({
   asChild,

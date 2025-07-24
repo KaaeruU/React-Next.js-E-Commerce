@@ -2,16 +2,16 @@
 
 import z from "zod";
 import { useForm } from "react-hook-form";
-import { Button } from "./components/atom/buttons/Button";
-import { Heading } from "./components/atom/heading/Heading";
-import { Input } from "./components/atom/input/Input";
+import { Button } from "@/src/components/atom/buttons/Button";
+import { Heading } from "@/src/components/atom/heading/Heading";
+import { Input } from "@/src/components/atom/input/Input";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-} from "./components/molecules/Form";
-import { formSchema } from "./utils/constants/form-schema";
+} from "@/src/components/molecules/Form";
+import { formSchema } from "@/src/utils/constants/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Home() {

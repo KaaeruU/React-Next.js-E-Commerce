@@ -1,7 +1,7 @@
-import * as Icons from "@/app/components/atom/icon/Icons";
-import type { IconProps, IconSize } from "@/app/components/atom/icon/icon-type";
-import { IconStyle } from "@/app/lib/tailwind/icons";
-import { cn } from "@/app/lib/tailwind/utils";
+import { IconProps, IconSize } from "./icon-type";
+import * as Icons from "@/src/components/atom/icon/Icons";
+import IconStyle from "@/src/lib/tailwind/icons";
+import { cn } from "@/src/lib/tailwind/utils";
 
 export const iconVariantSize: Record<IconSize, string> = {
   67: "size-[4.1rem]",

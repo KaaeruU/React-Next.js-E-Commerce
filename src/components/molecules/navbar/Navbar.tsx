@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../../atom/buttons/Button";
-import { Icon } from "../../atom/icon/Icon";
 import { NavbarProps } from "./navbar-type";
+import { Button } from "@/src/components/atom/buttons/Button";
+import { Icon } from "@/src/components/atom/icon/Icon";
+import Menu from "@/src/components/atom/menu/Menu";
 
 const Navbar = ({ items = 0, className }: NavbarProps) => {
   return (
@@ -23,7 +24,7 @@ const Navbar = ({ items = 0, className }: NavbarProps) => {
       </div>
       <div className="flex w-1/3 items-center justify-end border-black">
         <div className="relative flex h-full items-center justify-end border-x border-black px-6 md:px-8">
-          <Link href={"/shop"}>
+          <Link href={"/chart"}>
             <Icon name="Union" size="24" weight="regular" />
           </Link>
           <div
@@ -42,8 +43,8 @@ const Navbar = ({ items = 0, className }: NavbarProps) => {
             className="mx-10"
           />
         </div>
-        <div className="flex justify-end border-black md:hidden">
-          <Icon name="Menu" size="24" weight="regular" className="mx-4" />
+        <div className="flex justify-end border-black px-5 md:hidden">
+          <Menu />
         </div>
       </div>
     </div>

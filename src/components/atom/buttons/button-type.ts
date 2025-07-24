@@ -1,5 +1,5 @@
 import type { VariantProps } from "class-variance-authority";
-import type { buttonVariants } from "@/app/lib/tailwind/button-style";
+import type { buttonVariants } from "@/src/lib/tailwind/button-style";
 
 export interface ButtonTypeProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,

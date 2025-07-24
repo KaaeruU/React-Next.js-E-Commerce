@@ -1,6 +1,6 @@
-import { OrbsVariant } from "@/app/lib/tailwind/orbs";
-import { cn } from "@/app/lib/tailwind/utils";
 import type { OrbProps, OrbType } from "./orb-type";
+import { OrbsVariant } from "@/src/lib/tailwind/orbs";
+import { cn } from "@/src/lib/tailwind/utils";
 
 export const Orb = ({ className, color }: OrbProps) => {
   const OrbGradientStyles: Record<OrbType, string> = {

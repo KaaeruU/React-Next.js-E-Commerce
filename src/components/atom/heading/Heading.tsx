@@ -1,10 +1,10 @@
 import { Slot } from "@radix-ui/react-slot";
-import { cn } from "@/app/lib/tailwind/utils";
 import type {
   HeadingType,
   HeadingTypeProps,
   HeadingVariant,
 } from "./heading-type";
+import { cn } from "@/src/lib/tailwind/utils";
 
 const Heading = <T extends HeadingType>({
   asChild,

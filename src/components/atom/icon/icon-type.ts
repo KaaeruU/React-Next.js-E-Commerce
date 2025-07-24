@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import type { VariantProps } from "class-variance-authority";
-import { IconStyle } from "@/app/lib/tailwind/icons";
-import iconSetting from "@/app/utils/constants/icons";
+import { IconStyle } from "@/src/lib/tailwind/icons";
+import iconSetting from "@/src/utils/constants/icons";
 
 export type IconName = (typeof iconSetting.iconName)[number];
 export type IconSize = (typeof iconSetting.iconSize)[number];

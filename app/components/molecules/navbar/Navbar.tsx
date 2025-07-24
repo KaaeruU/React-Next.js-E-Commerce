@@ -23,7 +23,9 @@ const Navbar = ({ items = 0, className }: NavbarProps) => {
       </div>
       <div className="flex w-1/3 items-center justify-end border-black">
         <div className="relative flex h-full items-center justify-end border-x border-black px-6 md:px-8">
-          <Icon name="Union" size="24" weight="regular" />
+          <Link href={"/shop"}>
+            <Icon name="Union" size="24" weight="regular" />
+          </Link>
           <div
             className="absolute right-3 top-5 -z-10 flex h-4 w-4 items-center justify-center
               rounded-full bg-black text-xs text-white"

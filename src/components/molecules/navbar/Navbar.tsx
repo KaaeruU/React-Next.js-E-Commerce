@@ -1,8 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
 import { NavbarProps } from "./navbar-type";
 import { Button } from "@/src/components/atom/buttons/Button";
 import CartIcon from "@/src/components/atom/cartIcon/CartIcon";
+import Logo from "@/src/components/atom/logo/Logo";
 import Menu from "@/src/components/atom/menu/Menu";
 
 const Navbar = ({ items = 0, className }: NavbarProps) => {
@@ -12,15 +11,7 @@ const Navbar = ({ items = 0, className }: NavbarProps) => {
         ${className}`}
     >
       <div className="flex items-center border-black px-5 md:border-r md:px-10 md:py-2">
-        <Link href={"/"}>
-          <Image
-            src={"/logo.svg"}
-            alt={"flavioshop logo"}
-            priority={true}
-            width={67}
-            height={35}
-          />
-        </Link>
+        <Logo />
       </div>
       <div className="flex w-1/3 items-center justify-end border-black">
         <CartIcon items={items} />

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { NavbarProps } from "./navbar-type";
 import { Button } from "@/src/components/atom/buttons/Button";
-import { Icon } from "@/src/components/atom/icon/Icon";
+import CartIcon from "@/src/components/atom/cartIcon/CartIcon";
 import Menu from "@/src/components/atom/menu/Menu";
 
 const Navbar = ({ items = 0, className }: NavbarProps) => {
@@ -23,18 +23,10 @@ const Navbar = ({ items = 0, className }: NavbarProps) => {
         </Link>
       </div>
       <div className="flex w-1/3 items-center justify-end border-black">
-        <div className="relative flex h-full items-center justify-end border-x border-black px-6 md:px-8">
-          <Link href={"/chart"}>
-            <Icon name="Union" size="24" weight="regular" />
-          </Link>
-          <div
-            className="absolute right-3 top-5 -z-10 flex h-4 w-4 items-center justify-center
-              rounded-full bg-black text-xs text-white"
-          >
-            <p className="z-10">{items}</p>
-            {/*TODO assegnare items allo stato dello shop*/}
-          </div>
-        </div>
+        <CartIcon items={items} />
+
+        {/*TODO assegnare items allo stato dello shop*/}
+
         <div className="hidden justify-end border-black md:flex">
           <Button
             label={"Accedi"}

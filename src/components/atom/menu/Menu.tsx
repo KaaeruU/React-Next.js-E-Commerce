@@ -10,6 +10,10 @@ import { useMenuStore } from "@/src/store/global-store";
 
 // filepath: [Menu.tsx](http://_vscodecontentref_/1)
 
+// filepath: [Menu.tsx](http://_vscodecontentref_/1)
+
+// filepath: [Menu.tsx](http://_vscodecontentref_/1)
+
 export default function HamburgerMenu() {
   const isOpen = useMenuStore((state) => state.isOpen);
   const toggleMenu = useMenuStore((state) => state.toggleMenu);

@@ -23,8 +23,8 @@ const Navbar = ({ items = 0, className }: NavbarProps) => {
   return (
     <div
       ref={ref}
-      className={`fixed z-50 flex h-16 min-w-full justify-between border border-black md:h-20
-        ${className}`}
+      className={`fixed z-50 flex h-16 min-w-full justify-between border border-black
+        bg-neutral-background md:h-20 ${className}`}
     >
       <div className="flex items-center border-black px-5 md:border-r md:px-10 md:py-2">
         <Logo />

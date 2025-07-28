@@ -36,6 +36,9 @@ const config: Config = {
         90: "90deg",
         265: "265deg",
       },
+      height: {
+        "screen-nav": "calc(100vh - var(--nav-height))",
+      },
     },
   },
   plugins: [],

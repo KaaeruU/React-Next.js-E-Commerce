@@ -88,6 +88,16 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div className="flex min-h-screen flex-col">
+        <Button variant={"default"} label={"ddd"} isDisabled={false}></Button>
+        <Button variant={"default"} label={"ddd"} isDisabled={false}></Button>
+
+        <Button variant={"default"} label={"ddd"} isDisabled={false}></Button>
+        <Button variant={"default"} label={"ddd"} isDisabled={false}></Button>
+        <Button variant={"default"} label={"ddd"} isDisabled={false}></Button>
+
+        <Button variant={"default"} label={"ddd"} isDisabled={false}></Button>
+      </div>
     </>
   );
 }

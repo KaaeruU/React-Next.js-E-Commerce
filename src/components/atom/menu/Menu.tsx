@@ -1,4 +1,3 @@
-// filepath: [Menu.tsx](http://_vscodecontentref_/1)
 "use client";
 
 import {
@@ -7,10 +6,6 @@ import {
   middleVariants,
 } from "@/src/lib/tailwind/menu";
 import { useMenuStore } from "@/src/store/global-store";
-
-// filepath: [Menu.tsx](http://_vscodecontentref_/1)
-
-// filepath: [Menu.tsx](http://_vscodecontentref_/1)
 
 // filepath: [Menu.tsx](http://_vscodecontentref_/1)
 

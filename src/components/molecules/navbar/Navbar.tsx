@@ -10,7 +10,7 @@ import Menu from "@/src/components/atom/menu/Menu";
 import { useMenuStore } from "@/src/store/global-store";
 import { useMeasure } from "@uidotdev/usehooks";
 
-const Navbar = ({ items = 0, className }: NavbarProps) => {
+const Navbar = ({ items = 0, className = "" }: NavbarProps) => {
   const [ref, { height }] = useMeasure();
   const setNavHeight = useMenuStore((state) => state.setNavHeight);
   useEffect(() => {

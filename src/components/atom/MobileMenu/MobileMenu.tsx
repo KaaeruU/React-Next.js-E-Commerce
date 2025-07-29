@@ -3,13 +3,8 @@
 // filepath: [MobileMenu.tsx](http://_vscodecontentref_/2)
 import Link from "next/link";
 import { Heading } from "../heading/Heading";
+import { BodyScrollLocker } from "@/src/components/atom/bodyScrollLocker/BodyScrollLocker";
 import { useMenuStore } from "@/src/store/global-store";
-import { useLockBodyScroll } from "@uidotdev/usehooks";
-
-const BodyScrollLocker = () => {
-  useLockBodyScroll();
-  return null;
-};
 
 export const MobileMenu = () => {
   const isOpen = useMenuStore((state) => state.isOpen);
@@ -22,7 +17,7 @@ export const MobileMenu = () => {
           "--nav-height": `${navHeight}px`,
         } as React.CSSProperties
       }
-      className={`fixed bottom-0 left-0 w-full overflow-hidden bg-neutral-background
+      className={`fixed bottom-0 left-0 w-full overflow-hidden bg-neutral-buttonSecondary
         transition-all duration-300 ease-in-out
         ${isOpen ? "h-[calc(100vh-var(--nav-height))]" : "h-0"}`}
     >
@@ -47,7 +42,8 @@ export const MobileMenu = () => {
               <Heading
                 as={"h3"}
                 styledAs={"h2"}
-                className={`absolute transform duration-1000 ease-out ${isOpen ? "right-1/2" : "-right-20"}`}
+                className={`absolute transform duration-[1400ms] ease-out
+                  ${isOpen ? "right-1/2" : "-right-20"}`}
               >
                 Cart
               </Heading>
@@ -60,7 +56,8 @@ export const MobileMenu = () => {
               <Heading
                 as={"h4"}
                 styledAs={"h2"}
-                className={`absolute transform duration-1000 ease-out ${isOpen ? "right-1/2" : "-right-20"}`}
+                className={`absolute transform duration-[1800ms] ease-out
+                  ${isOpen ? "right-1/2" : "-right-20"}`}
               >
                 Login
               </Heading>

@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { Button } from "../buttons/Button";
 import { Heading } from "../heading/Heading";
 import {
@@ -11,7 +14,14 @@ import {
 } from "@/src/lib/motion/variants";
 import * as motion from "motion/react-client";
 
+// Next.js
+
 const MenuLogin = () => {
+  const router = useRouter();
+
+  const handleLoginClick = () => {
+    router.push("/");
+  };
   return (
     <>
       <motion.div
@@ -27,7 +37,12 @@ const MenuLogin = () => {
         </Heading>
       </motion.div>
       <motion.div variants={buttonWrapperVariants} className="grid">
-        <Button label={"log out"} isDisabled={false} variant={"primary"} />
+        <Button
+          label={"log out"}
+          isDisabled={false}
+          variant={"primary"}
+          onClick={handleLoginClick}
+        />
       </motion.div>{" "}
     </>
   );

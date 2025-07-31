@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { MenuItemProps } from "./menuItem-type";
 import { itemVariants } from "@/src/lib/motion/variants";

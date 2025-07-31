@@ -25,7 +25,7 @@ export const MobileMenu = () => {
       {isOpen && <BodyScrollLocker />}
       <div className="h-full">
         <motion.ul
-          className="flex h-full flex-col items-center justify-evenly"
+          className="h-full items-center justify-evenly"
           variants={ulVariants}
         >
           <MenuItem label={"SHOP"} href={""} />

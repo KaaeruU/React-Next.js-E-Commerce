@@ -14,8 +14,6 @@ import {
 } from "@/src/lib/motion/variants";
 import * as motion from "motion/react-client";
 
-// Next.js
-
 const MenuLogin = () => {
   const router = useRouter();
 

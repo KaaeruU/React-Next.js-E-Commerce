@@ -24,7 +24,7 @@ export const itemVariants = {
   },
   closed: {
     x: 100,
-    size: 3,
+    size: 0,
     opacity: 0,
     transition: {},
   },

@@ -5,7 +5,7 @@ import { MenuItemProps } from "./menuItem-type";
 import { itemVariants } from "@/src/lib/motion/variants";
 import * as motion from "motion/react-client";
 
-const MenuItem = ({ label, href, className }: MenuItemProps) => {
+const MenuItem = ({ label, href, className = "" }: MenuItemProps) => {
   return (
     <motion.li
       variants={itemVariants}

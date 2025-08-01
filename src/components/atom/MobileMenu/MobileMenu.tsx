@@ -23,6 +23,7 @@ export const MobileMenu = () => {
           "--nav-height": `${navHeight}px`,
         } as React.CSSProperties
       }
+      initial={false}
       animate={isOpen ? "open" : "closed"}
       variants={menuVariants}
       className={"fixed bottom-0 left-0 w-full overflow-hidden bg-neutral-800"}

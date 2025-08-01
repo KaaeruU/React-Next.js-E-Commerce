@@ -6,10 +6,10 @@ export default function Home() {
   return (
     <>
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        <div className="default-grid">
+        <div className="default-grid grid-container">
           <Card
             title={"Introduzione alla biomeccanica del ciclismo"}
-            price={"327$"}
+            price={"$ 327,00"}
             score={9.6}
             mountOfReview={87}
             img="/pexels.jpg"

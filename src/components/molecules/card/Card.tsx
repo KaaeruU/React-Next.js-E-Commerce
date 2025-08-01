@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { CardProps } from "./card-type";
-import { Button } from "@/src/components/atom/buttons/Button";
 import CounterButton from "@/src/components/atom/counterButton/CounterButton";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Icon } from "@/src/components/atom/icon/Icon";
@@ -8,7 +7,7 @@ import { Text } from "@/src/components/atom/text/Text";
 
 const Card = ({ title, price, img, score, mountOfReview }: CardProps) => {
   return (
-    <article className="col-span-3 bg-white">
+    <article className="col-span-3 bg-white md:col-span-4">
       <div className="w-full">
         <Image
           src={img}
@@ -26,8 +25,8 @@ const Card = ({ title, price, img, score, mountOfReview }: CardProps) => {
         </div>
 
         <div className="mx-4 pt-4">
-          <div className="">
-            <Heading as={"h4"} styledAs={"h4"} className="">
+          <div className="pb-2">
+            <Heading as={"h4"} styledAs={"h4"}>
               {price}
             </Heading>
           </div>
@@ -41,15 +40,8 @@ const Card = ({ title, price, img, score, mountOfReview }: CardProps) => {
             </Text>
           </div>
         </div>
-        <div className="flex flex-nowrap justify-between p-4">
-          <Button
-            label={"Aggiungi al carrello"}
-            isDisabled={true}
-            variant={"secondary"}
-            className=""
-          />
-          <CounterButton />
-        </div>
+
+        <CounterButton />
       </div>
     </article>
   );

@@ -7,7 +7,7 @@ import { Text } from "@/src/components/atom/text/Text";
 
 const Card = ({ title, price, img, score, mountOfReview }: CardProps) => {
   return (
-    <article className="col-span-3 bg-white md:col-span-4">
+    <article className="col-span-3 bg-white md:col-span-4 lg:col-span-3">
       <div className="w-full">
         <Image
           src={img}

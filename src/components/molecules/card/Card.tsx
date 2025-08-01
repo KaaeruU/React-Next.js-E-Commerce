@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "../../atom/buttons/Button";
+import CounterButton from "../../atom/counterButton/CounterButton";
 import { Icon } from "../../atom/icon/Icon";
 import { CardProps } from "./card-type";
 import { Heading } from "@/src/components/atom/heading/Heading";
@@ -24,24 +25,30 @@ const Card = ({ title, price, img, score, mountOfReview }: CardProps) => {
           </Heading>
         </div>
 
-        <div className="mx-4 py-4">
+        <div className="mx-4 pt-4">
           <div className="">
             <Heading as={"h4"} styledAs={"h4"} className="">
               {price}
             </Heading>
           </div>
-          <div className="flex justify-start py-4 text-gray-500">
+          <div className="flex justify-start text-gray-500">
             <Icon name={"Star"} size={"16"} weight={"regular"} />
             <Text as={"p"} styledAs={"body-xs"} className="pl-2">
               {score}
             </Text>
-            <Text as={"p"} styledAs={"body-xs"} className="">
-              {`(${mountOfReview}recensioni)`}
+            <Text as={"p"} styledAs={"body-xs"} className="pl-1">
+              {`(${mountOfReview} recensioni)`}
             </Text>
           </div>
         </div>
-        <div>
-          <Button label={"Aggiungi al carrello"} isDisabled={true} />
+        <div className="flex flex-nowrap justify-between p-4">
+          <Button
+            label={"Aggiungi al carrello"}
+            isDisabled={true}
+            variant={"secondary"}
+            className=""
+          />
+          <CounterButton />
         </div>
       </div>
     </article>

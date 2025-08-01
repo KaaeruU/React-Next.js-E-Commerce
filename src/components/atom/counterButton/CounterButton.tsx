@@ -40,7 +40,7 @@ const CounterButton = () => {
         label={"Aggiungi al carrello"}
         isDisabled={count ? false : true}
         variant={"secondary"}
-        className="md:w-1/2 md:text-14"
+        className="whitespace-nowrap md:w-1/2 md:text-14"
       />
     </div>
   );

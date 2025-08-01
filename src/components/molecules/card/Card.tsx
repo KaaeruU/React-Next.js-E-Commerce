@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Button } from "../../atom/buttons/Button";
-import CounterButton from "../../atom/counterButton/CounterButton";
-import { Icon } from "../../atom/icon/Icon";
 import { CardProps } from "./card-type";
+import { Button } from "@/src/components/atom/buttons/Button";
+import CounterButton from "@/src/components/atom/counterButton/CounterButton";
 import { Heading } from "@/src/components/atom/heading/Heading";
+import { Icon } from "@/src/components/atom/icon/Icon";
 import { Text } from "@/src/components/atom/text/Text";
 
 const Card = ({ title, price, img, score, mountOfReview }: CardProps) => {

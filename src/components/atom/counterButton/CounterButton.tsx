@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Text } from "../text/Text";
+import { Text } from "@/src/components/atom/text/Text";
 
 const CounterButton = () => {
   const [count, setCount] = useState(0);

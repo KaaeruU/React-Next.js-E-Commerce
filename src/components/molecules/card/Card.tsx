@@ -1,11 +1,15 @@
 import Image from "next/image";
+import { Button } from "../../atom/buttons/Button";
 import { CardProps } from "./card-type";
 import CounterButton from "@/src/components/atom/counterButton/CounterButton";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Icon } from "@/src/components/atom/icon/Icon";
 import { Text } from "@/src/components/atom/text/Text";
+import { useGlobalStore } from "@/src/store/global-store";
 
 const Card = ({ title, price, img, score, mountOfReview }: CardProps) => {
+  const { items } = useGlobalStore();
+
   return (
     <article className="col-span-3 h-full w-full bg-white md:col-span-4">
       <div className="w-full">
@@ -40,8 +44,15 @@ const Card = ({ title, price, img, score, mountOfReview }: CardProps) => {
             </Text>
           </div>
         </div>
-
-        <CounterButton />
+        <div className="flex flex-nowrap justify-between p-4">
+          <CounterButton />
+          <Button
+            label={"Aggiungi al carrello"}
+            isDisabled={items ? false : true}
+            variant={"secondary"}
+            className="whitespace-nowrap md:w-1/2 md:text-14"
+          />
+        </div>
       </div>
     </article>
   );

@@ -6,4 +6,5 @@ export interface CardProps extends ComponentProps<"article"> {
   img: string;
   score: number;
   mountOfReview: number;
+  count: number;
 }

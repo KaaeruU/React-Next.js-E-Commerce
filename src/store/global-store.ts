@@ -6,8 +6,6 @@ type GlobalStore = {
   setIsOpen: (open: boolean) => void;
   navHeight: number;
   setNavHeight: (height: number) => void;
-  items: number;
-  setItems: (count: number) => void;
 };
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
@@ -16,6 +14,4 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
   setIsOpen: (open) => set({ isOpen: open }),
   navHeight: 67,
   setNavHeight: (height) => set({ navHeight: height }),
-  items: 0,
-  setItems: (items) => set({ items }),
 }));

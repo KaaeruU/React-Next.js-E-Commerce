@@ -1,18 +1,21 @@
 "use client";
 
 import { Text } from "@/src/components/atom/text/Text";
-import { useGlobalStore } from "@/src/store/global-store";
 
-const CounterButton = () => {
-  const { items, setItems } = useGlobalStore();
-
+const CounterButton = ({
+  count,
+  setCount,
+}: {
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+}) => {
   const increment = () => {
-    setItems(items + 1);
+    setCount(count + 1);
   };
 
   const decrement = () => {
-    if (items != 0) {
-      setItems(items - 1);
+    if (count != 0) {
+      setCount(count - 1);
     }
   };
   return (
@@ -26,7 +29,7 @@ const CounterButton = () => {
         </Text>
       </button>
       <Text as={"span"} styledAs={"button"}>
-        {items}
+        {count}
       </Text>
       <button onClick={increment} className="px-2">
         <Text as={"span"} styledAs={"button"}>

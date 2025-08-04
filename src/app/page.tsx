@@ -36,7 +36,7 @@ export default function Home() {
           >
             <Heading as="h1" styledAs="h1" className="lg:whitespace-nowrap">
               Accedi al tuo{" "}
-              <span className="block pl-14 sm:inline lg:p-0">account</span>
+              <span className="pl-14 sm:inline lg:p-0">account</span>
             </Heading>
           </div>
           <div

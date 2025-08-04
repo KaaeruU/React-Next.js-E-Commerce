@@ -1,0 +1,24 @@
+"use client";
+
+import Link from "next/link";
+import { MenuItemProps } from "./menuItem-type";
+import { itemVariants } from "@/src/lib/motion/variants";
+import * as motion from "motion/react-client";
+
+const MenuItem = ({ label, href, className = "" }: MenuItemProps) => {
+  return (
+    <motion.li
+      variants={itemVariants}
+      className="flex items-center justify-start py-4"
+    >
+      <Link href={href}>
+        {" "}
+        <strong className={`heading-h4 text-white ${className}`}>
+          {label}
+        </strong>
+      </Link>
+    </motion.li>
+  );
+};
+
+export default MenuItem;

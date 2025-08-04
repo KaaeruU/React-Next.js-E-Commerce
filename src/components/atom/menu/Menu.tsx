@@ -1,18 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import {
   hamburgerVariants,
   lineVariants,
   middleVariants,
 } from "@/src/lib/tailwind/menu";
+import { useGlobalStore } from "@/src/store/global-store";
+
+// filepath: [Menu.tsx](http://_vscodecontentref_/1)
 
 export default function HamburgerMenu() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const isOpen = useGlobalStore((state) => state.isOpen);
+  const toggleMenu = useGlobalStore((state) => state.toggleMenu);
 
   return (
     <button

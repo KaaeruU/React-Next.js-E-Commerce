@@ -7,12 +7,12 @@ import { Button } from "@/src/components/atom/buttons/Button";
 import CartIcon from "@/src/components/atom/cartIcon/CartIcon";
 import Logo from "@/src/components/atom/logo/Logo";
 import Menu from "@/src/components/atom/menu/Menu";
-import { useMenuStore } from "@/src/store/global-store";
+import { useGlobalStore } from "@/src/store/global-store";
 import { useMeasure } from "@uidotdev/usehooks";
 
 const Navbar = ({ items = 0, className = "" }: NavbarProps) => {
   const [ref, { height }] = useMeasure();
-  const setNavHeight = useMenuStore((state) => state.setNavHeight);
+  const setNavHeight = useGlobalStore((state) => state.setNavHeight);
   useEffect(() => {
     if (height) {
       setNavHeight(height);

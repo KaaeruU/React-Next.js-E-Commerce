@@ -9,12 +9,19 @@ import {
   menuVariants,
   ulVariants,
 } from "@/src/lib/motion/variants";
-import { useMenuStore } from "@/src/store/global-store";
+import { useGlobalStore } from "@/src/store/global-store";
 import * as motion from "motion/react-client";
 
 export const MobileMenu = () => {
-  const isOpen = useMenuStore((state) => state.isOpen);
-  const navHeight = useMenuStore((state) => state.navHeight);
+  const isOpen = useGlobalStore((state) => state.isOpen);
+  const navHeight = useGlobalStore((state) => state.navHeight);
+  const menuItems = [
+    { label: "SHOP", href: "" },
+    { label: "CART", href: "" },
+    { label: "LOGIN", href: "" },
+    { label: "SEARCH", href: "" },
+    { label: "INFO", href: "" },
+  ];
 
   return (
     <motion.div
@@ -34,11 +41,9 @@ export const MobileMenu = () => {
           className="mx-8 h-1/2 border-b-2 border-b-slate-100 pt-10"
           variants={ulVariants}
         >
-          <MenuItem label={"SHOP"} href={""} className="mx-5" />
-          <MenuItem label={"CART"} href={""} className="mx-5" />
-          <MenuItem label={"LOGIN"} href={""} className="mx-5" />
-          <MenuItem label={"SEARCH"} href={""} className="mx-5" />
-          <MenuItem label={"INFO"} href={""} className="mx-5" />
+          {menuItems.map((item) => (
+            <MenuItem label={item.label} href={item.href} key={item.label} />
+          ))}
         </motion.ul>
         <motion.div
           variants={containerVariants}

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type MenuStore = {
+type GlobalStore = {
   isOpen: boolean;
   toggleMenu: () => void;
   setIsOpen: (open: boolean) => void;
@@ -8,7 +8,7 @@ type MenuStore = {
   setNavHeight: (height: number) => void;
 };
 
-export const useMenuStore = create<MenuStore>((set) => ({
+export const useGlobalStore = create<GlobalStore>((set) => ({
   isOpen: false,
   toggleMenu: () => set((state) => ({ isOpen: !state.isOpen })),
   setIsOpen: (open) => set({ isOpen: open }),

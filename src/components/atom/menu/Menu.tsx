@@ -5,13 +5,13 @@ import {
   lineVariants,
   middleVariants,
 } from "@/src/lib/tailwind/menu";
-import { useMenuStore } from "@/src/store/global-store";
+import { useGlobalStore } from "@/src/store/global-store";
 
 // filepath: [Menu.tsx](http://_vscodecontentref_/1)
 
 export default function HamburgerMenu() {
-  const isOpen = useMenuStore((state) => state.isOpen);
-  const toggleMenu = useMenuStore((state) => state.toggleMenu);
+  const isOpen = useGlobalStore((state) => state.isOpen);
+  const toggleMenu = useGlobalStore((state) => state.toggleMenu);
 
   return (
     <button

@@ -21,7 +21,7 @@ const MenuLogin = () => {
     router.push("/");
   };
   return (
-    <>
+    <div className="contents">
       <motion.div
         className="flex items-center"
         variants={slideFromRightVariants}
@@ -41,8 +41,8 @@ const MenuLogin = () => {
           variant={"primary"}
           onClick={handleLoginClick}
         />
-      </motion.div>{" "}
-    </>
+      </motion.div>
+    </div>
   );
 };
 

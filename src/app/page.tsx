@@ -6,8 +6,6 @@ import Card from "../components/molecules/card/Card";
 export default function Home() {
   const { data, isLoading, error } = useProductsQuery();
 
-  if (isLoading) return <div>Caricamento...</div>;
-
   return (
     <>
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden">

@@ -24,7 +24,6 @@ export default function Home() {
               score={card.score}
               mountOfReview={card.mountOfReview}
               img={card.img}
-              count={0}
             />
           ))}
         </div>

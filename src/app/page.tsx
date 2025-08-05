@@ -12,11 +12,12 @@ export default function Home() {
     <>
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
         <div className="default-grid grid-container">
+          {isLoading && <p>Caricamento...</p>}
           {error ? (
             <p>errore</p>
           ) : (
-            data?.map(({ id, title, price, images, rating, reviews }) => (
-              <div className="col-span-3 my-10">
+            data?.map(
+              ({ id, title, price, images, rating, reviews }, index) => (
                 <Card
                   key={id}
                   title={title}
@@ -24,9 +25,10 @@ export default function Home() {
                   img={images[0] || ""}
                   score={rating}
                   mountOfReview={reviews.length}
+                  className={` ${index % 3 === 0 ? "lg:col-start-4" : ""} `}
                 />
-              </div>
-            ))
+              )
+            )
           )}
         </div>
       </div>

@@ -2,7 +2,9 @@ import { Product } from "../types/product-type";
 
 export const getProducts = async () => {
   try {
-    const response = await fetch("https://dummyjson.com/products");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_ROUTE_API}/products`
+    );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Providers from "@/src/components/atom/providers/Providers";
 import Navbar from "@/src/components/molecules/navbar/Navbar";
 import "@/src/styles/global.css";
 
@@ -19,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Navbar />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

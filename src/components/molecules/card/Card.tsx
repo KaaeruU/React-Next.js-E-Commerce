@@ -24,7 +24,7 @@ const Card = ({
       className={`col-span-3 my-5 h-full w-full md:col-span-4 lg:col-span-3 ${className}`}
     >
       <div className="bg-white">
-        <div className="w-full">
+        <div className="h-auto w-auto">
           <Image
             src={img}
             alt={"image of the product"}

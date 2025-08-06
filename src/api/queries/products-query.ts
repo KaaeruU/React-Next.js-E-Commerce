@@ -2,9 +2,9 @@ import { getProducts } from "@/src/api/getProducts";
 import { productsQueryKey } from "@/src/utils/constants/query-key";
 import { useQuery } from "@tanstack/react-query";
 
-export function useProductsQuery() {
+export function useProductsQuery(filter?: string) {
   return useQuery({
-    queryKey: [productsQueryKey],
-    queryFn: getProducts,
+    queryKey: [productsQueryKey, filter],
+    queryFn: () => getProducts(filter),
   });
 }

@@ -1,9 +1,11 @@
 import { Product } from "@/src/types/product-type";
 
-export const getProducts = async (): Promise<Product[]> => {
+export const getProducts = async (filter?: string): Promise<Product[]> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ROUTE_API}/products`
+      filter
+        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${filter}` //cambiare
+        : `${process.env.NEXT_PUBLIC_ROUTE_API}/products`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

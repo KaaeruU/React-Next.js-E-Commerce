@@ -1,7 +1,7 @@
 "use client";
 
-import { useProductsQuery } from "../api/queries/products-query";
-import Card from "../components/molecules/card/Card";
+import { useProductsQuery } from "@/src/api/queries/products-query";
+import Card from "@/src/components/molecules/card/Card";
 
 export default function Home() {
   const { data, isLoading, error } = useProductsQuery();

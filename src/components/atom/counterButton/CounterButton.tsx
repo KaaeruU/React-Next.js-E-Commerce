@@ -10,12 +10,12 @@ const CounterButton = ({
   setCount: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const increment = () => {
-    setCount(count + 1);
+    setCount((count) => count + 1);
   };
 
   const decrement = () => {
     if (count != 0) {
-      setCount(count - 1);
+      setCount((count) => count - 1);
     }
   };
   return (

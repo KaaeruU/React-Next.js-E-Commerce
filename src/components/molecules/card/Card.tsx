@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "../../atom/buttons/Button";
 import { CardProps } from "./card-type";
+import { Button } from "@/src/components/atom/buttons/Button";
 import CounterButton from "@/src/components/atom/counterButton/CounterButton";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Icon } from "@/src/components/atom/icon/Icon";

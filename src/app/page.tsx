@@ -13,13 +13,15 @@ export default function Home() {
     <>
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden pt-28">
         <div className="default-grid grid-container">
-          <CardFilter />
-          {isLoading && <p>Caricamento...</p>}
-          {error ? (
-            <p>errore</p>
-          ) : (
-            data?.map(
-              ({ id, title, price, images, rating, reviews }, index) => (
+          <div className="col-span-3">
+            <CardFilter />
+          </div>
+          <div className="col-span-9 col-start-4 grid-cols-9 gap-x-5 sm:contents lg:grid">
+            {isLoading && <p>Caricamento...</p>}
+            {error ? (
+              <p>errore</p>
+            ) : (
+              data?.map(({ id, title, price, images, rating, reviews }) => (
                 <Card
                   key={id}
                   title={title}
@@ -27,11 +29,10 @@ export default function Home() {
                   img={images[0] || ""}
                   score={rating}
                   mountOfReview={reviews.length}
-                  className={` ${index % 3 === 0 ? "lg:col-start-4" : ""} `}
                 />
-              )
-            )
-          )}
+              ))
+            )}
+          </div>
         </div>
       </div>
     </>

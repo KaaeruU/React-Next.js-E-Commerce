@@ -3,7 +3,6 @@
 import { useCategoriesQuery } from "@/src/api/queries/categories-query";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
-import { Input } from "@/src/components/atom/input/Input";
 import { useGlobalStore } from "@/src/store/global-store";
 
 export const CardFilter = () => {
@@ -24,11 +23,11 @@ export const CardFilter = () => {
 
   return (
     <div className="col-span-3 hidden bg-neutral-50 p-8 lg:flex lg:flex-col">
-      <Heading as={"h2"} styledAs={"h2"}>
+      <Heading as={"h2"} styledAs={"h2"} className="mb-6">
         Filtra i PRODOTTI
       </Heading>
       <div>
-        <Heading as={"h4"} styledAs={"h4"}>
+        <Heading as={"h4"} styledAs={"h4"} className="mb-4">
           Tipologia
         </Heading>
         <div className="flex flex-col space-y-2">
@@ -36,12 +35,15 @@ export const CardFilter = () => {
             <p>Errore nel caricamento delle categorie</p>
           ) : (
             data?.map(({ name }) => (
-              <label className="flex cursor-pointer items-center" key={name}>
-                <Input
-                  placeholder=""
-                  type="radio"
+              <label
+                className="flex cursor-pointer items-center pb-3"
+                key={name}
+              >
+                <input
+                  type="checkbox"
                   name="category"
-                  className="mb-0 mr-2"
+                  className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
+                    checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
                   checked={tempSelectedCategory === name}
                   onChange={() => handleCategoryChange(name)}
                 />
@@ -51,7 +53,7 @@ export const CardFilter = () => {
           )}
         </div>
 
-        <div className="mt-6 space-y-2">
+        <div className="mt-6">
           <Button
             label={"Applica filtro"}
             isDisabled={false}

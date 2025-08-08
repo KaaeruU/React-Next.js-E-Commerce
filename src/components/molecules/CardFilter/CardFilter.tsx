@@ -39,7 +39,7 @@ export const CardFilter = () => {
               <label className="flex cursor-pointer items-center" key={name}>
                 <Input
                   placeholder=""
-                  type="checkbox"
+                  type="radio"
                   name="category"
                   className="mb-0 mr-2"
                   checked={tempSelectedCategory === name}

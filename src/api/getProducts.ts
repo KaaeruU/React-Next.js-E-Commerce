@@ -4,7 +4,7 @@ export const getProducts = async (filter?: string): Promise<Product[]> => {
   try {
     const response = await fetch(
       filter
-        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${filter}` //cambiare
+        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${filter}`
         : `${process.env.NEXT_PUBLIC_ROUTE_API}/products`
     );
     if (!response.ok) {

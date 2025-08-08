@@ -6,5 +6,7 @@ export function useProductsQuery(filter?: string) {
   return useQuery({
     queryKey: [productsQueryKey, filter],
     queryFn: () => getProducts(filter),
+    enabled: true,
+    staleTime: 5 * 60 * 1000,
   });
 }

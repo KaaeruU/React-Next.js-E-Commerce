@@ -8,9 +8,12 @@ type GlobalStore = {
   setNavHeight: (height: number) => void;
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
+  tempSelectedCategory: string;
+  setTempSelectedCategory: (category: string) => void;
+  applyFilter: () => void;
 };
 
-export const useGlobalStore = create<GlobalStore>((set) => ({
+export const useGlobalStore = create<GlobalStore>((set, get) => ({
   isOpen: false,
   toggleMenu: () => set((state) => ({ isOpen: !state.isOpen })),
   setIsOpen: (open) => set({ isOpen: open }),
@@ -18,4 +21,11 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
   setNavHeight: (height) => set({ navHeight: height }),
   selectedCategory: "",
   setSelectedCategory: (category) => set({ selectedCategory: category }),
+  tempSelectedCategory: "",
+  setTempSelectedCategory: (category) =>
+    set({ tempSelectedCategory: category }),
+  applyFilter: () => {
+    const { tempSelectedCategory } = get();
+    set({ selectedCategory: tempSelectedCategory });
+  },
 }));

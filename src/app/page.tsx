@@ -11,12 +11,15 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative flex min-h-screen items-center justify-center overflow-hidden pt-28">
+      <div className="relative min-h-screen overflow-hidden pt-28">
         <div className="default-grid grid-container">
-          <div className="col-span-3">
+          <div className="col-span-12 lg:col-span-3">
             <CardFilter />
           </div>
-          <div className="col-span-9 col-start-4 grid-cols-9 gap-x-5 sm:contents lg:grid">
+          <div
+            className="col-span-12 grid gap-x-5 md:grid-cols-8 lg:col-start-4 lg:grid-cols-9
+              2xl:grid-cols-12"
+          >
             {isLoading && <p>Caricamento...</p>}
             {error ? (
               <p>errore</p>

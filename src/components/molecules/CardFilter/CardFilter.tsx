@@ -5,6 +5,7 @@ import { Icon } from "../../atom/icon/Icon";
 import { useCategoriesQuery } from "@/src/api/queries/categories-query";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
+import { useResponsive } from "@/src/hooks/useResponsive";
 import { useGlobalStore } from "@/src/store/global-store";
 
 export const CardFilter = () => {
@@ -14,6 +15,8 @@ export const CardFilter = () => {
   const { data, error } = useCategoriesQuery();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const isLargeDevice = useResponsive("only screen and (min-width : 993px)");
 
   const handleCategoryChange = (categoryName: string) => {
     if (tempSelectedCategory === categoryName) {
@@ -30,21 +33,23 @@ export const CardFilter = () => {
   };
 
   return (
-    <div className="col-span-12 flex flex-col bg-neutral-50 px-6 py-4 lg:col-span-3 lg:p-8">
+    <div className="col-span-12 flex flex-col bg-neutral-50 px-6 py-4 lg:col-span-3 lg:px-5 lg:py-8">
       <div className="flex justify-between lg:mb-6">
         <Heading
           as={"h2"}
           styledAs={"h2"}
-          className={isFilterOpen ? "mb-6" : ""}
+          className={isFilterOpen || isLargeDevice ? "mb-6" : ""}
         >
           Filtra i PRODOTTI
         </Heading>
-        <button onClick={() => toggleFilter()}>
-          <Icon name={"Arrow"} size={"14"} weight={"bold"} />
-        </button>
+        {!isLargeDevice && (
+          <button onClick={() => toggleFilter()} className="lg:hidden">
+            <Icon name={"Arrow"} size={"14"} weight={"bold"} />
+          </button>
+        )}
       </div>
 
-      {isFilterOpen && (
+      {(isFilterOpen || isLargeDevice) && (
         <div>
           <Heading as={"h4"} styledAs={"h4"} className="mb-4">
             Tipologia
@@ -78,6 +83,7 @@ export const CardFilter = () => {
               isDisabled={false}
               variant={"primary"}
               onClick={handleApplyFilter}
+              className="w-full"
             />
           </div>
         </div>

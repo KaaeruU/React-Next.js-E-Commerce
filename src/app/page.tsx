@@ -24,16 +24,27 @@ export default function Home() {
             {error ? (
               <p>errore</p>
             ) : (
-              data?.map(({ id, title, price, images, rating, reviews }) => (
-                <Card
-                  key={id}
-                  title={title}
-                  price={price}
-                  img={images[0] || ""}
-                  score={rating}
-                  mountOfReview={reviews.length}
-                />
-              ))
+              data?.map(
+                ({
+                  id,
+                  title,
+                  price,
+                  images,
+                  rating,
+                  reviews,
+                  discountPercentage,
+                }) => (
+                  <Card
+                    key={id}
+                    title={title}
+                    price={price}
+                    img={images[0] || ""}
+                    score={rating}
+                    mountOfReview={reviews.length}
+                    discount={discountPercentage}
+                  />
+                )
+              )
             )}
           </div>
         </div>

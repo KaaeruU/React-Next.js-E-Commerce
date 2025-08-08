@@ -7,4 +7,5 @@ export interface CardProps extends ComponentProps<"article"> {
   score: number;
   mountOfReview: number;
   className?: string;
+  discount?: number;
 }

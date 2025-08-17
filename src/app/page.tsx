@@ -1,9 +1,9 @@
 "use client";
 
 import { CardFilter } from "../components/molecules/CardFilter/CardFilter";
-import { useGlobalStore } from "../store/global-store";
 import { useProductsQuery } from "@/src/api/queries/products-query";
 import Card from "@/src/components/molecules/card/Card";
+import { useGlobalStore } from "@/src/store/global-store";
 
 export default function Home() {
   const { selectedCategory } = useGlobalStore();

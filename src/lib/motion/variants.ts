@@ -87,3 +87,41 @@ export const slideFromRightVariants = {
     },
   },
 };
+
+export const filterVariants = {
+  open: {
+    height: "auto",
+    gridTemplateRows: "1fr",
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut" as const,
+    },
+  },
+  closed: {
+    height: 0,
+    gridTemplateRows: "0fr",
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut" as const,
+    },
+  },
+};
+
+export const filterItemVariants = {
+  open: {
+    height: "auto",
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut" as const,
+    },
+  },
+  closed: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut" as const,
+    },
+  },
+};

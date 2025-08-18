@@ -6,7 +6,9 @@ import { useCategoriesQuery } from "@/src/api/queries/categories-query";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { useResponsive } from "@/src/hooks/useResponsive";
+import { filterItemVariants } from "@/src/lib/motion/variants";
 import { useGlobalStore } from "@/src/store/global-store";
+import * as motion from "motion/react-client";
 
 export const CardFilter = () => {
   const { tempSelectedCategory, setTempSelectedCategory, applyFilter } =
@@ -26,6 +28,7 @@ export const CardFilter = () => {
 
   const handleApplyFilter = () => {
     applyFilter();
+    setIsFilterOpen(false);
   };
 
   const toggleFilter = () => {
@@ -35,11 +38,7 @@ export const CardFilter = () => {
   return (
     <div className="col-span-12 flex flex-col bg-neutral-50 px-6 py-4 lg:col-span-3 lg:px-5 lg:py-8">
       <div className="flex justify-between lg:mb-6">
-        <Heading
-          as={"h2"}
-          styledAs={"h2"}
-          className={isFilterOpen || isLargeDevice ? "mb-6" : ""}
-        >
+        <Heading as={"h2"} styledAs={"h2"}>
           Filtra i PRODOTTI
         </Heading>
         {!isLargeDevice && (
@@ -49,7 +48,8 @@ export const CardFilter = () => {
         )}
       </div>
 
-      {(isFilterOpen || isLargeDevice) && (
+      {/* Su desktop sempre visibile, su mobile animato */}
+      {isLargeDevice ? (
         <div>
           <Heading as={"h4"} styledAs={"h4"} className="mb-4">
             Tipologia
@@ -87,6 +87,51 @@ export const CardFilter = () => {
             />
           </div>
         </div>
+      ) : (
+        <motion.div
+          initial="closed"
+          animate={isFilterOpen ? "open" : "closed"}
+          variants={filterItemVariants}
+          className="overflow-hidden"
+        >
+          <div>
+            <Heading as={"h4"} styledAs={"h4"} className="my-4">
+              Tipologia
+            </Heading>
+            <div className="flex flex-col space-y-2">
+              {error ? (
+                <p>Errore nel caricamento delle categorie</p>
+              ) : (
+                data?.map(({ name }) => (
+                  <label
+                    className="flex cursor-pointer items-center pb-3"
+                    key={name}
+                  >
+                    <input
+                      type="checkbox"
+                      name="category"
+                      className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
+                        checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
+                      checked={tempSelectedCategory === name}
+                      onChange={() => handleCategoryChange(name)}
+                    />
+                    <span className="capitalize">{name}</span>
+                  </label>
+                ))
+              )}
+            </div>
+
+            <div className="mt-6">
+              <Button
+                label={"Applica filtro"}
+                isDisabled={false}
+                variant={"primary"}
+                onClick={handleApplyFilter}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </motion.div>
       )}
     </div>
   );

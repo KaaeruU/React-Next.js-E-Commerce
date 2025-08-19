@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Icon } from "../../atom/icon/Icon";
-import { useCategoriesQuery } from "@/src/api/queries/categories-query";
+import { useGetCategoriesQuery } from "@/src/api/queries/categories-query";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { useResponsive } from "@/src/hooks/useResponsive";
@@ -14,16 +14,16 @@ export const CardFilter = () => {
   const { tempSelectedCategory, setTempSelectedCategory, applyFilter } =
     useGlobalStore();
 
-  const { data, error } = useCategoriesQuery();
+  const { data, error } = useGetCategoriesQuery();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const isLargeDevice = useResponsive("only screen and (min-width : 993px)");
 
   const handleCategoryChange = (categoryName: string) => {
-    if (tempSelectedCategory === categoryName) {
-      setTempSelectedCategory("");
-    } else setTempSelectedCategory(categoryName);
+    setTempSelectedCategory(
+      tempSelectedCategory === categoryName ? "" : categoryName
+    );
   };
 
   const handleApplyFilter = () => {

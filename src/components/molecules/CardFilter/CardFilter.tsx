@@ -29,6 +29,7 @@ export const CardFilter = () => {
   const handleApplyFilter = () => {
     applyFilter();
     setIsFilterOpen(false);
+    window.scrollTo(0, 0);
   };
 
   const toggleFilter = () => {
@@ -104,7 +105,7 @@ export const CardFilter = () => {
               ) : (
                 data?.map(({ name }) => (
                   <label
-                    className="flex cursor-pointer items-center pb-3"
+                    className="flex cursor-pointer items-center pb-3 pl-1"
                     key={name}
                   >
                     <input

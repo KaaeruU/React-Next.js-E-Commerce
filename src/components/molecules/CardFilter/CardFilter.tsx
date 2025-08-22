@@ -29,7 +29,7 @@ export const CardFilter = () => {
   const handleApplyFilter = () => {
     applyFilter();
     setIsFilterOpen(false);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const toggleFilter = () => {

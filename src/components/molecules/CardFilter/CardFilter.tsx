@@ -14,13 +14,20 @@ import { useGlobalStore } from "@/src/store/global-store";
 import * as motion from "motion/react-client";
 
 export const CardFilter = () => {
-  const { tempSelectedCategory, setTempSelectedCategory, applyFilter } =
-    useGlobalStore();
+  const {
+    tempSelectedCategory,
+    setTempSelectedCategory,
+    applyFilter,
+    selectedCategory,
+  } = useGlobalStore();
 
   const router = useRouter();
 
   const form = useForm({
     mode: "onSubmit",
+    defaultValues: {
+      category: selectedCategory,
+    },
   });
 
   const { data, error } = useGetCategoriesQuery();
@@ -92,7 +99,11 @@ export const CardFilter = () => {
                               name="category"
                               className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
                                 checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
-                              checked={tempSelectedCategory === slug}
+                              checked={
+                                tempSelectedCategory
+                                  ? tempSelectedCategory === slug
+                                  : selectedCategory === slug
+                              }
                               onChange={() => handleCategoryChange(slug)}
                             />
                             <span className="capitalize">{slug}</span>

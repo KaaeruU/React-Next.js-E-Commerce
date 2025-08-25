@@ -1,11 +1,16 @@
 "use client";
 
 import { useGetProductsQuery } from "@/src/api/queries/products-query";
+import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import { CardFilter } from "@/src/components/molecules/CardFilter/CardFilter";
 import Card from "@/src/components/molecules/card/Card";
 
 export default function Home() {
   const { data, isLoading, error } = useGetProductsQuery();
+
+  if (error) {
+    return <ErrorHandler message={error.message} cause={error.cause} />;
+  }
 
   return (
     <>
@@ -19,29 +24,25 @@ export default function Home() {
               2xl:grid-cols-12"
           >
             {isLoading && <p>Caricamento...</p>}
-            {error ? (
-              <p>errore</p>
-            ) : (
-              data?.map(
-                ({
-                  id,
-                  title,
-                  price,
-                  images,
-                  rating,
-                  reviews,
-                  discountPercentage,
-                }) => (
-                  <Card
-                    key={id}
-                    title={title}
-                    price={price}
-                    img={images[0] || ""}
-                    score={rating}
-                    mountOfReview={reviews.length}
-                    discount={discountPercentage}
-                  />
-                )
+            {data?.map(
+              ({
+                id,
+                title,
+                price,
+                images,
+                rating,
+                reviews,
+                discountPercentage,
+              }) => (
+                <Card
+                  key={id}
+                  title={title}
+                  price={price}
+                  img={images[0] || ""}
+                  score={rating}
+                  mountOfReview={reviews.length}
+                  discount={discountPercentage}
+                />
               )
             )}
           </div>

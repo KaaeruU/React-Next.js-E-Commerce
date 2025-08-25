@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Icon } from "../../atom/icon/Icon";
 import { Form, FormControl, FormField, FormItem } from "../Form";
@@ -20,6 +20,11 @@ export const CardFilter = () => {
     applyFilter,
     selectedCategory,
   } = useGlobalStore();
+
+  useEffect(() => {
+    setTempSelectedCategory(selectedCategory);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategory]);
 
   const router = useRouter();
 
@@ -99,11 +104,7 @@ export const CardFilter = () => {
                               name="category"
                               className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
                                 checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
-                              checked={
-                                tempSelectedCategory
-                                  ? tempSelectedCategory === slug
-                                  : selectedCategory === slug
-                              }
+                              checked={tempSelectedCategory === slug}
                               onChange={() => handleCategoryChange(slug)}
                             />
                             <span className="capitalize">{slug}</span>

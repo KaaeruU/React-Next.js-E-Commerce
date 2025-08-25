@@ -42,7 +42,7 @@ const Card = ({
           )}
         </div>
         <div className="flex flex-col">
-          <div className="mx-4 border-b-2 border-gray-300/20">
+          <div className="mx-4 h-24 border-b-2 border-gray-300/20">
             <Heading as={"h3"} styledAs={"h4"} className="py-4">
               {title}
             </Heading>

@@ -36,6 +36,50 @@ export const CardFilter = () => {
     setIsFilterOpen(() => !isFilterOpen);
   };
 
+  const filterContent = (
+    <div>
+      <Heading
+        as={"h4"}
+        styledAs={"h4"}
+        className={isLargeDevice ? "mb-4" : "my-4"}
+      >
+        Tipologia
+      </Heading>
+      <div className="flex flex-col space-y-2">
+        {error ? (
+          <p>Errore nel caricamento delle categorie</p>
+        ) : (
+          data?.map(({ name }) => (
+            <label
+              className={`flex cursor-pointer items-center pb-3 ${!isLargeDevice ? "pl-1" : ""}`}
+              key={name}
+            >
+              <input
+                type="checkbox"
+                name="category"
+                className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
+                  checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
+                checked={tempSelectedCategory === name}
+                onChange={() => handleCategoryChange(name)}
+              />
+              <span className="capitalize">{name}</span>
+            </label>
+          ))
+        )}
+      </div>
+
+      <div className="mt-6">
+        <Button
+          label={"Applica filtro"}
+          isDisabled={false}
+          variant={"primary"}
+          onClick={handleApplyFilter}
+          className="w-full"
+        />
+      </div>
+    </div>
+  );
+
   return (
     <div className="col-span-12 flex flex-col bg-neutral-50 px-6 py-4 lg:col-span-3 lg:px-5 lg:py-8">
       <div className="flex justify-between lg:mb-6">
@@ -49,45 +93,8 @@ export const CardFilter = () => {
         )}
       </div>
 
-      {/* Su desktop sempre visibile, su mobile animato */}
       {isLargeDevice ? (
-        <div>
-          <Heading as={"h4"} styledAs={"h4"} className="mb-4">
-            Tipologia
-          </Heading>
-          <div className="flex flex-col space-y-2">
-            {error ? (
-              <p>Errore nel caricamento delle categorie</p>
-            ) : (
-              data?.map(({ name }) => (
-                <label
-                  className="flex cursor-pointer items-center pb-3"
-                  key={name}
-                >
-                  <input
-                    type="checkbox"
-                    name="category"
-                    className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
-                      checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
-                    checked={tempSelectedCategory === name}
-                    onChange={() => handleCategoryChange(name)}
-                  />
-                  <span className="capitalize">{name}</span>
-                </label>
-              ))
-            )}
-          </div>
-
-          <div className="mt-6">
-            <Button
-              label={"Applica filtro"}
-              isDisabled={false}
-              variant={"primary"}
-              onClick={handleApplyFilter}
-              className="w-full"
-            />
-          </div>
-        </div>
+        filterContent
       ) : (
         <motion.div
           initial="closed"
@@ -95,43 +102,7 @@ export const CardFilter = () => {
           variants={filterItemVariants}
           className="overflow-hidden"
         >
-          <div>
-            <Heading as={"h4"} styledAs={"h4"} className="my-4">
-              Tipologia
-            </Heading>
-            <div className="flex flex-col space-y-2">
-              {error ? (
-                <p>Errore nel caricamento delle categorie</p>
-              ) : (
-                data?.map(({ name }) => (
-                  <label
-                    className="flex cursor-pointer items-center pb-3 pl-1"
-                    key={name}
-                  >
-                    <input
-                      type="checkbox"
-                      name="category"
-                      className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
-                        checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
-                      checked={tempSelectedCategory === name}
-                      onChange={() => handleCategoryChange(name)}
-                    />
-                    <span className="capitalize">{name}</span>
-                  </label>
-                ))
-              )}
-            </div>
-
-            <div className="mt-6">
-              <Button
-                label={"Applica filtro"}
-                isDisabled={false}
-                variant={"primary"}
-                onClick={handleApplyFilter}
-                className="w-full"
-              />
-            </div>
-          </div>
+          {filterContent}
         </motion.div>
       )}
     </div>

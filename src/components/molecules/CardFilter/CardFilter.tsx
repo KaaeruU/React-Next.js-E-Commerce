@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorHandler } from "../../atom/ErrorHandler/ErrorHandler";
@@ -9,33 +8,21 @@ import { Form, FormControl, FormField, FormItem } from "../Form";
 import { useGetCategoriesQuery } from "@/src/api/queries/categories-query";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
+import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { filterItemVariants } from "@/src/lib/motion/variants";
 import { useGlobalStore } from "@/src/store/global-store";
 import * as motion from "motion/react-client";
 
 export const CardFilter = () => {
   const { applyFilter, selectedCategory } = useGlobalStore();
-
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
-  const params = new URLSearchParams(searchParams);
-
-  const handleParams = (term: string) => {
-    if (term) {
-      params.set("category", term);
-    } else {
-      params.delete("category");
-    }
-    replace(`${pathname}?${params.toString()}`);
-  };
+  const { updateCategoryParam, getCurrentCategory } = useCategoryParams();
 
   useEffect(() => {
-    const categoryFromUrl = searchParams.get("category");
-    applyFilter(categoryFromUrl || "");
-    form.setValue("category", categoryFromUrl || "");
+    const categoryFromUrl = getCurrentCategory();
+    applyFilter(categoryFromUrl);
+    form.setValue("category", categoryFromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [applyFilter, getCurrentCategory]);
 
   const { data, error } = useGetCategoriesQuery();
 
@@ -53,7 +40,7 @@ export const CardFilter = () => {
     if (window.innerWidth <= 768) {
       setIsFilterOpen(false);
     }
-    handleParams(values.category);
+    updateCategoryParam(values.category);
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -79,7 +66,7 @@ export const CardFilter = () => {
         initial="closed"
         animate={isFilterOpen ? "open" : "closed"}
         variants={filterItemVariants}
-        className="grid overflow-hidden lg:block"
+        className="overflow-hidden lg:!h-auto lg:!opacity-100"
       >
         <Heading as={"h4"} styledAs={"h4"} className="my-4 lg:mt-0">
           Tipologia
@@ -95,9 +82,7 @@ export const CardFilter = () => {
                   key={slug}
                   control={form.control}
                   name="category"
-                  render={({
-                    field: { value = selectedCategory, onChange },
-                  }) => (
+                  render={({ field: { value, onChange } }) => (
                     <FormItem className="contents">
                       <FormControl className="contents">
                         <label className="flex cursor-pointer items-center pb-3 pl-1">

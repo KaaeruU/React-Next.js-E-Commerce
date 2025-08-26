@@ -88,25 +88,6 @@ export const slideFromRightVariants = {
   },
 };
 
-export const filterVariants = {
-  open: {
-    height: "auto",
-    gridTemplateRows: "1fr",
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut" as const,
-    },
-  },
-  closed: {
-    height: ["auto", "auto", "auto", 0],
-    gridTemplateRows: ["1fr", "1fr", "1fr", "0fr"],
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut" as const,
-    },
-  },
-};
-
 export const filterItemVariants = {
   open: {
     height: "auto",
@@ -117,8 +98,8 @@ export const filterItemVariants = {
     },
   },
   closed: {
-    height: ["auto", "auto", "auto", 0],
-    opacity: [1, 1, 1, 0],
+    height: 0,
+    opacity: 0,
     transition: {
       duration: 0.3,
       ease: "easeInOut" as const,

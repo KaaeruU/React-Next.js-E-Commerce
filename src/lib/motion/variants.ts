@@ -98,8 +98,8 @@ export const filterVariants = {
     },
   },
   closed: {
-    height: 0,
-    gridTemplateRows: "0fr",
+    height: ["auto", "auto", "auto", 0],
+    gridTemplateRows: ["1fr", "1fr", "1fr", "0fr"],
     transition: {
       duration: 0.3,
       ease: "easeInOut" as const,
@@ -117,8 +117,8 @@ export const filterItemVariants = {
     },
   },
   closed: {
-    height: 0,
-    opacity: 0,
+    height: ["auto", "auto", "auto", 0],
+    opacity: [1, 1, 1, 0],
     transition: {
       duration: 0.3,
       ease: "easeInOut" as const,

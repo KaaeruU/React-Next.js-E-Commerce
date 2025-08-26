@@ -37,9 +37,8 @@ export const CardFilter = () => {
 
   const handleApplyFilter = (values: { category: string }) => {
     applyFilter(values.category);
-    if (window.innerWidth <= 768) {
-      setIsFilterOpen(false);
-    }
+    setIsFilterOpen(false);
+
     updateCategoryParam(values.category);
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { ErrorHandler } from "../../atom/ErrorHandler/ErrorHandler";
 import { Icon } from "../../atom/icon/Icon";
 import { Form, FormControl, FormField, FormItem } from "../Form";
@@ -13,13 +13,30 @@ import { filterItemVariants } from "@/src/lib/motion/variants";
 import { useGlobalStore } from "@/src/store/global-store";
 import * as motion from "motion/react-client";
 
-export const CardFilter = () => {
-  const { applyFilter, selectedCategory } = useGlobalStore();
+interface CardFilterProps {
+  form: UseFormReturn<
+    {
+      category: string;
+      sortBy: string;
+      order: string;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    {
+      category: string;
+      sortBy: string;
+      order: string;
+    }
+  >;
+}
+
+export const CardFilter = ({ form }: CardFilterProps) => {
+  const { applyFilter } = useGlobalStore();
   const { updateCategoryParam, getCurrentCategory } = useCategoryParams();
 
   useEffect(() => {
     const categoryFromUrl = getCurrentCategory();
-    applyFilter(categoryFromUrl);
+    applyFilter("category", categoryFromUrl);
     form.setValue("category", categoryFromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applyFilter, getCurrentCategory]);
@@ -28,18 +45,11 @@ export const CardFilter = () => {
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const form = useForm({
-    mode: "onChange",
-    defaultValues: {
-      category: selectedCategory || "",
-    },
-  });
-
   const handleApplyFilter = (values: { category: string }) => {
-    applyFilter(values.category);
+    applyFilter("category", values.category);
     setIsFilterOpen(false);
 
-    updateCategoryParam(values.category);
+    updateCategoryParam({ category: values.category });
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 

@@ -1,4 +1,7 @@
 import { create } from "zustand";
+import { GetProductsParams } from "../types/get-products.type";
+
+type SelectedFiltersKeys = keyof GetProductsParams;
 
 type GlobalStore = {
   isOpen: boolean;
@@ -6,9 +9,8 @@ type GlobalStore = {
   setIsOpen: (open: boolean) => void;
   navHeight: number;
   setNavHeight: (height: number) => void;
-  selectedCategory: string;
-  setSelectedCategory: (category: string) => void;
-  applyFilter: (category: string) => void;
+  applyFilter: (key: SelectedFiltersKeys, value: string) => void;
+  selectedFilters: { category?: string; sortBy?: string; order?: string };
 };
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
@@ -17,9 +19,13 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
   setIsOpen: (open) => set({ isOpen: open }),
   navHeight: 67,
   setNavHeight: (height) => set({ navHeight: height }),
-  selectedCategory: "",
-  setSelectedCategory: (category) => set({ selectedCategory: category }),
-  applyFilter: (category) => {
-    set({ selectedCategory: category });
+  selectedFilters: { category: "", sortBy: "", order: "" },
+  applyFilter: (key: SelectedFiltersKeys, value: string) => {
+    set((state) => ({
+      selectedFilters: {
+        ...state.selectedFilters,
+        [key]: value,
+      },
+    }));
   },
 }));

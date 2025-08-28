@@ -1,11 +1,16 @@
+import { GetProductsParams } from "../types/get-products.type";
 import { Product } from "@/src/types/product-type";
 
-export const getProducts = async (filter?: string): Promise<Product[]> => {
+export const getProducts = async ({
+  category,
+  sortBy,
+  order,
+}: GetProductsParams): Promise<Product[]> => {
   try {
     const response = await fetch(
-      filter
-        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${filter}`
-        : `${process.env.NEXT_PUBLIC_ROUTE_API}/products`
+      category
+        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${category}?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}`
+        : `${process.env.NEXT_PUBLIC_ROUTE_API}/products?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

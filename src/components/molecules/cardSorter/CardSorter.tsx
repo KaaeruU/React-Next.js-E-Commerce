@@ -1,0 +1,168 @@
+import { useEffect, useState } from "react";
+import { UseFormReturn } from "react-hook-form";
+import { Button } from "../../atom/buttons/Button";
+import { Heading } from "../../atom/heading/Heading";
+import { Icon } from "../../atom/icon/Icon";
+import { Text } from "../../atom/text/Text";
+import { Form, FormControl, FormField, FormItem } from "../Form";
+import { useCategoryParams } from "@/src/hooks/useCategoryParams";
+import { filterItemVariants } from "@/src/lib/motion/variants";
+import { useGlobalStore } from "@/src/store/global-store";
+import * as motion from "motion/react-client";
+
+interface CardFilterProps {
+  form: UseFormReturn<
+    {
+      category: string;
+      sortBy: string;
+      order: string;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    {
+      category: string;
+      sortBy: string;
+      order: string;
+    }
+  >;
+}
+
+const CardSorter = ({ form }: CardFilterProps) => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const { applyFilter } = useGlobalStore();
+  const { updateCategoryParam, getCurrentSortBy, getCurrentOrder } =
+    useCategoryParams();
+
+  useEffect(() => {
+    const sortByFromUrl = getCurrentSortBy();
+    const orderFromUrl = getCurrentOrder();
+    applyFilter("sortBy", sortByFromUrl);
+    applyFilter("order", orderFromUrl);
+    form.setValue("sortBy", sortByFromUrl);
+    form.setValue("order", orderFromUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getCurrentOrder, getCurrentSortBy]);
+
+  const toggleFilter = () => {
+    setIsFilterOpen(() => !isFilterOpen);
+  };
+
+  const handleApplyFilter = (values: { sortBy: string; order: string }) => {
+    applyFilter("sortBy", values.sortBy);
+    applyFilter("order", values.order);
+    updateCategoryParam({
+      sortBy: values.sortBy,
+      order: values.order,
+    });
+  };
+
+  return (
+    <div
+      className="lg:mt:0 col-span-2 my-6 flex flex-col items-center md:col-span-8 md:flex-row
+        md:justify-between lg:col-span-9 lg:mb-6"
+    >
+      <Heading as={"h2"} styledAs={"h2"} className="whitespace-nowrap">
+        100 PRODOTTI presenti
+      </Heading>
+      <div
+        className="mt-5 w-full justify-center border-2 border-black bg-neutral-50 p-4 md:mt-0
+          md:w-1/3 md:px-4 md:py-2"
+      >
+        <Text as={"label"} styledAs={"body"}>
+          Filtra per:...
+        </Text>
+        <button onClick={() => toggleFilter()}>
+          <Icon name={"Arrow"} size={"14"} weight={"bold"} />
+        </button>
+        <motion.div
+          initial="closed"
+          animate={isFilterOpen ? "open" : "closed"}
+          variants={filterItemVariants}
+          className="overflow-hidden"
+        >
+          <div className="flex flex-col space-y-2">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(handleApplyFilter)}
+                className="w-full"
+              >
+                <FormField
+                  control={form.control}
+                  name="sortBy"
+                  render={({ field }) => (
+                    <FormItem className="contents">
+                      <FormControl className="contents">
+                        <div className="flex flex-col space-y-2">
+                          <label className="flex cursor-pointer items-center">
+                            <input
+                              type="radio"
+                              className="mr-2 h-4 w-4 accent-purple-500"
+                              checked={field.value === "title"}
+                              onChange={() => field.onChange("title")}
+                            />
+                            <span>Titolo</span>
+                          </label>
+                          <label className="flex cursor-pointer items-center">
+                            <input
+                              type="radio"
+                              className="mr-2 h-4 w-4 accent-purple-500"
+                              checked={field.value === "price"}
+                              onChange={() => field.onChange("price")}
+                            />
+                            <span>Prezzo</span>
+                          </label>
+                        </div>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="order"
+                  render={({ field }) => (
+                    <FormItem className="contents">
+                      <FormControl className="contents">
+                        <div className="flex flex-col space-y-2">
+                          <label className="flex cursor-pointer items-center">
+                            <input
+                              type="radio"
+                              className="mr-2 h-4 w-4 accent-purple-500"
+                              checked={field.value === "asc"}
+                              onChange={() => field.onChange("asc")}
+                            />
+                            <span>Crescente</span>
+                          </label>
+                          <label className="flex cursor-pointer items-center">
+                            <input
+                              type="radio"
+                              className="mr-2 h-4 w-4 accent-purple-500"
+                              checked={field.value === "desc"}
+                              onChange={() => field.onChange("desc")}
+                            />
+                            <span>Decrescente</span>
+                          </label>
+                        </div>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <div className="mt-6">
+                  <Button
+                    type="submit"
+                    label={"Applica filtro"}
+                    isDisabled={false}
+                    variant={"primary"}
+                    className="w-full"
+                  />
+                </div>
+              </form>
+            </Form>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default CardSorter;

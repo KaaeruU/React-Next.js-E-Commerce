@@ -7,10 +7,11 @@ import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import { CardFilter } from "@/src/components/molecules/CardFilter/CardFilter";
 import Card from "@/src/components/molecules/card/Card";
 import CardSorter from "@/src/components/molecules/cardSorter/CardSorter";
-import { useGlobalStore } from "@/src/store/global-store";
+import { useShopStore } from "@/src/store/shop-store";
 
 export default function Home() {
-  const { selectedFilters } = useGlobalStore();
+  const { selectedFilters } = useShopStore();
+
   const productFilterForm = useForm({
     mode: "onChange",
     defaultValues: {
@@ -21,9 +22,9 @@ export default function Home() {
   });
 
   const { data, isLoading, error } = useGetProductsQuery({
-    category: selectedFilters.category,
-    sortBy: selectedFilters.sortBy,
-    order: selectedFilters.order,
+    category: selectedFilters.category || "",
+    sortBy: selectedFilters.sortBy || "",
+    order: selectedFilters.order || "",
   });
   if (error) {
     return <ErrorHandler message={error.message} cause={error.cause} />;
@@ -34,7 +35,10 @@ export default function Home() {
       <div className="relative min-h-screen overflow-hidden pt-28">
         <div className="flex justify-end">
           <Suspense fallback={<div>Loading...</div>}>
-            <CardSorter form={productFilterForm} />
+            <CardSorter
+              form={productFilterForm}
+              numberOfProducts={data?.length || 0}
+            />
           </Suspense>
         </div>
 

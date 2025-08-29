@@ -9,9 +9,10 @@ export const getProducts = async ({
   try {
     const response = await fetch(
       category
-        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${category}?${`sortBy=${sortBy}&`}${`order=${order}`}`
-        : `${process.env.NEXT_PUBLIC_ROUTE_API}/products?${`sortBy=${sortBy}&`}${`order=${order}`}`
+        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${category}?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}`
+        : `${process.env.NEXT_PUBLIC_ROUTE_API}/products?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}`
     );
+
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

@@ -10,7 +10,7 @@ import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { filterItemVariants } from "@/src/lib/motion/variants";
-import { useGlobalStore } from "@/src/store/global-store";
+import { useShopStore } from "@/src/store/shop-store";
 import * as motion from "motion/react-client";
 
 interface CardFilterProps {
@@ -31,25 +31,24 @@ interface CardFilterProps {
 }
 
 export const CardFilter = ({ form }: CardFilterProps) => {
-  const { applyFilter } = useGlobalStore();
-  const { updateCategoryParam, getCurrentCategory } = useCategoryParams();
+  const { appliedFilter } = useShopStore();
+  const { updateParams, getCurrentCategory } = useCategoryParams();
 
   useEffect(() => {
     const categoryFromUrl = getCurrentCategory();
-    applyFilter("category", categoryFromUrl);
+    appliedFilter({ category: categoryFromUrl });
     form.setValue("category", categoryFromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applyFilter, getCurrentCategory]);
+  }, [appliedFilter, getCurrentCategory]);
 
   const { data, error } = useGetCategoriesQuery();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const handleApplyFilter = (values: { category: string }) => {
-    applyFilter("category", values.category);
+  const handleAppliedFilter = (values: { category: string }) => {
+    appliedFilter({ category: values.category });
     setIsFilterOpen(false);
-
-    updateCategoryParam({ category: values.category });
+    updateParams(["category"], [values.category]);
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -83,7 +82,7 @@ export const CardFilter = ({ form }: CardFilterProps) => {
         <div className="flex flex-col space-y-2">
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(handleApplyFilter)}
+              onSubmit={form.handleSubmit(handleAppliedFilter)}
               className="w-full"
             >
               {data?.map(({ slug }) => (

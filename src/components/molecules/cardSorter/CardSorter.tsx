@@ -7,10 +7,10 @@ import { Icon } from "@/src/components/atom/icon/Icon";
 import { Text } from "@/src/components/atom/text/Text";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { filterItemVariants } from "@/src/lib/motion/variants";
-import { useGlobalStore } from "@/src/store/global-store";
+import { useShopStore } from "@/src/store/shop-store";
 import * as motion from "motion/react-client";
 
-interface CardFilterProps {
+interface CardSorterProps {
   form: UseFormReturn<
     {
       category: string;
@@ -25,20 +25,20 @@ interface CardFilterProps {
       order: string;
     }
   >;
+  numberOfProducts?: number;
 }
 
-const CardSorter = ({ form }: CardFilterProps) => {
+const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { applyFilter } = useGlobalStore();
-  const { updateCategoryParam, getCurrentSortBy, getCurrentOrder } =
+  const { appliedFilter } = useShopStore();
+  const { updateParams, getCurrentSortBy, getCurrentOrder } =
     useCategoryParams();
 
   useEffect(() => {
     const sortByFromUrl = getCurrentSortBy();
     const orderFromUrl = getCurrentOrder();
-    applyFilter("sortBy", sortByFromUrl);
-    applyFilter("order", orderFromUrl);
-    form.setValue("sortBy", sortByFromUrl);
+    appliedFilter({ sortBy: sortByFromUrl, order: orderFromUrl });
+
     form.setValue("order", orderFromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCurrentOrder, getCurrentSortBy]);
@@ -47,13 +47,9 @@ const CardSorter = ({ form }: CardFilterProps) => {
     setIsFilterOpen(() => !isFilterOpen);
   };
 
-  const handleApplyFilter = (values: { sortBy: string; order: string }) => {
-    applyFilter("sortBy", values.sortBy);
-    applyFilter("order", values.order);
-    updateCategoryParam({
-      sortBy: values.sortBy,
-      order: values.order,
-    });
+  const handleAppliedFilter = (values: { sortBy: string; order: string }) => {
+    appliedFilter({ sortBy: values.sortBy, order: values.order });
+    updateParams(["sortBy", "order"], [values.sortBy, values.order]);
   };
 
   return (
@@ -62,7 +58,7 @@ const CardSorter = ({ form }: CardFilterProps) => {
         md:justify-between lg:col-span-9 lg:mb-6"
     >
       <Heading as={"h2"} styledAs={"h2"} className="whitespace-nowrap">
-        100 PRODOTTI presenti
+        {numberOfProducts} PRODOTTI presenti
       </Heading>
       <div
         className="mt-5 w-full justify-center border-2 border-black bg-neutral-50 p-4 md:mt-0
@@ -83,7 +79,7 @@ const CardSorter = ({ form }: CardFilterProps) => {
           <div className="flex flex-col space-y-2">
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit(handleApplyFilter)}
+                onSubmit={form.handleSubmit(handleAppliedFilter)}
                 className="w-full"
               >
                 <FormField

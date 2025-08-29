@@ -49,7 +49,7 @@ const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
 
   const handleAppliedFilter = (values: { sortBy: string; order: string }) => {
     appliedFilter({ sortBy: values.sortBy, order: values.order });
-    updateParams(["sortBy", "order"], [values.sortBy, values.order]);
+    updateParams({ sortBy: values.sortBy, order: values.order });
   };
 
   return (

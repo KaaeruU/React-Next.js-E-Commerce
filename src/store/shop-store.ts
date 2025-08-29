@@ -8,7 +8,6 @@ type ShopStore = {
 
 export const useShopStore = create<ShopStore>((set) => ({
   appliedFilter: (params: Partial<GetProductsParams>) => {
-    console.log("appliedFilter called with:", params);
     set((state) => ({
       selectedFilters: {
         ...state.selectedFilters,

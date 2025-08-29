@@ -90,10 +90,19 @@ export const CardFilter = ({ form }: CardFilterProps) => {
                   key={slug}
                   control={form.control}
                   name="category"
+                  //usare useMemo
                   render={({ field: { value, onChange } }) => (
                     <FormItem className="contents">
                       <FormControl className="contents">
-                        <label className="flex cursor-pointer items-center pb-3 pl-1">
+                        <label
+                          className="flex cursor-pointer items-center pb-3 pl-1"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              onChange(value === slug ? "" : slug);
+                            }
+                          }}
+                        >
                           <input
                             type="checkbox"
                             name="category"

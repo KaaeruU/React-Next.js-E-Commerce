@@ -67,7 +67,7 @@ const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
         <Text as={"label"} styledAs={"body"}>
           Filtra per:...
         </Text>
-        <button onClick={() => toggleFilter()}>
+        <button onClick={() => toggleFilter()} aria-label="sortlist">
           <Icon name={"Arrow"} size={"14"} weight={"bold"} />
         </button>
         <motion.div
@@ -89,7 +89,17 @@ const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
                     <FormItem className="contents">
                       <FormControl className="contents">
                         <div className="flex flex-col space-y-2">
-                          <label className="flex cursor-pointer items-center">
+                          <label
+                            className="flex cursor-pointer items-center"
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                field.onChange(
+                                  field.value === "title" ? "" : "title"
+                                );
+                              }
+                            }}
+                          >
                             <input
                               type="checkbox"
                               className="mr-2 h-4 w-4 accent-purple-500"
@@ -102,7 +112,17 @@ const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
                             />
                             <span>Titolo</span>
                           </label>
-                          <label className="flex cursor-pointer items-center">
+                          <label
+                            className="flex cursor-pointer items-center"
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                field.onChange(
+                                  field.value === "price" ? "" : "price"
+                                );
+                              }
+                            }}
+                          >
                             <input
                               type="checkbox"
                               className="mr-2 h-4 w-4 accent-purple-500"
@@ -127,7 +147,17 @@ const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
                     <FormItem className="contents">
                       <FormControl className="contents">
                         <div className="flex flex-col space-y-2">
-                          <label className="flex cursor-pointer items-center">
+                          <label
+                            className="flex cursor-pointer items-center"
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                field.onChange(
+                                  field.value === "asc" ? "" : "asc"
+                                );
+                              }
+                            }}
+                          >
                             <input
                               type="checkbox"
                               className="mr-2 h-4 w-4 accent-purple-500"
@@ -140,7 +170,17 @@ const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
                             />
                             <span>Crescente</span>
                           </label>
-                          <label className="flex cursor-pointer items-center">
+                          <label
+                            className="flex cursor-pointer items-center"
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                field.onChange(
+                                  field.value === "desc" ? "" : "desc"
+                                );
+                              }
+                            }}
+                          >
                             <input
                               type="checkbox"
                               className="mr-2 h-4 w-4 accent-purple-500"
@@ -162,7 +202,7 @@ const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
                 <div className="mt-6">
                   <Button
                     type="submit"
-                    label={"Applica filtro"}
+                    label={"Applica"}
                     isDisabled={false}
                     variant={"primary"}
                     className="w-full"

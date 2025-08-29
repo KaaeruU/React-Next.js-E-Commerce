@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { ErrorHandler } from "../../atom/ErrorHandler/ErrorHandler";
-import { Icon } from "../../atom/icon/Icon";
 import { Form, FormControl, FormField, FormItem } from "../Form";
 import { useGetCategoriesQuery } from "@/src/api/queries/categories-query";
+import { Icon } from "@/src/components/atom//icon/Icon";
+import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";

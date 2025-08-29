@@ -6,7 +6,6 @@ export const useCategoryParams = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  // Funzione generica per aggiornare qualsiasi parametro
   const updateCategoryParam = useCallback(
     (params: Record<string, string | null>) => {
       const urlParams = new URLSearchParams(searchParams);
@@ -24,6 +23,22 @@ export const useCategoryParams = () => {
     },
     [searchParams, pathname, replace]
   );
+  /* 
+  const deleteCategoryParam = useCallback(
+    (params: Record<string, string | null>) => {
+      const urlParams = new URLSearchParams(searchParams);
+
+      for (const key in params) {
+        const value = params[key];
+         if (!value) {
+          urlParams.delete(key);
+        }
+      }
+
+      replace(`${pathname}?${urlParams.toString()}`);
+    },
+    [searchParams, pathname, replace]
+  ); */
 
   const getCurrentCategory = useCallback(() => {
     return searchParams.get("category") || "";

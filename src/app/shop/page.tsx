@@ -39,7 +39,7 @@ export default function Home() {
         </div>
 
         <div className="default-grid grid-container">
-          <div className="lg:col-span-3">
+          <div className="col-span-12 lg:col-span-3">
             {/*creare skeleton per cardfilter*/}
             <Suspense fallback={<div>Loading...</div>}>
               <CardFilter form={productFilterForm} />

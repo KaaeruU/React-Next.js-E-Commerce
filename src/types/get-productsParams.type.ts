@@ -4,4 +4,5 @@ export type GetProductsParams = {
   order?: string;
   limit?: number;
   skip?: number;
+  page?: number;
 };

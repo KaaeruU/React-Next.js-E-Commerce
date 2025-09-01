@@ -19,7 +19,8 @@ export const useShopStore = create<ShopStore>((set) => ({
     category: "",
     sortBy: "",
     order: "",
-    limit: 10,
+    limit: 30,
     skip: 0,
+    page: 1,
   },
 }));

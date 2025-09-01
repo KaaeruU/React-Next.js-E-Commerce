@@ -14,7 +14,6 @@ export const getProducts = async ({
         ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${category}?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}${limitParam ? `limit=${limitParam}&` : ""}${skipParam ? `skip=${skipParam}` : ""}`
         : `${process.env.NEXT_PUBLIC_ROUTE_API}/products?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}${limitParam ? `limit=${limitParam}&` : ""}${skipParam ? `skip=${skipParam}` : ""}`
     );
-    console.log("response:", response);
 
     if (!response.ok) {
       throw new Error("Network response was not ok");

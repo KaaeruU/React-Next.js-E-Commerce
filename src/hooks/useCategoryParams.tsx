@@ -33,9 +33,14 @@ export const useCategoryParams = () => {
     return searchParams.get("sortBy") || "";
   }, [searchParams]);
 
+  const getCurrentPage = useCallback(() => {
+    return searchParams.get("page") || "";
+  }, [searchParams]);
+
   return {
     updateParams,
     getCurrentCategory,
+    getCurrentPage,
     getCurrentOrder,
     getCurrentSortBy,
   };

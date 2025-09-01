@@ -30,8 +30,9 @@ export default function Home() {
     category: selectedFilters.category || "",
     sortBy: selectedFilters.sortBy || "",
     order: selectedFilters.order || "",
-    limit: selectedFilters.limit || 10,
+    limit: selectedFilters.limit || 30,
     skip: selectedFilters.skip || 0,
+    page: selectedFilters.page || 1,
   });
   if (error) {
     return <ErrorHandler message={error.message} cause={error.cause} />;

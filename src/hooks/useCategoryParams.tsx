@@ -6,6 +6,7 @@ export const useCategoryParams = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const updateParams = useCallback(
+    //Record<string | enum>??????
     (params: Record<string, string | null>) => {
       const urlParams = new URLSearchParams(searchParams);
       for (const key in params) {
@@ -16,10 +17,12 @@ export const useCategoryParams = () => {
           urlParams.delete(key);
         }
       }
+
       replace(`${pathname}?${urlParams.toString()}`);
     },
     [searchParams, pathname, replace]
   );
+
   const getCurrentCategory = useCallback(() => {
     return searchParams.get("category") || "";
   }, [searchParams]);

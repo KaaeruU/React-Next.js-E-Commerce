@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { GetProductsParams } from "../types/get-products.type";
+import { GetProductsParams } from "@/src/types/get-productsParams.type";
 
 type ShopStore = {
   appliedFilter: (params: GetProductsParams) => void;
@@ -19,5 +19,7 @@ export const useShopStore = create<ShopStore>((set) => ({
     category: "",
     sortBy: "",
     order: "",
+    limit: 10,
+    skip: 0,
   },
 }));

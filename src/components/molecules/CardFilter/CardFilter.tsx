@@ -83,7 +83,7 @@ export const CardFilter = ({ form }: CardFilterProps) => {
   const handleAppliedFilter = (values: { category: string }) => {
     appliedFilter({ category: values.category });
     setIsFilterOpen(false);
-    updateParams({ category: values.category });
+    updateParams({ category: values.category, sortBy: "", order: "" });
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 

@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { useGetProductsQuery } from "@/src/api/queries/products-query";
 import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
+import PaginationBar from "@/src/components/atom/paginationBar/PaginationBar";
 import { CardFilter } from "@/src/components/molecules/CardFilter/CardFilter";
 import Card from "@/src/components/molecules/card/Card";
 import CardSorter from "@/src/components/molecules/cardSorter/CardSorter";
@@ -21,10 +22,16 @@ export default function Home() {
     },
   });
 
-  const { data, isLoading, error } = useGetProductsQuery({
+  const {
+    data: { products, total, skip, limit } = {},
+    isLoading,
+    error,
+  } = useGetProductsQuery({
     category: selectedFilters.category || "",
     sortBy: selectedFilters.sortBy || "",
     order: selectedFilters.order || "",
+    limit: selectedFilters.limit || 10,
+    skip: selectedFilters.skip || 0,
   });
   if (error) {
     return <ErrorHandler message={error.message} cause={error.cause} />;
@@ -37,10 +44,13 @@ export default function Home() {
           <Suspense fallback={<div>Loading...</div>}>
             <CardSorter
               form={productFilterForm}
-              numberOfProducts={data?.length || 0}
+              numberOfProducts={products?.length || 0}
             />
           </Suspense>
         </div>
+        <Suspense fallback={<div>Loading...</div>}>
+          <PaginationBar limit={limit} skip={skip} total={total ?? 0} />
+        </Suspense>
 
         <div className="default-grid grid-container">
           <div className="col-span-12 lg:col-span-3">
@@ -54,7 +64,7 @@ export default function Home() {
               2xl:grid-cols-12"
           >
             {isLoading && <p>Caricamento...</p>}
-            {data?.map(
+            {products?.map(
               ({
                 id,
                 title,

@@ -1,3 +1,10 @@
+export interface Products {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
 export interface Product {
   id: number;
   title: string;
@@ -8,7 +15,7 @@ export interface Product {
   rating: number;
   stock: number;
   tags: string[];
-  brand: string;
+  brand?: string;
   sku: string;
   weight: number;
   dimensions: Dimensions;

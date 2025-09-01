@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "../Form";
 import { useGetCategoriesQuery } from "@/src/api/queries/categories-query";
@@ -42,6 +42,41 @@ export const CardFilter = ({ form }: CardFilterProps) => {
   }, [appliedFilter, getCurrentCategory]);
 
   const { data, error } = useGetCategoriesQuery();
+
+  const formFieldMemo = useMemo(() => {
+    return data?.map(({ slug }) => (
+      <FormField
+        key={slug}
+        control={form.control}
+        name="category"
+        render={({ field: { value, onChange } }) => (
+          <FormItem className="contents">
+            <FormControl className="contents">
+              <label
+                className="flex cursor-pointer items-center pb-3 pl-1"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    onChange(value === slug ? "" : slug);
+                  }
+                }}
+              >
+                <input
+                  type="checkbox"
+                  name="category"
+                  className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
+                    checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
+                  checked={value === slug}
+                  onChange={() => onChange(value === slug ? "" : slug)}
+                />
+                <span className="capitalize">{slug}</span>
+              </label>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+    ));
+  }, [data, form.control]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -85,41 +120,7 @@ export const CardFilter = ({ form }: CardFilterProps) => {
               onSubmit={form.handleSubmit(handleAppliedFilter)}
               className="w-full"
             >
-              {data?.map(({ slug }) => (
-                <FormField
-                  key={slug}
-                  control={form.control}
-                  name="category"
-                  //usare useMemo
-                  render={({ field: { value, onChange } }) => (
-                    <FormItem className="contents">
-                      <FormControl className="contents">
-                        <label
-                          className="flex cursor-pointer items-center pb-3 pl-1"
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              onChange(value === slug ? "" : slug);
-                            }
-                          }}
-                        >
-                          <input
-                            type="checkbox"
-                            name="category"
-                            className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
-                              checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
-                            checked={value === slug}
-                            onChange={() =>
-                              onChange(value === slug ? "" : slug)
-                            }
-                          />
-                          <span className="capitalize">{slug}</span>
-                        </label>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              ))}
+              {formFieldMemo}
               <div className="mt-6">
                 <Button
                   type="submit"

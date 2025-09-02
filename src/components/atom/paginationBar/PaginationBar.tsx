@@ -1,4 +1,3 @@
-import React from "react";
 import { Text } from "../text/Text";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { useShopStore } from "@/src/store/shop-store";
@@ -11,11 +10,7 @@ type PaginationProps = {
 };
 
 const PaginationBar = ({ limit, total }: PaginationProps) => {
-  console.log(`PaginationBar received: total=${total}, limit=${limit}`);
-  const totalPages = limit ? Math.ceil(total / limit) : 1;
-  console.log(`Calculated totalPages: ${totalPages}`);
-
-  const { appliedFilter } = useShopStore();
+  const { appliedFilter, getTotalPages } = useShopStore();
   const { updateParams, getCurrentPage } = useCategoryParams();
 
   const handleAppliedFilter = (values: { skip: number; page: number }) => {
@@ -28,8 +23,10 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const allPages = generatePagination(Number(getCurrentPage()), totalPages);
-  console.log(getCurrentPage());
+  const allPages = generatePagination(
+    Number(getCurrentPage()),
+    getTotalPages(total)
+  );
 
   return (
     <div>

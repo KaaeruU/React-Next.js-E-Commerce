@@ -5,8 +5,10 @@ type ShopStore = {
   appliedFilter: (params: GetProductsParams) => void;
   selectedFilters: GetProductsParams;
   totalPages: number;
-  getTotalPages: (total: number) => number;
+  calcTotalPages: (total: number) => number;
+  getTotalPages: () => number;
 };
+
 export const useShopStore = create<ShopStore>((set, get) => ({
   appliedFilter: (params: GetProductsParams) => {
     set((state) => ({
@@ -25,8 +27,9 @@ export const useShopStore = create<ShopStore>((set, get) => ({
     page: 1,
   },
   totalPages: 1,
-  getTotalPages: (total) => {
+  calcTotalPages: (total) => {
     const { limit } = get().selectedFilters;
     return limit && total ? Math.ceil(total / limit) : 1;
   },
+  getTotalPages: () => get().totalPages,
 }));

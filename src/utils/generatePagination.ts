@@ -19,7 +19,6 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     ];
   }
 
-  // For middle pages
   return [
     1,
     "...",

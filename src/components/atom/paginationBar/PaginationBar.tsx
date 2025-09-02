@@ -10,8 +10,9 @@ type PaginationProps = {
 };
 
 const PaginationBar = ({ limit, total }: PaginationProps) => {
-  const { appliedFilter, getTotalPages } = useShopStore();
+  const { appliedFilter, calcTotalPages } = useShopStore();
   const { updateParams, getCurrentPage } = useCategoryParams();
+  const totalPages = calcTotalPages(total);
 
   const handleAppliedFilter = (values: { skip: number; page: number }) => {
     appliedFilter({ skip: values.skip });
@@ -23,20 +24,28 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const allPages = generatePagination(
-    Number(getCurrentPage()),
-    getTotalPages(total)
-  );
+  const allPages = generatePagination(Number(getCurrentPage()), totalPages);
 
   return (
     <div>
-      <Text as={"p"} styledAs={"label"}>
-        Precedente
-      </Text>
+      <button
+        disabled={Number(getCurrentPage()) === 1}
+        onClick={() =>
+          handleAppliedFilter({
+            skip: (Number(getCurrentPage()) - 2) * (limit || 30),
+            page: Number(getCurrentPage()) - 1,
+          })
+        }
+      >
+        <Text as={"p"} styledAs={"label"}>
+          Precedente
+        </Text>
+      </button>
       {allPages.map((page, index) => (
         <button
           key={index}
           className="p-4"
+          disabled={page === "..." ? true : false}
           onClick={() =>
             handleAppliedFilter({
               skip: (Number(page) - 1) * (limit || 30),
@@ -47,10 +56,19 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
           {page}
         </button>
       ))}
-
-      <Text as={"p"} styledAs={"label"}>
-        Avanti
-      </Text>
+      <button
+        disabled={Number(getCurrentPage()) === totalPages}
+        onClick={() =>
+          handleAppliedFilter({
+            skip: (Number(getCurrentPage()) + 1) * (limit || 30),
+            page: Number(getCurrentPage()) + 1,
+          })
+        }
+      >
+        <Text as={"p"} styledAs={"label"}>
+          Avanti
+        </Text>
+      </button>
     </div>
   );
 };

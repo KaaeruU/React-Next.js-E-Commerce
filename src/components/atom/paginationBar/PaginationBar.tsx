@@ -32,7 +32,7 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
         disabled={Number(getCurrentPage()) === 1}
         onClick={() =>
           handleAppliedFilter({
-            skip: (Number(getCurrentPage()) - 2) * (limit || 30),
+            skip: (Number(getCurrentPage()) - 2) * (limit || 9),
             page: Number(getCurrentPage()) - 1,
           })
         }
@@ -57,7 +57,7 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
         </button>
       ))}
       <button
-        disabled={Number(getCurrentPage()) === totalPages}
+        disabled={Number(getCurrentPage()) === totalPages || totalPages === 1}
         onClick={() =>
           handleAppliedFilter({
             skip: (Number(getCurrentPage()) + 1) * (limit || 30),

@@ -80,10 +80,20 @@ export const CardFilter = ({ form }: CardFilterProps) => {
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const handleAppliedFilter = (values: { category: string }) => {
-    appliedFilter({ category: values.category });
+  const handleAppliedFilter = (values: {
+    category: string;
+    skip?: number;
+    page?: number;
+  }) => {
+    appliedFilter({ category: values.category, skip: 0, page: 1 });
     setIsFilterOpen(false);
-    updateParams({ category: values.category, sortBy: "", order: "" });
+    updateParams({
+      category: values.category,
+      sortBy: "",
+      order: "",
+      skip: "0",
+      page: "1",
+    });
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 

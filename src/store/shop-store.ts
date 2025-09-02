@@ -6,7 +6,6 @@ type ShopStore = {
   selectedFilters: GetProductsParams;
   totalPages: number;
   calcTotalPages: (total: number) => number;
-  getTotalPages: () => number;
 };
 
 export const useShopStore = create<ShopStore>((set, get) => ({
@@ -22,7 +21,7 @@ export const useShopStore = create<ShopStore>((set, get) => ({
     category: "",
     sortBy: "",
     order: "",
-    limit: 30,
+    limit: 9,
     skip: 0,
     page: 1,
   },
@@ -31,5 +30,4 @@ export const useShopStore = create<ShopStore>((set, get) => ({
     const { limit } = get().selectedFilters;
     return limit && total ? Math.ceil(total / limit) : 1;
   },
-  getTotalPages: () => get().totalPages,
 }));

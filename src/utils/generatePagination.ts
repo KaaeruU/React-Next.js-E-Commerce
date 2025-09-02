@@ -1,5 +1,5 @@
 export const generatePagination = (currentPage: number, totalPages: number) => {
-  if (totalPages <= 3) {
+  if (totalPages <= 4) {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 

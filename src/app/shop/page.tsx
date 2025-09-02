@@ -30,7 +30,7 @@ export default function Home() {
     category: selectedFilters.category || "",
     sortBy: selectedFilters.sortBy || "",
     order: selectedFilters.order || "",
-    limit: selectedFilters.limit || 30,
+    limit: selectedFilters.limit || 10,
     skip: selectedFilters.skip || 0,
     page: selectedFilters.page || 1,
   });
@@ -49,9 +49,6 @@ export default function Home() {
             />
           </Suspense>
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <PaginationBar limit={limit} skip={skip} total={total ?? 0} />
-        </Suspense>
 
         <div className="default-grid grid-container">
           <div className="col-span-12 lg:col-span-3">
@@ -87,6 +84,11 @@ export default function Home() {
               )
             )}
           </div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <div className="col-span-12 flex justify-center py-10">
+              <PaginationBar limit={limit} skip={skip} total={total ?? 0} />
+            </div>
+          </Suspense>
         </div>
       </div>
     </>

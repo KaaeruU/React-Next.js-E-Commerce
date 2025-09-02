@@ -11,8 +11,8 @@ export const getProducts = async ({
   try {
     const response: Response = await fetch(
       category
-        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${category}?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}${limitParam ? `limit=${limitParam}&` : ""}${skipParam ? `skip=${skipParam}` : ""}`
-        : `${process.env.NEXT_PUBLIC_ROUTE_API}/products?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}${limitParam ? `limit=${limitParam}&` : ""}${skipParam ? `skip=${skipParam}` : ""}`
+        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${category}?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}${limitParam ? `&limit=${limitParam}` : ""}${skipParam ? `&skip=${skipParam}` : ""}`
+        : `${process.env.NEXT_PUBLIC_ROUTE_API}/products?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}${limitParam ? `&limit=${limitParam}` : ""}${skipParam ? `&skip=${skipParam}` : ""}`
     );
 
     if (!response.ok) {

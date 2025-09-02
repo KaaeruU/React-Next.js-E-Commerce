@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Text } from "../text/Text";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { useShopStore } from "@/src/store/shop-store";
@@ -13,6 +14,19 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
   const { appliedFilter, calcTotalPages } = useShopStore();
   const { updateParams, getCurrentPage } = useCategoryParams();
   const totalPages = calcTotalPages(total);
+
+  useEffect(() => {
+    const pageFromURL = getCurrentPage();
+    const pageNumber = Number(pageFromURL) || 1;
+
+    // evitare il ricalcolo di skip ???
+    const skipValue = (pageNumber - 1) * (limit || 9);
+
+    appliedFilter({
+      page: pageNumber,
+      skip: skipValue,
+    });
+  }, [appliedFilter, getCurrentPage, limit]);
 
   const handleAppliedFilter = (values: { skip: number; page: number }) => {
     appliedFilter({ skip: values.skip });

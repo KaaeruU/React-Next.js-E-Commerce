@@ -40,7 +40,6 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
     appliedFilter({ skip: values.skip });
 
     updateParams({
-      skip: String(values.skip),
       page: String(values.page),
     });
     window?.scrollTo({ top: 0, behavior: "smooth" });

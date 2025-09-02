@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Icon } from "../icon/Icon";
 import { Text } from "../text/Text";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { useShopStore } from "@/src/store/shop-store";
@@ -48,7 +49,7 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
   const allPages = generatePagination(Number(getCurrentPage()), totalPages);
 
   return (
-    <div>
+    <div className="flex justify-center py-10">
       <button
         disabled={isFirstPage}
         className={`${isFirstPage ? "text-gray-600" : ""}`}
@@ -59,9 +60,15 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
           })
         }
       >
-        <Text as={"p"} styledAs={"label"}>
+        <Text as={"p"} styledAs={"label"} className="hidden md:block">
           Precedente
         </Text>
+        <Icon
+          name={"LeftArrow"}
+          size={"14"}
+          weight={"bold"}
+          className="mr-4 block md:hidden"
+        />
       </button>
       {allPages.map((page, index) => (
         <button
@@ -89,9 +96,15 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
           })
         }
       >
-        <Text as={"p"} styledAs={"label"}>
+        <Text as={"p"} styledAs={"label"} className="hidden md:block">
           Avanti
         </Text>
+        <Icon
+          name={"RightArrow"}
+          size={"14"}
+          weight={"bold"}
+          className="ml-4 block md:hidden"
+        />
       </button>
     </div>
   );

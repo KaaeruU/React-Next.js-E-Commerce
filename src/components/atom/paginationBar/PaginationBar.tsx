@@ -26,7 +26,14 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
       page: pageNumber,
       skip: skipValue,
     });
-  }, [appliedFilter, getCurrentPage, limit]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { isFirstPage, isLastPageOrSinglePage } = {
+    isFirstPage: Number(getCurrentPage()) === 1,
+    isLastPageOrSinglePage:
+      Number(getCurrentPage()) === totalPages || totalPages === 1,
+  };
 
   const handleAppliedFilter = (values: { skip: number; page: number }) => {
     appliedFilter({ skip: values.skip });
@@ -43,7 +50,8 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
   return (
     <div>
       <button
-        disabled={Number(getCurrentPage()) === 1}
+        disabled={isFirstPage}
+        className={`${isFirstPage ? "text-gray-600" : ""}`}
         onClick={() =>
           handleAppliedFilter({
             skip: (Number(getCurrentPage()) - 2) * (limit || 9),
@@ -58,11 +66,12 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
       {allPages.map((page, index) => (
         <button
           key={index}
-          className="p-4"
+          className={`p-3 hover:text-primary-purple hover:underline hover:underline-offset-4
+          focus:text-primary-purple focus:underline focus:underline-offset-4`}
           disabled={page === "..." ? true : false}
           onClick={() =>
             handleAppliedFilter({
-              skip: (Number(page) - 1) * (limit || 30),
+              skip: (Number(page) - 1) * (limit || 9),
               page: Number(page),
             })
           }
@@ -71,10 +80,11 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
         </button>
       ))}
       <button
-        disabled={Number(getCurrentPage()) === totalPages || totalPages === 1}
+        disabled={isLastPageOrSinglePage}
+        className={`${isLastPageOrSinglePage ? "text-gray-600" : ""}`}
         onClick={() =>
           handleAppliedFilter({
-            skip: (Number(getCurrentPage()) + 1) * (limit || 30),
+            skip: (Number(getCurrentPage()) + 1) * (limit || 9),
             page: Number(getCurrentPage()) + 1,
           })
         }

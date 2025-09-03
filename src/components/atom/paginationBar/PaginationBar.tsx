@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { Icon } from "../icon/Icon";
 import { Text } from "../text/Text";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
+import { usePagination } from "@/src/hooks/usePagination";
 import { useShopStore } from "@/src/store/shop-store";
-import { generatePagination } from "@/src/utils/generatePagination";
 
 type PaginationProps = {
   limit?: number;
@@ -15,6 +15,7 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
   const { appliedFilter, calcTotalPages } = useShopStore();
   const { updateParams, getCurrentPage } = useCategoryParams();
   const totalPages = calcTotalPages(total);
+  const currentPages = usePagination(Number(getCurrentPage()), totalPages);
 
   useEffect(() => {
     const pageFromURL = getCurrentPage();
@@ -45,8 +46,6 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const allPages = generatePagination(Number(getCurrentPage()), totalPages);
-
   return (
     <div className="flex justify-center py-10">
       <button
@@ -69,7 +68,7 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
           className="mr-4 block md:hidden"
         />
       </button>
-      {allPages.map((page, index) => (
+      {currentPages.map((page, index) => (
         <button
           key={index}
           className={`p-3 hover:text-primary-purple hover:underline hover:underline-offset-4

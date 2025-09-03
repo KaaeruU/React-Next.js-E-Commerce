@@ -85,7 +85,7 @@ export default function Home() {
             )}
           </div>
           <Suspense fallback={<div>Loading...</div>}>
-            <div className="col-span-12 flex justify-center py-10">
+            <div className="col-span-12">
               <PaginationBar limit={limit} skip={skip} total={total ?? 0} />
             </div>
           </Suspense>

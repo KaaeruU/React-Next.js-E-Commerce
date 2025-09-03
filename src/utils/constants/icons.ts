@@ -11,6 +11,8 @@ const iconName = [
   "MenuQuit",
   "Arrow",
   "Logo",
+  "RightArrow",
+  "LeftArrow",
 ] as const;
 
 const iconsWeights = ["regular", "bold"] as const;

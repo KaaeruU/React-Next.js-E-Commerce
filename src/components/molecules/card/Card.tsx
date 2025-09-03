@@ -15,6 +15,7 @@ const Card = ({
   img,
   score,
   mountOfReview,
+  discount,
   className = "",
 }: CardProps) => {
   const [count, setCount] = useState(0);
@@ -24,7 +25,7 @@ const Card = ({
       className={`col-span-3 my-5 h-full w-full md:col-span-4 lg:col-span-3 ${className}`}
     >
       <div className="bg-white">
-        <div className="h-auto w-auto">
+        <div className="relative h-auto w-auto">
           <Image
             src={img}
             alt={"image of the product"}
@@ -32,9 +33,16 @@ const Card = ({
             height={155}
             quality={70}
           />
+          {discount && (
+            <div className="absolute left-0 top-5 z-10 rounded-br-lg bg-accent-yellow p-3">
+              <Text as={"span"} styledAs={"body-xs"} className="!font-bold">
+                In offerta -{discount}%
+              </Text>
+            </div>
+          )}
         </div>
         <div className="flex flex-col">
-          <div className="mx-4 border-b-2 border-gray-300/20">
+          <div className="mx-4 h-24 border-b-2 border-gray-300/20">
             <Heading as={"h3"} styledAs={"h4"} className="py-4">
               {title}
             </Heading>

@@ -15,7 +15,7 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
   const { appliedFilter, calcTotalPages } = useShopStore();
   const { updateParams, getCurrentPage } = useCategoryParams();
   const totalPages = calcTotalPages(total);
-  const currentPages = usePagination(Number(getCurrentPage()), totalPages);
+  const currentPages = usePagination(Number(getCurrentPage()), totalPages, 2);
 
   useEffect(() => {
     const pageFromURL = getCurrentPage();

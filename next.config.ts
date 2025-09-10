@@ -6,7 +6,12 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.dummyjson.com",
-        pathname: "/product-images/**",
+        pathname: "/product/images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "example.com",
+        pathname: "/**",
       },
     ],
   },

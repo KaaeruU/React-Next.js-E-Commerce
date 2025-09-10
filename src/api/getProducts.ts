@@ -5,28 +5,25 @@ export const getProducts = async ({
   category,
   sortBy,
   order,
-  limit: limitParam,
-  skip: skipParam,
+  limit,
+  skip,
 }: GetProductsParams): Promise<Products> => {
   try {
-    const response: Response = await fetch(
-      category
-        ? `${process.env.NEXT_PUBLIC_ROUTE_API}/products/category/${category}?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}${limitParam ? `&limit=${limitParam}` : ""}${skipParam ? `&skip=${skipParam}` : ""}`
-        : `${process.env.NEXT_PUBLIC_ROUTE_API}/products?${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}` : ""}${limitParam ? `&limit=${limitParam}` : ""}${skipParam ? `&skip=${skipParam}` : ""}`
-    );
+    const response: Response = await fetch(`
+      ${process.env.NEXT_PUBLIC_ROUTE_API}/products?${category ? `category=${category}&` : ""}${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}&` : ""}${limit ? `limit=${limit}&` : ""}${`skip=${skip}&`}`);
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
-    const {
+    const { products, total }: { products: Product[]; total: number } = data;
+
+    return {
       products,
       total,
-      skip,
-      limit,
-    }: { products: Product[]; total: number; skip: number; limit: number } =
-      data;
-    return { products, total, skip, limit };
+      skip: skip || 0, // <-- Usa il parametro passato
+      limit: limit || 10, // <-- Usa il parametro passato
+    };
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;

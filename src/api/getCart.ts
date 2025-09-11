@@ -1,4 +1,4 @@
-import { Cart } from "../types/cart.type";
+import { Cart } from "@/src/types/cart.type";
 
 export const getCart = async (userId: number): Promise<Cart> => {
   try {

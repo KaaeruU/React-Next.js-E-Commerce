@@ -10,7 +10,6 @@ export default function Home() {
   const { data: { items } = {}, error } = useGetCartQuery();
   console.log(error);
 
-  // ✅ Calcola il totale
   const total =
     items?.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;
 
@@ -31,7 +30,6 @@ export default function Home() {
           </Heading>
         </div>
 
-        {/* ✅ Lista prodotti */}
         <div className="col-span-4 my-4 flex flex-col bg-neutral-50 p-4 md:col-span-8 lg:col-span-7">
           <div className="flex justify-between border-b border-gray-200 pb-2 text-gray-400">
             <Text as={"p"} styledAs={"label"}>
@@ -62,7 +60,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* ✅ Sezione totale e acquisto - 1 colonna skip */}
         <div className="col-span-4 my-4 md:col-span-8 lg:col-span-4 lg:col-start-9">
           <div className="rounded-lg border border-gray-200 bg-white p-6">
             <Heading as={"h3"} styledAs={"h4"} className="mb-4">

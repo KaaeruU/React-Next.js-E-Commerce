@@ -1,0 +1,74 @@
+"use server";
+
+import z from "zod";
+import { revalidatePath } from "next/cache";
+
+const FormSchema = z.object({
+  productId: z.coerce.number(),
+  title: z.string(),
+  price: z.coerce.number(),
+  quantity: z.coerce.number(),
+});
+
+type FormState = {
+  success: boolean;
+  message: string;
+  error?: string;
+};
+
+export async function addCartItem(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  try {
+    const validatedFields = FormSchema.parse({
+      productId: formData.get("productId"),
+      title: formData.get("title"),
+      price: formData.get("price"),
+      quantity: formData.get("quantity"),
+    });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_ROUTE_API}/cart/1/items`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(validatedFields),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response
+        .json()
+        .catch(() => ({ error: "Unknown error" }));
+
+      return {
+        success: false,
+        message: "Errore nell'aggiunta al carrello",
+        error: errorData.error || "Unknown error",
+      };
+    }
+
+    revalidatePath("/cart");
+
+    return {
+      success: true,
+      message: "Prodotto aggiunto al carrello!",
+    };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        message: "Dati non validi",
+      };
+    }
+
+    return {
+      success: false,
+      message: "Errore nell'aggiunta al carrello",
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}

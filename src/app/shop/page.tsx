@@ -74,6 +74,7 @@ export default function Home() {
               }) => (
                 <Card
                   key={id}
+                  productId={id}
                   title={title}
                   price={price}
                   img={images[0] || ""}

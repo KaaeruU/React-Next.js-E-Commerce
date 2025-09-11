@@ -1,15 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useActionState, useRef, useState } from "react";
+import { useFormStatus } from "react-dom";
 import { CardProps } from "./card-type";
 import { Button } from "@/src/components/atom/buttons/Button";
 import CounterButton from "@/src/components/atom/counterButton/CounterButton";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Icon } from "@/src/components/atom/icon/Icon";
 import { Text } from "@/src/components/atom/text/Text";
+import { addCartItem } from "@/src/lib/actions/addCartItem";
 
 const Card = ({
+  productId,
   title,
   price,
   img,
@@ -19,6 +22,27 @@ const Card = ({
   className = "",
 }: CardProps) => {
   const [count, setCount] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [state, formAction] = useActionState(addCartItem, {
+    success: false,
+    message: "",
+  });
+
+  function SubmitButton({ isDisabled }: { isDisabled: boolean }) {
+    const { pending } = useFormStatus();
+
+    return (
+      <Button
+        type="submit"
+        label={pending ? "Aggiungendo..." : "Aggiungi al carrello"}
+        isDisabled={isDisabled || pending}
+        variant="secondary"
+        className="md:w-1/2 md:text-14 lg:px-0"
+      />
+    );
+  }
 
   return (
     <article
@@ -66,12 +90,19 @@ const Card = ({
           </div>
           <div className="flex flex-nowrap justify-between p-4">
             <CounterButton count={count} setCount={setCount} />
-            <Button
-              label="Aggiungi al carrello"
-              isDisabled={count ? false : true}
-              variant="secondary"
-              className="md:w-1/2 md:text-14 lg:px-0"
-            />
+
+            <form
+              ref={formRef}
+              method="POST"
+              action={formAction}
+              className="contents"
+            >
+              <input type="hidden" name="productId" value={productId} />
+              <input type="hidden" name="title" value={title} />
+              <input type="hidden" name="price" value={price} />
+              <input type="hidden" name="quantity" value={count} />
+              <SubmitButton isDisabled={count === 0} />
+            </form>
           </div>
         </div>
       </div>

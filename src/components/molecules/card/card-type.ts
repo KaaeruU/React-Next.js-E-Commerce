@@ -1,6 +1,7 @@
 import { ComponentProps } from "react";
 
 export interface CardProps extends ComponentProps<"article"> {
+  productId: number;
   title: string;
   price: number;
   img: string;

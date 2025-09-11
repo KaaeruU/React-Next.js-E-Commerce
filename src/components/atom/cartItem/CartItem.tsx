@@ -3,9 +3,11 @@ import { Icon } from "../icon/Icon";
 import { CartItemProps } from "./cartItem.type";
 import { Text } from "@/src/components/atom/text/Text";
 
-const CartItem = ({ title, price, quantity }: CartItemProps) => {
+const CartItem = ({ title, price, quantity, classname }: CartItemProps) => {
   return (
-    <div className="flex items-center justify-between gap-4 py-4">
+    <div
+      className={`flex items-center justify-between gap-4 py-4 ${classname}`}
+    >
       <Icon name={"Delete"} size={"24"} weight={"regular"} variant={"danger"} />
 
       <div className="max-w-48 flex-1">

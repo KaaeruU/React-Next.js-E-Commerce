@@ -21,6 +21,7 @@ export async function addCartItem(
   formData: FormData
 ): Promise<FormState> {
   try {
+    const userId = 1;
     const validatedFields = FormSchema.parse({
       productId: formData.get("productId"),
       title: formData.get("title"),
@@ -51,7 +52,7 @@ export async function addCartItem(
       };
     }
 
-    revalidatePath("/cart");
+    revalidatePath(`/cart/${userId}`, "page");
 
     return {
       success: true,

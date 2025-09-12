@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 import { MobileMenu } from "../../atom/MobileMenu/MobileMenu";
 import { NavbarProps } from "./navbar-type";
@@ -10,9 +11,11 @@ import Menu from "@/src/components/atom/menu/Menu";
 import { useGlobalStore } from "@/src/store/global-store";
 import { useMeasure } from "@uidotdev/usehooks";
 
-const Navbar = ({ items = 0, className = "" }: NavbarProps) => {
+const Navbar = ({ cartItemsCount = 0, className = "" }: NavbarProps) => {
   const [ref, { height }] = useMeasure();
   const setNavHeight = useGlobalStore((state) => state.setNavHeight);
+  cartItemsCount = useGlobalStore((state) => state.cartItemsCount);
+
   useEffect(() => {
     if (height) {
       setNavHeight(height);
@@ -30,17 +33,19 @@ const Navbar = ({ items = 0, className = "" }: NavbarProps) => {
         <Logo />
       </div>
       <div className="flex w-1/3 items-center justify-end border-black">
-        <CartIcon items={items} />
+        <CartIcon items={cartItemsCount} />
 
         {/*TODO assegnare items allo stato dello shop*/}
 
         <div className="hidden justify-end border-black md:flex">
-          <Button
-            label={"Accedi"}
-            isDisabled={false}
-            variant={"accent"}
-            className="mx-10"
-          />
+          <Link href={"/shop"} className="contents">
+            <Button
+              label={"Accedi"}
+              isDisabled={false}
+              variant={"accent"}
+              className="mx-10"
+            />
+          </Link>
         </div>
         <div className="flex justify-end border-black px-5 md:hidden">
           <Menu />

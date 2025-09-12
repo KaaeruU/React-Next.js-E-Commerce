@@ -1,14 +1,22 @@
 "use client";
 
+import { useEffect } from "react";
 import { useGetCartQuery } from "@/src/api/queries/cart-query";
 import { Button } from "@/src/components/atom/buttons/Button";
 import CartItem from "@/src/components/atom/cartItem/CartItem";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Text } from "@/src/components/atom/text/Text";
+import { useGlobalStore } from "@/src/store/global-store";
 
 export default function Home() {
-  const { data: { items } = {}, error } = useGetCartQuery();
-  console.log(error);
+  const { data: { items } = {} } = useGetCartQuery();
+  const setCartItemsCount = useGlobalStore((state) => state.setCartItemsCount);
+
+  useEffect(() => {
+    const count = items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+
+    setCartItemsCount(count);
+  }, [items, setCartItemsCount]);
 
   const total =
     items?.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;

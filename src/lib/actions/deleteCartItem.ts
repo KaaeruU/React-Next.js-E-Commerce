@@ -1,12 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-
-type FormState = {
-  success: boolean;
-  message: string;
-  error?: string;
-};
+import { FormState } from "@/src/types/formState";
 
 export async function removeCartItem(
   prevState: FormState,

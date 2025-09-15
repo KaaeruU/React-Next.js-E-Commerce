@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useGetCartQuery } from "@/src/api/queries/cart-query";
 import { Button } from "@/src/components/atom/buttons/Button";
+import { CartCleaner } from "@/src/components/atom/cartCleaner/CartCleaner";
 import CartItem from "@/src/components/atom/cartItem/CartItem";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Text } from "@/src/components/atom/text/Text";
@@ -66,6 +67,9 @@ export default function Home() {
               classname="border-b border-gray-200 pb-2"
             />
           ))}
+          <div>
+            <CartCleaner userId={1} itemsLenght={items?.length} />
+          </div>
         </div>
 
         <div className="col-span-4 my-4 md:col-span-8 lg:col-span-4 lg:col-start-9">

@@ -2,6 +2,7 @@
 
 import z from "zod";
 import { revalidatePath } from "next/cache";
+import { FormState } from "@/src/types/formState";
 
 const FormSchema = z.object({
   productId: z.coerce.number(),
@@ -9,12 +10,6 @@ const FormSchema = z.object({
   price: z.coerce.number(),
   quantity: z.coerce.number(),
 });
-
-type FormState = {
-  success: boolean;
-  message: string;
-  error?: string;
-};
 
 export async function addCartItem(
   prevState: FormState,

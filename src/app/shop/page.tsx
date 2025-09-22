@@ -21,11 +21,13 @@ export default function Home() {
       category: selectedFilters.category || "",
       sortBy: selectedFilters.sortBy || "",
       order: selectedFilters.order || "",
+      page: selectedFilters.page?.toString() || "1",
     },
   });
 
   const {
     initialData: { products, total, limit, skip },
+    categories,
   } = useProducts();
 
   const handleFilterUpdate = (filters: {
@@ -33,12 +35,14 @@ export default function Home() {
     sortBy?: string;
     order?: string;
     limit?: string;
+    page?: string;
   }) => {
     const formData = new FormData();
     if (filters.category) formData.append("category", filters.category);
     if (filters.sortBy) formData.append("sortBy", filters.sortBy);
     if (filters.order) formData.append("order", filters.order);
     if (filters.limit) formData.append("limit", filters.limit);
+    if (filters.page) formData.append("page", filters.page);
 
     formAction(formData);
   };
@@ -62,6 +66,7 @@ export default function Home() {
               <CardFilter
                 form={productFilterForm}
                 onFilterChange={handleFilterUpdate}
+                categories={categories || []}
               />
             </Suspense>
           </div>

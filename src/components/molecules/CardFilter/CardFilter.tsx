@@ -3,14 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "../Form";
-import { useGetCategoriesQuery } from "@/src/api/queries/categories-query";
 import { Icon } from "@/src/components/atom//icon/Icon";
-import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { filterItemVariants } from "@/src/lib/motion/variants";
 import { useShopStore } from "@/src/store/shop-store";
+import { Categories } from "@/src/types/categories-type";
 import * as motion from "motion/react-client";
 
 interface CardFilterProps {
@@ -19,6 +18,8 @@ interface CardFilterProps {
       category: string;
       sortBy: string;
       order: string;
+      page: string;
+      skip?: number;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
@@ -26,6 +27,8 @@ interface CardFilterProps {
       category: string;
       sortBy: string;
       order: string;
+      page: string;
+      skip?: number;
     }
   >;
   onFilterChange?: (filters: {
@@ -33,10 +36,15 @@ interface CardFilterProps {
     sortBy?: string;
     order?: string;
     limit?: string;
-  }) => void; // Add this prop
+  }) => void;
+  categories?: Categories[];
 }
 
-export const CardFilter = ({ form, onFilterChange }: CardFilterProps) => {
+export const CardFilter = ({
+  form,
+  onFilterChange,
+  categories,
+}: CardFilterProps) => {
   const { appliedFilter } = useShopStore();
   const { updateParams, getCurrentCategory } = useCategoryParams();
 
@@ -47,10 +55,8 @@ export const CardFilter = ({ form, onFilterChange }: CardFilterProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appliedFilter, getCurrentCategory]);
 
-  const { data, error } = useGetCategoriesQuery();
-
   const formFieldMemo = useMemo(() => {
-    return data?.map(({ slug }) => (
+    return categories?.map(({ slug }) => (
       <FormField
         key={slug}
         control={form.control}
@@ -82,14 +88,14 @@ export const CardFilter = ({ form, onFilterChange }: CardFilterProps) => {
         )}
       />
     ));
-  }, [data, form.control]);
+  }, [categories, form.control]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleAppliedFilter = (values: {
     category: string;
     skip?: number;
-    page?: number;
+    page?: string;
   }) => {
     if (onFilterChange) {
       onFilterChange(values);
@@ -102,6 +108,8 @@ export const CardFilter = ({ form, onFilterChange }: CardFilterProps) => {
       skip: "0",
       page: "1",
     });
+    form.setValue("page", "1");
+    form.setValue("skip", 0);
     setIsFilterOpen(false);
 
     window?.scrollTo({ top: 0, behavior: "smooth" });
@@ -111,9 +119,9 @@ export const CardFilter = ({ form, onFilterChange }: CardFilterProps) => {
     setIsFilterOpen(() => !isFilterOpen);
   };
 
-  if (error) {
+  /*   if (error) {
     return <ErrorHandler message={error.message} />;
-  }
+  } */
 
   return (
     <div className="col-span-12 flex flex-col bg-neutral-50 px-6 py-4 lg:col-span-3 lg:px-5 lg:py-8">

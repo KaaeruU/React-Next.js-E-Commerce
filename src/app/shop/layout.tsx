@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { getCategories } from "@/src/api/getCategories";
 import { getProducts } from "@/src/api/getProducts";
 import { ProductsProvider } from "@/src/components/atom/productsProvider/ProductsProvider";
 import Providers from "@/src/components/atom/providers/Providers";
@@ -28,20 +29,26 @@ export default async function ShopLayout({
   const page = Number(cookieStore.get("current_page")?.value) || 1;
   const skip = (page - 1) * limit;
 
-  const initialProducts = await getProducts({
-    category,
-    sortBy,
-    order,
-    limit,
-    skip,
-  });
+  const [initialProducts, categories] = await Promise.all([
+    getProducts({
+      category,
+      sortBy,
+      order,
+      limit,
+      skip,
+    }),
+    getCategories(),
+  ]);
 
   return (
     <html lang="en">
       <body>
         <Providers>
           <Navbar />
-          <ProductsProvider initialData={initialProducts}>
+          <ProductsProvider
+            initialData={initialProducts}
+            categories={categories}
+          >
             {children}
           </ProductsProvider>
         </Providers>

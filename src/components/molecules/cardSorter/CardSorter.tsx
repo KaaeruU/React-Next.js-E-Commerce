@@ -16,6 +16,7 @@ interface CardSorterProps {
       category: string;
       sortBy: string;
       order: string;
+      page: string;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
@@ -23,6 +24,7 @@ interface CardSorterProps {
       category: string;
       sortBy: string;
       order: string;
+      page: string;
     }
   >;
   numberOfProducts?: number;

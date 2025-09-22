@@ -1,3 +1,5 @@
+"use client";
+
 import { useActionState, useEffect } from "react";
 import { Icon } from "../icon/Icon";
 import { Text } from "../text/Text";
@@ -10,11 +12,13 @@ type PaginationProps = {
   limit?: number;
   skip?: number;
   total: number;
+  onFilterChange?: (filters: { page?: string; skip?: string }) => void;
 };
 
-const PaginationBar = ({ limit, total }: PaginationProps) => {
+const PaginationBar = ({ limit, total, onFilterChange }: PaginationProps) => {
   const { appliedFilter, calcTotalPages } = useShopStore();
-  const { getCurrentPage } = useCategoryParams();
+  const { getCurrentPage, updateParams, getCurrentCategory } =
+    useCategoryParams();
   const [, formAction] = useActionState(updateFiltersAction, null);
 
   const totalPages = calcTotalPages(total);
@@ -29,7 +33,20 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
       page: pageNumber,
       skip: skipValue,
     });
+    updateParams({ page: pageNumber.toString(), skip: skipValue.toString() });
   }, []);
+
+  const handlePageChange = (page: number, skip: number) => {
+    if (onFilterChange) {
+      onFilterChange({
+        page: page.toString(),
+        skip: skip.toString(),
+      });
+    }
+
+    appliedFilter({ page, skip: skip });
+    updateParams({ page: page.toString(), skip: skip.toString() });
+  };
 
   const { isFirstPage, isLastPageOrSinglePage } = {
     isFirstPage: Number(getCurrentPage()) === 1,
@@ -51,10 +68,25 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
   }) => {
     const skip = (page - 1) * (limit || 9);
 
+    const handleFormSubmit = (formData: FormData) => {
+      const pageValue = Number(formData.get("page"));
+      const skipValue = Number(formData.get("skip"));
+      const currentCategory = getCurrentCategory();
+
+      if (currentCategory) formData.append("category", currentCategory);
+      formData.append("page", pageValue.toString());
+      formData.append("skip", skipValue.toString());
+
+      handlePageChange(pageValue, skipValue);
+
+      formAction(formData);
+    };
+
     return (
-      <form action={formAction} className="contents">
+      <form action={handleFormSubmit} className="contents">
         <input type="hidden" name="page" value={page.toString()} />
         <input type="hidden" name="skip" value={skip.toString()} />
+
         <button type="submit" disabled={disabled} className={className}>
           {children}
         </button>

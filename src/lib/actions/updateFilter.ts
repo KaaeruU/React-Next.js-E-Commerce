@@ -21,15 +21,14 @@ export async function updateFiltersAction(
     cookieStore.set("preferred_sortBy", sortBy || "");
     cookieStore.set("preferred_order", order || "");
     if (limit) cookieStore.set("preferred_limit", limit);
-    if (page) cookieStore.set("current_page", page);
+    cookieStore.set("current_page", page || "1");
 
-    // client comp con mio hook dentro??
     const params = new URLSearchParams();
     if (category) params.set("category", category);
     if (sortBy) params.set("sortBy", sortBy);
     if (order) params.set("order", order);
     if (limit) params.set("limit", limit);
-    params.set("page", "1");
+    params.set("page", page || "1");
 
     redirect(`/shop?${params.toString()}`);
   } catch (error) {

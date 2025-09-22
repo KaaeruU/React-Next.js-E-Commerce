@@ -26,9 +26,19 @@ interface CardSorterProps {
     }
   >;
   numberOfProducts?: number;
+  onSortChange?: (filters: {
+    category?: string;
+    sortBy?: string;
+    order?: string;
+    limit?: string;
+  }) => void;
 }
 
-const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
+const CardSorter = ({
+  form,
+  numberOfProducts,
+  onSortChange,
+}: CardSorterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { appliedFilter } = useShopStore();
   const { updateParams, getCurrentSortBy, getCurrentOrder } =
@@ -48,6 +58,9 @@ const CardSorter = ({ form, numberOfProducts }: CardSorterProps) => {
   };
 
   const handleAppliedFilter = (values: { sortBy: string; order: string }) => {
+    if (onSortChange) {
+      onSortChange(values);
+    }
     appliedFilter({ sortBy: values.sortBy, order: values.order });
     updateParams({ sortBy: values.sortBy, order: values.order });
   };

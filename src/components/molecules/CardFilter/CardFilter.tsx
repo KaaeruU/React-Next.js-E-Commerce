@@ -28,9 +28,15 @@ interface CardFilterProps {
       order: string;
     }
   >;
+  onFilterChange?: (filters: {
+    category?: string;
+    sortBy?: string;
+    order?: string;
+    limit?: string;
+  }) => void; // Add this prop
 }
 
-export const CardFilter = ({ form }: CardFilterProps) => {
+export const CardFilter = ({ form, onFilterChange }: CardFilterProps) => {
   const { appliedFilter } = useShopStore();
   const { updateParams, getCurrentCategory } = useCategoryParams();
 
@@ -85,8 +91,10 @@ export const CardFilter = ({ form }: CardFilterProps) => {
     skip?: number;
     page?: number;
   }) => {
+    if (onFilterChange) {
+      onFilterChange(values);
+    }
     appliedFilter({ category: values.category, skip: 0, page: 1 });
-    setIsFilterOpen(false);
     updateParams({
       category: values.category,
       sortBy: "",
@@ -94,6 +102,8 @@ export const CardFilter = ({ form }: CardFilterProps) => {
       skip: "0",
       page: "1",
     });
+    setIsFilterOpen(false);
+
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 

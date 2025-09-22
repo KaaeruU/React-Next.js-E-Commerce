@@ -28,8 +28,8 @@ export const CartCleaner = ({
       <input type="hidden" name="userId" value={userId} />
       <Button
         type="submit"
-        variant={"default_accent"}
-        label={"Svuota il carello"}
+        variant="default_accent"
+        label="Svuota il carrello"
         isDisabled={itemsLenght === 0}
       ></Button>
     </form>

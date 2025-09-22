@@ -1,6 +1,6 @@
 import { Cart } from "@/src/types/cart.type";
 
-export const getCart = async (userId: number): Promise<Cart> => {
+export const getCart = async (userId: number = 1): Promise<Cart> => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_ROUTE_API}/cart/${userId}`

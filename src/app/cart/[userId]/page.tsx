@@ -1,26 +1,26 @@
 "use client";
 
 import { useEffect } from "react";
-import { useGetCartQuery } from "@/src/api/queries/cart-query";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { CartCleaner } from "@/src/components/atom/cartCleaner/CartCleaner";
 import CartItem from "@/src/components/atom/cartItem/CartItem";
+import { useCart } from "@/src/components/atom/cartProvider/CartProvider";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Text } from "@/src/components/atom/text/Text";
 import { useGlobalStore } from "@/src/store/global-store";
 
 export default function Home() {
-  const { data: { items } = {} } = useGetCartQuery();
   const setCartItemsCount = useGlobalStore((state) => state.setCartItemsCount);
-
+  const { cart } = useCart();
+  const products = cart?.items;
   useEffect(() => {
-    const count = items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+    const count = products?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
     setCartItemsCount(count);
-  }, [items, setCartItemsCount]);
+  }, [products, setCartItemsCount]);
 
   const total =
-    items?.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;
+    products?.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;
 
   return (
     <div className="pt-32">
@@ -60,7 +60,7 @@ export default function Home() {
               </Text>
             </div>
           </div>
-          {items?.map(({ productId, title, price, quantity }) => (
+          {products?.map(({ productId, title, price, quantity }) => (
             <CartItem
               key={productId}
               productId={productId}
@@ -71,7 +71,7 @@ export default function Home() {
             />
           ))}
           <div className="mt-6">
-            <CartCleaner userId={1} itemsLenght={items?.length} />
+            <CartCleaner userId={1} itemsLenght={products?.length} />
           </div>
         </div>
 
@@ -105,7 +105,7 @@ export default function Home() {
                 label="Procedi all'acquisto"
                 variant="default_accent"
                 className="w-full"
-                isDisabled={!items?.length}
+                isDisabled={!products?.length}
               />
             </div>
           </div>

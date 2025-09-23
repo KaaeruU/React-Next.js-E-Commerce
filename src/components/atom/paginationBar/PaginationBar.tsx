@@ -1,11 +1,11 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useEffect } from "react";
 import { Icon } from "../icon/Icon";
+import { PaginationForm } from "../paginationForm/PaginationForm";
 import { Text } from "../text/Text";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { usePagination } from "@/src/hooks/usePagination";
-import { updateFiltersAction } from "@/src/lib/actions/updateFilter";
 import { useShopStore } from "@/src/store/shop-store";
 
 type PaginationProps = {
@@ -15,11 +15,13 @@ type PaginationProps = {
   onFilterChange?: (filters: { page?: string; skip?: string }) => void;
 };
 
-const PaginationBar = ({ limit, total, onFilterChange }: PaginationProps) => {
+const PaginationBar = ({
+  limit = 9,
+  total,
+  onFilterChange,
+}: PaginationProps) => {
   const { appliedFilter, calcTotalPages } = useShopStore();
-  const { getCurrentPage, updateParams, getCurrentCategory } =
-    useCategoryParams();
-  const [, formAction] = useActionState(updateFiltersAction, null);
+  const { getCurrentPage, updateParams } = useCategoryParams();
 
   const totalPages = calcTotalPages(total);
   const currentPages = usePagination(Number(getCurrentPage()), totalPages, 2);
@@ -27,13 +29,14 @@ const PaginationBar = ({ limit, total, onFilterChange }: PaginationProps) => {
   useEffect(() => {
     const pageFromURL = getCurrentPage();
     const pageNumber = Number(pageFromURL) || 1;
-    const skipValue = (pageNumber - 1) * (limit || 9);
+    const skipValue = (pageNumber - 1) * limit;
 
     appliedFilter({
       page: pageNumber,
       skip: skipValue,
     });
     updateParams({ page: pageNumber.toString(), skip: skipValue.toString() });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePageChange = (page: number, skip: number) => {
@@ -44,7 +47,7 @@ const PaginationBar = ({ limit, total, onFilterChange }: PaginationProps) => {
       });
     }
 
-    appliedFilter({ page, skip: skip });
+    appliedFilter({ page, skip });
     updateParams({ page: page.toString(), skip: skip.toString() });
   };
 
@@ -54,52 +57,14 @@ const PaginationBar = ({ limit, total, onFilterChange }: PaginationProps) => {
       Number(getCurrentPage()) === totalPages || totalPages === 1,
   };
 
-  // exportare
-  const PaginationForm = ({
-    page,
-    children,
-    disabled = false,
-    className = "",
-  }: {
-    page: number;
-    children: React.ReactNode;
-    disabled?: boolean;
-    className?: string;
-  }) => {
-    const skip = (page - 1) * (limit || 9);
-
-    const handleFormSubmit = (formData: FormData) => {
-      const pageValue = Number(formData.get("page"));
-      const skipValue = Number(formData.get("skip"));
-      const currentCategory = getCurrentCategory();
-
-      if (currentCategory) formData.append("category", currentCategory);
-      formData.append("page", pageValue.toString());
-      formData.append("skip", skipValue.toString());
-
-      handlePageChange(pageValue, skipValue);
-
-      formAction(formData);
-    };
-
-    return (
-      <form action={handleFormSubmit} className="contents">
-        <input type="hidden" name="page" value={page.toString()} />
-        <input type="hidden" name="skip" value={skip.toString()} />
-
-        <button type="submit" disabled={disabled} className={className}>
-          {children}
-        </button>
-      </form>
-    );
-  };
-
   return (
     <div className="flex justify-center py-10">
       <PaginationForm
         page={Number(getCurrentPage()) - 1}
         disabled={isFirstPage}
         className={isFirstPage ? "text-gray-600" : ""}
+        limit={limit}
+        onPageChange={handlePageChange}
       >
         <Text as={"p"} styledAs={"label"} className="hidden md:block">
           Precedente
@@ -120,6 +85,8 @@ const PaginationBar = ({ limit, total, onFilterChange }: PaginationProps) => {
           className={`p-3 hover:text-primary-purple hover:underline hover:underline-offset-4
           focus:text-primary-purple focus:underline focus:underline-offset-4 ${
           page === "..." ? "cursor-default" : "" }`}
+          limit={limit}
+          onPageChange={handlePageChange}
         >
           {page}
         </PaginationForm>
@@ -129,6 +96,8 @@ const PaginationBar = ({ limit, total, onFilterChange }: PaginationProps) => {
         page={Number(getCurrentPage()) + 1}
         disabled={isLastPageOrSinglePage}
         className={isLastPageOrSinglePage ? "text-gray-600" : ""}
+        limit={limit}
+        onPageChange={handlePageChange}
       >
         <Text as={"p"} styledAs={"label"} className="hidden md:block">
           Avanti

@@ -48,8 +48,7 @@ export default function Home() {
     formAction(formData);
   };
 
-  if (formState?.success === false)
-    return <ErrorHandler message={formState.message} />;
+  if (formState?.success) return <ErrorHandler message={formState.message} />;
 
   return (
     <>

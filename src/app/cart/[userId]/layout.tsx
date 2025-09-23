@@ -23,11 +23,5 @@ export default async function CartLayout({
 
   const cart = await getCart(Number(userId));
 
-  return (
-    <html lang="en">
-      <body>
-        <CartProvider initialCart={cart}>{children}</CartProvider>
-      </body>
-    </html>
-  );
+  return <CartProvider initialCart={cart}>{children}</CartProvider>;
 }

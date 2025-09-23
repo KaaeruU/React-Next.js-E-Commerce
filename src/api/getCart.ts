@@ -1,12 +1,14 @@
+import { cache } from "react";
 import { Cart } from "@/src/types/cart.type";
 
-export const getCart = async (userId: number = 1): Promise<Cart> => {
+const getCachedCart = async (userId: number = 1): Promise<Cart> => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_ROUTE_API}/cart/${userId}`,
       {
         next: {
           tags: [`cart-${userId}`, "cart"],
+          revalidate: 300,
         },
       }
     );
@@ -23,3 +25,5 @@ export const getCart = async (userId: number = 1): Promise<Cart> => {
     throw error;
   }
 };
+
+export const getCart = cache(getCachedCart);

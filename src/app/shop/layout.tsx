@@ -39,12 +39,8 @@ export default async function ShopLayout({
   ]);
 
   return (
-    <html lang="en">
-      <body>
-        <ProductsProvider initialData={initialProducts} categories={categories}>
-          {children}
-        </ProductsProvider>
-      </body>
-    </html>
+    <ProductsProvider initialData={initialProducts} categories={categories}>
+      {children}
+    </ProductsProvider>
   );
 }

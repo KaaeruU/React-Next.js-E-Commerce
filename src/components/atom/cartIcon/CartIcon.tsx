@@ -3,8 +3,6 @@ import { Icon } from "../icon/Icon";
 import { CartIconProps } from "./cartIcon-type";
 
 const CartIcon = ({ items, className }: CartIconProps) => {
-  console.log(items, "cart icon");
-
   return (
     <div
       className={`relative flex h-full items-center justify-end border-x border-black px-6 md:px-8

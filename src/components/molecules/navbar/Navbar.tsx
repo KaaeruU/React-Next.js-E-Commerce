@@ -14,7 +14,6 @@ import { useMeasure } from "@uidotdev/usehooks";
 const Navbar = ({ cartItemsCount, className = "" }: NavbarProps) => {
   const [ref, { height }] = useMeasure();
   const setNavHeight = useGlobalStore((state) => state.setNavHeight);
-  console.log(cartItemsCount, "navbar");
 
   useEffect(() => {
     if (height) {

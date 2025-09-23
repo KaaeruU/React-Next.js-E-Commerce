@@ -2,6 +2,7 @@
 
 import { Suspense, useActionState } from "react";
 import { useForm } from "react-hook-form";
+import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import PaginationBar from "@/src/components/atom/paginationBar/PaginationBar";
 import { useProducts } from "@/src/components/atom/productsProvider/ProductsProvider";
 import { CardFilter } from "@/src/components/molecules/CardFilter/CardFilter";
@@ -13,7 +14,7 @@ import { useShopStore } from "@/src/store/shop-store";
 export default function Home() {
   const { selectedFilters } = useShopStore();
 
-  const [, formAction] = useActionState(updateFiltersAction, null);
+  const [formState, formAction] = useActionState(updateFiltersAction, null);
 
   const productFilterForm = useForm({
     mode: "onChange",
@@ -47,6 +48,9 @@ export default function Home() {
     formAction(formData);
   };
 
+  if (formState?.success === false)
+    return <ErrorHandler message={formState.message} />;
+
   return (
     <>
       <div className="relative min-h-screen overflow-hidden pt-28">
@@ -67,6 +71,7 @@ export default function Home() {
                 form={productFilterForm}
                 onFilterChange={handleFilterUpdate}
                 categories={categories || []}
+                isFormDisabled={formState?.success}
               />
             </Suspense>
           </div>

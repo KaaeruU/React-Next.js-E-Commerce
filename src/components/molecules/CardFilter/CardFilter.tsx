@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "../Form";
 import { Icon } from "@/src/components/atom//icon/Icon";
+import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
@@ -38,12 +39,14 @@ interface CardFilterProps {
     limit?: string;
   }) => void;
   categories?: Categories[];
+  isFormDisabled?: boolean;
 }
 
 export const CardFilter = ({
   form,
   onFilterChange,
   categories,
+  isFormDisabled = false,
 }: CardFilterProps) => {
   const { appliedFilter } = useShopStore();
   const { updateParams, getCurrentCategory } = useCategoryParams();
@@ -119,9 +122,9 @@ export const CardFilter = ({
     setIsFilterOpen(() => !isFilterOpen);
   };
 
-  /*   if (error) {
-    return <ErrorHandler message={error.message} />;
-  } */
+  if (isFormDisabled) {
+    return <ErrorHandler message={"Error loading categories"} />;
+  }
 
   return (
     <div className="col-span-12 flex flex-col bg-neutral-50 px-6 py-4 lg:col-span-3 lg:px-5 lg:py-8">

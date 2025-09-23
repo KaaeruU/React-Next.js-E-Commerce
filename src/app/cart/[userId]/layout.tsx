@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getCart } from "@/src/api/getCart";
 import { CartProvider } from "@/src/components/atom/cartProvider/CartProvider";
-import Providers from "@/src/components/atom/providers/Providers";
-import Navbar from "@/src/components/molecules/navbar/Navbar";
 import "@/src/styles/global.css";
 
 export const metadata: Metadata = {
@@ -28,10 +26,7 @@ export default async function CartLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <Navbar />
-          <CartProvider initialCart={cart}>{children}</CartProvider>
-        </Providers>
+        <CartProvider initialCart={cart}>{children}</CartProvider>
       </body>
     </html>
   );

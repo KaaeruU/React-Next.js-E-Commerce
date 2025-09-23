@@ -1,7 +1,7 @@
 "use server";
 
 import z from "zod";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { FormState } from "@/src/types/formState";
 
 const FormSchema = z.object({
@@ -48,6 +48,7 @@ export async function addCartItem(
     }
 
     revalidatePath(`/cart/${userId}`, "page");
+    revalidateTag(`cart-${userId}`);
 
     return {
       success: true,

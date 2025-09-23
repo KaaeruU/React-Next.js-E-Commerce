@@ -3,8 +3,6 @@ import { cookies } from "next/headers";
 import { getCategories } from "@/src/api/getCategories";
 import { getProducts } from "@/src/api/getProducts";
 import { ProductsProvider } from "@/src/components/atom/productsProvider/ProductsProvider";
-import Providers from "@/src/components/atom/providers/Providers";
-import Navbar from "@/src/components/molecules/navbar/Navbar";
 import "@/src/styles/global.css";
 
 export const metadata: Metadata = {
@@ -43,15 +41,9 @@ export default async function ShopLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <Navbar />
-          <ProductsProvider
-            initialData={initialProducts}
-            categories={categories}
-          >
-            {children}
-          </ProductsProvider>
-        </Providers>
+        <ProductsProvider initialData={initialProducts} categories={categories}>
+          {children}
+        </ProductsProvider>
       </body>
     </html>
   );

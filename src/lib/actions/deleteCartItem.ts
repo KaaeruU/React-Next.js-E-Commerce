@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { FormState } from "@/src/types/formState";
 
 export async function removeCartItem(
@@ -33,7 +33,8 @@ export async function removeCartItem(
       };
     }
 
-    revalidatePath("/cart");
+    revalidatePath(`/cart/${userId}`, "page");
+    revalidateTag(`cart-${userId}`);
 
     return {
       success: true,

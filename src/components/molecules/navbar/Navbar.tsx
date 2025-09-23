@@ -11,10 +11,10 @@ import Menu from "@/src/components/atom/menu/Menu";
 import { useGlobalStore } from "@/src/store/global-store";
 import { useMeasure } from "@uidotdev/usehooks";
 
-const Navbar = ({ cartItemsCount = 0, className = "" }: NavbarProps) => {
+const Navbar = ({ cartItemsCount, className = "" }: NavbarProps) => {
   const [ref, { height }] = useMeasure();
   const setNavHeight = useGlobalStore((state) => state.setNavHeight);
-  cartItemsCount = useGlobalStore((state) => state.cartItemsCount);
+  console.log(cartItemsCount, "navbar");
 
   useEffect(() => {
     if (height) {
@@ -33,7 +33,7 @@ const Navbar = ({ cartItemsCount = 0, className = "" }: NavbarProps) => {
         <Logo />
       </div>
       <div className="flex w-1/3 items-center justify-end border-black">
-        <CartIcon items={cartItemsCount} />
+        <CartIcon items={cartItemsCount || 0} />
 
         {/*TODO assegnare items allo stato dello shop*/}
 

@@ -23,12 +23,12 @@ export default async function RootLayout({
   const userId = cookieStore.get("user_id")?.value || "1";
 
   const { items } = await getCart(Number(userId));
-  const count = items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+  const itemsCount = items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
   return (
     <html lang="en">
       <body>
-        <Navbar cartItemsCount={count || 0} />
+        <Navbar cartItemsCount={itemsCount} />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -4,6 +4,7 @@ import { getCategories } from "@/src/api/getCategories";
 import { getProducts } from "@/src/api/getProducts";
 import { ProductsProvider } from "@/src/components/atom/productsProvider/ProductsProvider";
 import "@/src/styles/global.css";
+import { getFiltersFromCookie } from "@/src/utils/getFiltersFromCoockie";
 
 export const metadata: Metadata = {
   title: {
@@ -19,13 +20,9 @@ export default async function ShopLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = await cookies();
-
-  const category = cookieStore.get("preferred_category")?.value || "";
-  const sortBy = cookieStore.get("preferred_sortBy")?.value || "";
-  const order = cookieStore.get("preferred_order")?.value || "";
-  const limit = Number(cookieStore.get("preferred_limit")?.value) || 10;
-  const page = Number(cookieStore.get("current_page")?.value) || 1;
-  const skip = (page - 1) * limit;
+  const filtersString = cookieStore.get("shop_filters")?.value;
+  const { category, sortBy, order, limit, skip } =
+    getFiltersFromCookie(filtersString);
 
   const [initialProducts, categories] = await Promise.all([
     getProducts({

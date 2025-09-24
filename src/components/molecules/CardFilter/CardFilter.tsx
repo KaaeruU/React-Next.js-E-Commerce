@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { CategoryCheckBox } from "../../atom/categoryCheckBox/CategoryCheckBox";
 import { Form, FormControl, FormField, FormItem } from "../Form";
 import { CardFilterProps } from "./cardFilter.type";
 import { Icon } from "@/src/components/atom//icon/Icon";
@@ -37,25 +38,7 @@ export const CardFilter = ({
         render={({ field: { value, onChange } }) => (
           <FormItem className="contents">
             <FormControl className="contents">
-              <label
-                className="flex cursor-pointer items-center pb-3 pl-1"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    onChange(value === slug ? "" : slug);
-                  }
-                }}
-              >
-                <input
-                  type="checkbox"
-                  name="category"
-                  className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
-                    checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
-                  checked={value === slug}
-                  onChange={() => onChange(value === slug ? "" : slug)}
-                />
-                <span className="capitalize">{slug}</span>
-              </label>
+              <CategoryCheckBox slug={slug} value={value} onChange={onChange} />
             </FormControl>
           </FormItem>
         )}

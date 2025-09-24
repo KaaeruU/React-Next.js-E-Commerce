@@ -34,8 +34,6 @@ const Navbar = ({ cartItemsCount, className = "" }: NavbarProps) => {
       <div className="flex w-1/3 items-center justify-end border-black">
         <CartIcon items={cartItemsCount || 0} />
 
-        {/*TODO assegnare items allo stato dello shop*/}
-
         <div className="hidden justify-end border-black md:flex">
           <Link href={"/shop"} className="contents">
             <Button

@@ -7,7 +7,7 @@ export const getCategories = async (): Promise<Categories[]> => {
       {
         next: {
           tags: ["categories"],
-          revalidate: 10,
+          revalidate: 300,
         },
       }
     );

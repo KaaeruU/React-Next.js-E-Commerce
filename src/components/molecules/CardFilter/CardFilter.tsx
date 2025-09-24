@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { UseFormReturn } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "../Form";
+import { CardFilterProps } from "./cardFilter.type";
 import { Icon } from "@/src/components/atom//icon/Icon";
 import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import { Button } from "@/src/components/atom/buttons/Button";
@@ -10,37 +10,7 @@ import { Heading } from "@/src/components/atom/heading/Heading";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { filterItemVariants } from "@/src/lib/motion/variants";
 import { useShopStore } from "@/src/store/shop-store";
-import { Categories } from "@/src/types/categories-type";
 import * as motion from "motion/react-client";
-
-interface CardFilterProps {
-  form: UseFormReturn<
-    {
-      category: string;
-      sortBy: string;
-      order: string;
-      page: string;
-      skip?: number;
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    any,
-    {
-      category: string;
-      sortBy: string;
-      order: string;
-      page: string;
-      skip?: number;
-    }
-  >;
-  onFilterChange?: (filters: {
-    category?: string;
-    sortBy?: string;
-    order?: string;
-    limit?: string;
-  }) => void;
-  categories?: Categories[];
-  isFormDisabled?: boolean;
-}
 
 export const CardFilter = ({
   form,

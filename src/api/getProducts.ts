@@ -16,7 +16,7 @@ export const getProducts = async ({
       {
         next: {
           tags: ["products", category ? `products-${category}` : "products"],
-          revalidate: 10,
+          revalidate: 300,
         },
       }
     );

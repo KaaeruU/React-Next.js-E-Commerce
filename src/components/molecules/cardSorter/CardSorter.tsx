@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { UseFormReturn } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "../Form";
+import { CardSorterProps } from "./cardSorter.type";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Icon } from "@/src/components/atom/icon/Icon";
@@ -9,32 +9,6 @@ import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { filterItemVariants } from "@/src/lib/motion/variants";
 import { useShopStore } from "@/src/store/shop-store";
 import * as motion from "motion/react-client";
-
-interface CardSorterProps {
-  form: UseFormReturn<
-    {
-      category: string;
-      sortBy: string;
-      order: string;
-      page: string;
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    any,
-    {
-      category: string;
-      sortBy: string;
-      order: string;
-      page: string;
-    }
-  >;
-  numberOfProducts?: number;
-  onSortChange?: (filters: {
-    category?: string;
-    sortBy?: string;
-    order?: string;
-    limit?: string;
-  }) => void;
-}
 
 const CardSorter = ({
   form,

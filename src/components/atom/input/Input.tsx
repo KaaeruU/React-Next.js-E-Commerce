@@ -16,13 +16,19 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       variant = "default",
       onChange,
       value,
+      type,
       ...props
     },
     ref
   ) => {
     const [internalValue, setInternalValue] = useState(value || "");
+    const [showPassword, setShowPassword] = useState(false);
     const inputRef = useRef(value || "");
-    const { error } = useFormField(); //parlarne con michele
+    const { error } = useFormField();
+
+    // Check if this is a password input
+    const isPasswordInput = type === "password";
+    const inputType = isPasswordInput && showPassword ? "text" : type;
 
     useEffect(() => {
       if (value !== undefined) {
@@ -43,6 +49,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       setInternalValue(inputRef.current);
     };
 
+    const handleIconClick = () => {
+      if (isPasswordInput) {
+        setShowPassword(!showPassword);
+      }
+    };
+
     return (
       <>
         <div
@@ -55,6 +67,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         >
           <input
             ref={ref}
+            type={inputType}
             value={internalValue}
             onChange={handleChange}
             placeholder={placeholder}
@@ -70,17 +83,30 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             })}
             {...props}
           />
-          {icon && (
-            <Icon
-              name={icon}
-              size="24"
-              weight="regular"
+          {(icon || isPasswordInput) && (
+            <button
+              type="button"
+              onClick={handleIconClick}
               className={cn(
-                variant === "default" && "absolute right-3 top-3.5",
+                "absolute z-10 flex items-center justify-center",
+                variant === "default" && "right-3 top-3.5",
                 variant === "search" &&
-                  "absolute right-0 top-[10px] md:top-4 lg:top-3"
+                  "absolute right-0 top-[10px] md:top-4 lg:top-3",
+                isPasswordInput && showPassword && "opacity-50",
+                isPasswordInput && "cursor-pointer hover:opacity-75",
+                !isPasswordInput && "cursor-default"
               )}
-            ></Icon>
+              disabled={!isPasswordInput}
+            >
+              <Icon
+                name={icon || "EyeOn"}
+                size="24"
+                weight="regular"
+                className={cn(
+                  isPasswordInput && showPassword && "line-through decoration-2"
+                )}
+              />
+            </button>
           )}
         </div>
       </>

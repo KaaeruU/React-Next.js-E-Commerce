@@ -10,7 +10,7 @@ export const DEFAULT_FILTERS: ShopFilters = {
   category: "",
   sortBy: "",
   order: "",
-  limit: 10,
+  limit: 9,
   skip: 0,
 };
 

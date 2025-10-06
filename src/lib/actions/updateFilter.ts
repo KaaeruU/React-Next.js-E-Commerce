@@ -23,7 +23,7 @@ export async function updateFiltersAction(
     const sortBy = formData.get("sortBy") as string;
     const order = formData.get("order") as string;
     const page = formData.get("page") as string;
-    const limit = Number(formData.get("limit")) || currentFilters.limit || 10;
+    const limit = Number(formData.get("limit")) || 9;
     const skip = (Number(page) - 1) * Number(limit);
 
     const updatedFilters: ShopFilters = {
@@ -38,6 +38,7 @@ export async function updateFiltersAction(
     cookieStore.set("shop_filters", filtersToString(updatedFilters), {
       httpOnly: true,
       path: "/",
+      maxAge: 300,
     });
 
     const params = new URLSearchParams();

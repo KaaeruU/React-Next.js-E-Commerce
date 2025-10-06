@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { CardProps } from "./card-type";
 import { Button } from "@/src/components/atom/buttons/Button";
@@ -10,8 +10,6 @@ import { Heading } from "@/src/components/atom/heading/Heading";
 import { Icon } from "@/src/components/atom/icon/Icon";
 import { Text } from "@/src/components/atom/text/Text";
 import { addCartItem } from "@/src/lib/actions/addCartItem";
-import { cartQueryKey } from "@/src/utils/constants/query-key";
-import { useQueryClient } from "@tanstack/react-query";
 
 const Card = ({
   productId,
@@ -31,14 +29,6 @@ const Card = ({
     success: false,
     message: "",
   });
-
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (state.success) {
-      queryClient.invalidateQueries({ queryKey: [cartQueryKey] });
-    }
-  }, [state.success, queryClient]);
 
   function SubmitButton({ isDisabled }: { isDisabled: boolean }) {
     const { pending } = useFormStatus();

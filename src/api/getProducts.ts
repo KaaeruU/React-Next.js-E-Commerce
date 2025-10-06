@@ -31,7 +31,7 @@ export const getProducts = async ({
       products,
       total,
       skip: skip || 0,
-      limit: limit || 10,
+      limit: limit || 9,
     };
   } catch (error) {
     console.error("Error fetching products:", error);

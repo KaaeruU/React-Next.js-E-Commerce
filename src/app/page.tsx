@@ -19,7 +19,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 function App() {
   const [isLogin, setIsLogin] = useState(true);
 
-  // Server actions with useActionState
   const [loginState, loginAction] = useActionState(login, null);
   const [signupState, signupAction] = useActionState(signup, null);
 
@@ -30,7 +29,6 @@ function App() {
     mode: "onChange",
   });
 
-  // Handle form submission with server actions
   const onSubmit = (data: FormValues) => {
     const formData = new FormData();
     formData.append("email", data.email);

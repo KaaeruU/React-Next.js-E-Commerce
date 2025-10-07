@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { UseFormReturn } from "react-hook-form";
+import { CategoryCheckBox } from "../../atom/categoryCheckBox/CategoryCheckBox";
 import { Form, FormControl, FormField, FormItem } from "../Form";
-import { useGetCategoriesQuery } from "@/src/api/queries/categories-query";
+import { CardFilterProps } from "./cardFilter.type";
 import { Icon } from "@/src/components/atom//icon/Icon";
 import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import { Button } from "@/src/components/atom/buttons/Button";
@@ -13,24 +13,12 @@ import { filterItemVariants } from "@/src/lib/motion/variants";
 import { useShopStore } from "@/src/store/shop-store";
 import * as motion from "motion/react-client";
 
-interface CardFilterProps {
-  form: UseFormReturn<
-    {
-      category: string;
-      sortBy: string;
-      order: string;
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    any,
-    {
-      category: string;
-      sortBy: string;
-      order: string;
-    }
-  >;
-}
-
-export const CardFilter = ({ form }: CardFilterProps) => {
+export const CardFilter = ({
+  form,
+  onFilterChange,
+  categories,
+  isFormDisabled = false,
+}: CardFilterProps) => {
   const { appliedFilter } = useShopStore();
   const { updateParams, getCurrentCategory } = useCategoryParams();
 
@@ -41,10 +29,8 @@ export const CardFilter = ({ form }: CardFilterProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appliedFilter, getCurrentCategory]);
 
-  const { data, error } = useGetCategoriesQuery();
-
   const formFieldMemo = useMemo(() => {
-    return data?.map(({ slug }) => (
+    return categories?.map(({ slug }) => (
       <FormField
         key={slug}
         control={form.control}
@@ -52,41 +38,25 @@ export const CardFilter = ({ form }: CardFilterProps) => {
         render={({ field: { value, onChange } }) => (
           <FormItem className="contents">
             <FormControl className="contents">
-              <label
-                className="flex cursor-pointer items-center pb-3 pl-1"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    onChange(value === slug ? "" : slug);
-                  }
-                }}
-              >
-                <input
-                  type="checkbox"
-                  name="category"
-                  className="mb-0 mr-3 h-5 w-5 appearance-none rounded-full border-2 border-gray-300
-                    checked:bg-purple-500 focus:ring-1 focus:ring-neutral-900 focus:ring-offset-1"
-                  checked={value === slug}
-                  onChange={() => onChange(value === slug ? "" : slug)}
-                />
-                <span className="capitalize">{slug}</span>
-              </label>
+              <CategoryCheckBox slug={slug} value={value} onChange={onChange} />
             </FormControl>
           </FormItem>
         )}
       />
     ));
-  }, [data, form.control]);
+  }, [categories, form.control]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleAppliedFilter = (values: {
     category: string;
     skip?: number;
-    page?: number;
+    page?: string;
   }) => {
+    if (onFilterChange) {
+      onFilterChange(values);
+    }
     appliedFilter({ category: values.category, skip: 0, page: 1 });
-    setIsFilterOpen(false);
     updateParams({
       category: values.category,
       sortBy: "",
@@ -94,6 +64,10 @@ export const CardFilter = ({ form }: CardFilterProps) => {
       skip: "0",
       page: "1",
     });
+    form.setValue("page", "1");
+    form.setValue("skip", 0);
+    setIsFilterOpen(false);
+
     window?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -101,8 +75,8 @@ export const CardFilter = ({ form }: CardFilterProps) => {
     setIsFilterOpen(() => !isFilterOpen);
   };
 
-  if (error) {
-    return <ErrorHandler message={error.message} />;
+  if (isFormDisabled) {
+    return <ErrorHandler message={"Error loading categories"} />;
   }
 
   return (

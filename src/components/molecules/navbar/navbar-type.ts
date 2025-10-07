@@ -1,4 +1,4 @@
 export type NavbarProps = {
   className?: string;
-  items?: number;
+  cartItemsCount?: number;
 };

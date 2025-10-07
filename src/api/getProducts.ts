@@ -9,8 +9,17 @@ export const getProducts = async ({
   skip,
 }: GetProductsParams): Promise<Products> => {
   try {
-    const response: Response = await fetch(`
-      ${process.env.NEXT_PUBLIC_ROUTE_API}/products?${category ? `category=${category}&` : ""}${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}&` : ""}${limit ? `limit=${limit}&` : ""}${`skip=${skip}&`}`);
+    const response: Response = await fetch(
+      `
+      ${process.env.NEXT_PUBLIC_ROUTE_API}/products?${category ? `category=${category}&` : ""}${sortBy ? `sortBy=${sortBy}&` : ""}${order ? `order=${order}&` : ""}${limit ? `limit=${limit}&` : ""}${`skip=${skip}&`}
+      `,
+      {
+        next: {
+          tags: ["products", category ? `products-${category}` : "products"],
+          revalidate: 300,
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -21,8 +30,8 @@ export const getProducts = async ({
     return {
       products,
       total,
-      skip: skip || 0, // <-- Usa il parametro passato
-      limit: limit || 10, // <-- Usa il parametro passato
+      skip: skip || 0,
+      limit: limit || 9,
     };
   } catch (error) {
     console.error("Error fetching products:", error);

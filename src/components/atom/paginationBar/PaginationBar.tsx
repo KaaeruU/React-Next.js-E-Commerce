@@ -1,5 +1,8 @@
+"use client";
+
 import { useEffect } from "react";
 import { Icon } from "../icon/Icon";
+import { PaginationForm } from "../paginationForm/PaginationForm";
 import { Text } from "../text/Text";
 import { useCategoryParams } from "@/src/hooks/useCategoryParams";
 import { usePagination } from "@/src/hooks/usePagination";
@@ -9,27 +12,44 @@ type PaginationProps = {
   limit?: number;
   skip?: number;
   total: number;
+  onFilterChange?: (filters: { page?: string; skip?: string }) => void;
 };
 
-const PaginationBar = ({ limit, total }: PaginationProps) => {
+const PaginationBar = ({
+  limit = 9,
+  total,
+  onFilterChange,
+}: PaginationProps) => {
   const { appliedFilter, calcTotalPages } = useShopStore();
-  const { updateParams, getCurrentPage } = useCategoryParams();
+  const { getCurrentPage, updateParams } = useCategoryParams();
+
   const totalPages = calcTotalPages(total);
   const currentPages = usePagination(Number(getCurrentPage()), totalPages, 2);
 
   useEffect(() => {
     const pageFromURL = getCurrentPage();
     const pageNumber = Number(pageFromURL) || 1;
-
-    // evitare il ricalcolo di skip ???
-    const skipValue = (pageNumber - 1) * (limit || 9);
+    const skipValue = (pageNumber - 1) * limit;
 
     appliedFilter({
       page: pageNumber,
       skip: skipValue,
     });
+    updateParams({ page: pageNumber.toString(), skip: skipValue.toString() });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handlePageChange = (page: number, skip: number) => {
+    if (onFilterChange) {
+      onFilterChange({
+        page: page.toString(),
+        skip: skip.toString(),
+      });
+    }
+
+    appliedFilter({ page, skip });
+    updateParams({ page: page.toString(), skip: skip.toString() });
+  };
 
   const { isFirstPage, isLastPageOrSinglePage } = {
     isFirstPage: Number(getCurrentPage()) === 1,
@@ -37,26 +57,14 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
       Number(getCurrentPage()) === totalPages || totalPages === 1,
   };
 
-  const handleAppliedFilter = (values: { skip: number; page: number }) => {
-    appliedFilter({ skip: values.skip });
-
-    updateParams({
-      page: String(values.page),
-    });
-    window?.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <div className="flex justify-center py-10">
-      <button
+      <PaginationForm
+        page={Number(getCurrentPage()) - 1}
         disabled={isFirstPage}
-        className={`${isFirstPage ? "text-gray-600" : ""}`}
-        onClick={() =>
-          handleAppliedFilter({
-            skip: (Number(getCurrentPage()) - 2) * (limit || 9),
-            page: Number(getCurrentPage()) - 1,
-          })
-        }
+        className={isFirstPage ? "text-gray-600" : ""}
+        limit={limit}
+        onPageChange={handlePageChange}
       >
         <Text as={"p"} styledAs={"label"} className="hidden md:block">
           Precedente
@@ -67,32 +75,29 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
           weight={"bold"}
           className="mr-4 block md:hidden"
         />
-      </button>
+      </PaginationForm>
+
       {currentPages.map((page, index) => (
-        <button
+        <PaginationForm
           key={index}
+          page={Number(page)}
+          disabled={page === "..."}
           className={`p-3 hover:text-primary-purple hover:underline hover:underline-offset-4
-          focus:text-primary-purple focus:underline focus:underline-offset-4`}
-          disabled={page === "..." ? true : false}
-          onClick={() =>
-            handleAppliedFilter({
-              skip: (Number(page) - 1) * (limit || 9),
-              page: Number(page),
-            })
-          }
+          focus:text-primary-purple focus:underline focus:underline-offset-4 ${
+          page === "..." ? "cursor-default" : "" }`}
+          limit={limit}
+          onPageChange={handlePageChange}
         >
           {page}
-        </button>
+        </PaginationForm>
       ))}
-      <button
+
+      <PaginationForm
+        page={Number(getCurrentPage()) + 1}
         disabled={isLastPageOrSinglePage}
-        className={`${isLastPageOrSinglePage ? "text-gray-600" : ""}`}
-        onClick={() =>
-          handleAppliedFilter({
-            skip: (Number(getCurrentPage()) + 1) * (limit || 9),
-            page: Number(getCurrentPage()) + 1,
-          })
-        }
+        className={isLastPageOrSinglePage ? "text-gray-600" : ""}
+        limit={limit}
+        onPageChange={handlePageChange}
       >
         <Text as={"p"} styledAs={"label"} className="hidden md:block">
           Avanti
@@ -103,7 +108,7 @@ const PaginationBar = ({ limit, total }: PaginationProps) => {
           weight={"bold"}
           className="ml-4 block md:hidden"
         />
-      </button>
+      </PaginationForm>
     </div>
   );
 };

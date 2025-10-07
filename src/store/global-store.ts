@@ -6,6 +6,8 @@ type GlobalStore = {
   setIsOpen: (open: boolean) => void;
   navHeight: number;
   setNavHeight: (height: number) => void;
+  cartItemsCount: number;
+  setCartItemsCount: (count: number) => void;
 };
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
@@ -14,4 +16,6 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
   setIsOpen: (open) => set({ isOpen: open }),
   navHeight: 67,
   setNavHeight: (height) => set({ navHeight: height }),
+  cartItemsCount: 0,
+  setCartItemsCount: (count) => set({ cartItemsCount: count }),
 }));

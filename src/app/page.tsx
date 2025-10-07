@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import type z from "zod";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState, useTransition } from "react";
@@ -15,6 +16,11 @@ import {
   FormItem,
 } from "@/src/components/molecules/Form";
 import { login, loginWithGoogle, signup } from "@/src/lib/actions/login";
+import {
+  fadeInUpVariants,
+  fadeVariants,
+  slideUpVariants,
+} from "@/src/lib/motion/variants";
 import { formSchema } from "@/src/utils/constants/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -68,21 +74,37 @@ function Login() {
             className="col-span-2 flex flex-col flex-wrap content-center md:col-span-6 md:col-start-3
               lg:col-span-5 lg:col-start-5 xl:min-w-[833px]"
           >
-            <Heading
-              as="h1"
-              styledAs="h1"
-              className="mb-2 lg:whitespace-nowrap"
-            >
-              {isLogin ? "Accedi al tuo " : "Crea il tuo "}
-              <span className="sm:inline md:pl-14 lg:p-0"> account</span>
-            </Heading>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isLogin ? "login" : "signup"}
+                variants={fadeInUpVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <Heading
+                  as="h1"
+                  styledAs="h1"
+                  className="mb-2 lg:whitespace-nowrap"
+                >
+                  {isLogin ? "Accedi al tuo " : "Crea il tuo "}
+                  <span className="sm:inline md:pl-14 lg:p-0"> account</span>
+                </Heading>
+              </motion.div>
+            </AnimatePresence>
           </div>
+
           <div
             className="col-span-2 flex flex-col md:col-span-6 md:col-start-2 lg:col-span-5
               lg:col-start-5"
           >
             {/* Google Login Button */}
-            <div className="mb-6">
+            <motion.div
+              className="mb-6"
+              variants={slideUpVariants}
+              initial="hidden"
+              animate="visible"
+            >
               <Button
                 type="button"
                 onClick={handleGoogleLogin}
@@ -91,7 +113,6 @@ function Login() {
                 isDisabled={isPending}
                 className="flex w-full items-center justify-center gap-2"
               />
-
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t border-gray-300" />
@@ -102,7 +123,7 @@ function Login() {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             <Form {...form}>
               <form
@@ -139,7 +160,6 @@ function Login() {
                     </FormItem>
                   )}
                 />
-
                 <Button
                   type="submit"
                   label={
@@ -152,33 +172,51 @@ function Login() {
                   isDisabled={isPending}
                 />
                 <div>
-                  <Button
-                    type="button"
-                    onClick={() => setIsLogin(!isLogin)}
-                    label={
-                      isLogin
-                        ? "Non hai un account? Registrati"
-                        : "Hai già un account? Login"
-                    }
-                    variant="primary"
-                    isDisabled={isPending}
-                  />
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={isLogin ? "login-submit" : "signup-submit"}
+                      variants={fadeVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                    >
+                      <Button
+                        type="button"
+                        onClick={() => setIsLogin(!isLogin)}
+                        label={
+                          isLogin
+                            ? "Non hai un account? Registrati"
+                            : "Hai già un account? Login"
+                        }
+                        variant="primary"
+                        isDisabled={isPending}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </form>
             </Form>
 
             {/* Show errors from server actions */}
             {(loginState?.error || signupState?.error) && (
-              <div className="mt-2 text-red-500">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-2 text-red-500"
+              >
                 Error: {loginState?.error || signupState?.error}
-              </div>
+              </motion.div>
             )}
 
             {/* Show success messages */}
             {signupState?.success && (
-              <div className="mt-2 text-green-500">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-2 text-green-500"
+              >
                 {signupState?.message || "Account created successfully!"}
-              </div>
+              </motion.div>
             )}
           </div>
         </div>

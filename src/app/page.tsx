@@ -4,6 +4,7 @@ import type z from "zod";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { Background } from "../components/atom/orbs/Orb";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Input } from "@/src/components/atom/input/Input";
@@ -14,7 +15,6 @@ import {
   FormItem,
 } from "@/src/components/molecules/Form";
 import { login, loginWithGoogle, signup } from "@/src/lib/actions/login";
-// Add loginWithGoogle
 import { formSchema } from "@/src/utils/constants/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -62,14 +62,19 @@ function Login() {
   return (
     <>
       <div className="flex min-h-screen items-center">
+        <Background />
         <div className="default-grid grid-container">
           <div
             className="col-span-2 flex flex-col flex-wrap content-center md:col-span-6 md:col-start-3
-              lg:col-span-5 lg:col-start-5"
+              lg:col-span-5 lg:col-start-5 xl:min-w-[833px]"
           >
-            <Heading as="h1" styledAs="h1" className="lg:whitespace-nowrap">
+            <Heading
+              as="h1"
+              styledAs="h1"
+              className="mb-2 lg:whitespace-nowrap"
+            >
               {isLogin ? "Accedi al tuo " : "Crea il tuo "}
-              <span className="pl-14 sm:inline lg:p-0"> account</span>
+              <span className="sm:inline md:pl-14 lg:p-0"> account</span>
             </Heading>
           </div>
           <div
@@ -82,18 +87,17 @@ function Login() {
                 type="button"
                 onClick={handleGoogleLogin}
                 label="Continue with Google"
-                variant="secondary"
+                variant="accent"
                 isDisabled={isPending}
                 className="flex w-full items-center justify-center gap-2"
               />
 
-              {/* Divider */}
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">
+                  <span className="px-2 pt-6 text-gray-500">
                     Or continue with email
                   </span>
                 </div>
@@ -147,18 +151,19 @@ function Login() {
                   }
                   isDisabled={isPending}
                 />
-
-                <Button
-                  type="button"
-                  onClick={() => setIsLogin(!isLogin)}
-                  label={
-                    isLogin
-                      ? "Non hai un account? Registrati"
-                      : "Hai già un account? Login"
-                  }
-                  variant="primary"
-                  isDisabled={isPending}
-                />
+                <div>
+                  <Button
+                    type="button"
+                    onClick={() => setIsLogin(!isLogin)}
+                    label={
+                      isLogin
+                        ? "Non hai un account? Registrati"
+                        : "Hai già un account? Login"
+                    }
+                    variant="primary"
+                    isDisabled={isPending}
+                  />
+                </div>
               </form>
             </Form>
 

@@ -23,7 +23,7 @@ export async function login(prevState: any, formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/shop");
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,6 +48,26 @@ export async function signup(prevState: any, formData: FormData) {
     success: true,
     message: "Check your email to confirm your account",
   };
+}
+
+export async function loginWithGoogle() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/callback`,
+    },
+  });
+
+  if (error) {
+    console.error("Google login error:", error);
+    redirect("/?error=google-login-failed");
+  }
+
+  if (data.url) {
+    redirect(data.url);
+  }
 }
 
 export async function logout() {

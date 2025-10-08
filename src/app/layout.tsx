@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { getCart } from "../api/getCart";
 import Providers from "@/src/components/atom/providers/Providers";
 import Navbar from "@/src/components/molecules/navbar/Navbar";
@@ -17,15 +18,41 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { items } = await getCart();
-  const itemsCount = items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+  try {
+    const cookieStore = await cookies();
 
-  return (
-    <html lang="en">
-      <body>
-        <Navbar cartItemsCount={itemsCount} />
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  );
+    // This handles both regular tokens
+    const allCookies = cookieStore.getAll();
+    const hasAuthToken = allCookies.some(
+      (cookie) =>
+        cookie.name.startsWith("sb-cijmnzjidhbknfhpensb-auth-token") ||
+        cookie.name.startsWith("sb-cijmnzjidhbknfhpensb-anon-token=")
+    );
+
+    const isUserLogged = hasAuthToken;
+
+    const { items } = await getCart();
+    const itemsCount =
+      items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+
+    return (
+      <html lang="en">
+        <body>
+          <Navbar cartItemsCount={itemsCount} isLoggedIn={isUserLogged} />
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    );
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    const itemsCount = 0;
+    return (
+      <html lang="en">
+        <body>
+          <Navbar cartItemsCount={itemsCount} isLoggedIn={false} />
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    );
+  }
 }

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { getCart } from "../api/getCart";
 import Providers from "@/src/components/atom/providers/Providers";
 import Navbar from "@/src/components/molecules/navbar/Navbar";
@@ -18,11 +17,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-
-  const userId = cookieStore.get("user_id")?.value || "1";
-
-  const { items } = await getCart(Number(userId));
+  const { items } = await getCart();
   const itemsCount = items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
   return (

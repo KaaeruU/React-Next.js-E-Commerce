@@ -1,26 +1,25 @@
+import { cache } from "react";
 import { Categories } from "../types/categories-type";
+import { createClient } from "@/src/utils/supabase/server";
 
-export const getCategories = async (): Promise<Categories[]> => {
+const getCachedCategories = async (): Promise<Categories[]> => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ROUTE_API}/categories`,
-      {
-        next: {
-          tags: ["categories"],
-          revalidate: 300,
-        },
-      }
-    );
+    const supabase = await createClient();
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
+    const { data, error } = await supabase
+      .from("categories")
+      .select("*")
+      .order("name");
+
+    if (error) {
+      throw new Error(`Supabase error: ${error.message}`);
     }
-    const responseData = await response.json();
 
-    const categories: Categories[] = responseData.data;
-    return categories;
+    return data || [];
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error("Error fetching categories:", error);
     throw error;
   }
 };
+
+export const getCategories = cache(getCachedCategories);

@@ -1,29 +1,48 @@
+import { redirect } from "next/navigation";
 import { cache } from "react";
 import { Cart } from "@/src/types/cart.type";
+import { createClient } from "@/src/utils/supabase/server";
 
-const getCachedCart = async (userId: number = 1): Promise<Cart> => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ROUTE_API}/cart/${userId}`,
-      {
-        next: {
-          tags: [`cart-${userId}`, "cart"],
-          revalidate: 300,
-        },
-      }
-    );
+const getCachedCart = async (): Promise<Cart> => {
+  const supabase = await createClient();
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
 
-    const responseData = await response.json();
-    const cart: Cart = responseData.data;
-    return cart;
-  } catch (error) {
-    console.error("Error fetching cart:", error);
-    throw error;
+  if (error || !user) {
+    redirect("/");
   }
+
+  const { data, error: cartError } = await supabase
+    .from("users")
+    .select("cart")
+    .eq("id", user.id)
+    .single();
+
+  if (cartError) {
+    console.error("Supabase error:", cartError);
+    return {
+      id: user.id,
+      userId: user.id,
+      items: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  return (
+    data?.cart || {
+      id: user.id,
+      userId: user.id,
+      items: [],
+      totalAmount: 0,
+      totalItems: 0,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
+  );
 };
 
 export const getCart = cache(getCachedCart);

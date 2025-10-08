@@ -8,7 +8,6 @@ const CartIcon = ({ items, className }: CartIconProps) => {
       className={`relative flex h-full items-center justify-end border-x border-black px-6 md:px-8
         ${className}`}
     >
-      {/* TODO cambaire con userId !!!!!!!!!!!!!! */}
       <Link href={"/cart/1"}>
         <Icon name="Union" size="24" weight="regular" />
       </Link>

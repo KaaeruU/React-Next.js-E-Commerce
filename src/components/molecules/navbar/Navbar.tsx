@@ -41,7 +41,12 @@ const Navbar = ({
         <div className="hidden justify-end border-black md:flex">
           {isLoggedIn ? (
             <>
-              <DropDownMenuButton />
+              <div
+                className="mx-3 flex items-center justify-center rounded-full border border-black
+                  bg-accent-yellow p-5 font-bold md:h-10 md:w-10 lg:h-full lg:w-full"
+              >
+                <DropDownMenuButton />
+              </div>
             </>
           ) : (
             <Link href="/" className="contents">

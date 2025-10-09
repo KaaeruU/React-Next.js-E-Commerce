@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
@@ -34,6 +35,12 @@ export async function updateSession(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     data: { user },
   } = await supabase.auth.getUser();
+
+  const isProtectedRoute = request.nextUrl.pathname.startsWith("/cart/1");
+
+  if (!user && isProtectedRoute) {
+    redirect("/");
+  }
 
   return supabaseResponse;
 }

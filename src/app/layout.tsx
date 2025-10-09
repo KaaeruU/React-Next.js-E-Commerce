@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getCart } from "../api/getCart";
-import Providers from "@/src/components/atom/providers/Providers";
 import Navbar from "@/src/components/molecules/navbar/Navbar";
 import "@/src/styles/global.css";
 
@@ -39,7 +38,7 @@ export default async function RootLayout({
       <html lang="en">
         <body>
           <Navbar cartItemsCount={itemsCount} isLoggedIn={isUserLogged} />
-          <Providers>{children}</Providers>
+          {children}
         </body>
       </html>
     );
@@ -50,7 +49,7 @@ export default async function RootLayout({
       <html lang="en">
         <body>
           <Navbar cartItemsCount={itemsCount} isLoggedIn={false} />
-          <Providers>{children}</Providers>
+          {children}
         </body>
       </html>
     );

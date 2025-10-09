@@ -81,6 +81,7 @@ function Login() {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
+                className="text-center"
               >
                 <Heading
                   as="h1"

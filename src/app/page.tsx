@@ -71,8 +71,8 @@ function Login() {
         <Background />
         <div className="default-grid grid-container">
           <div
-            className="col-span-2 flex flex-col flex-wrap content-center md:col-span-6 md:col-start-3
-              lg:col-span-5 lg:col-start-5 xl:min-w-[833px]"
+            className="col-span-2 flex flex-col flex-wrap content-center md:col-span-6 md:col-start-2
+              lg:col-span-5 lg:col-start-4 xl:col-start-4 xl:min-w-[833px]"
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -81,12 +81,12 @@ function Login() {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="text-center"
+                className="align-center flex justify-center text-center"
               >
                 <Heading
                   as="h1"
                   styledAs="h1"
-                  className="mb-2 lg:whitespace-nowrap"
+                  className="mb-2 md:text-wrap lg:whitespace-nowrap"
                 >
                   {isLogin ? "Accedi al tuo " : "Crea il tuo "}
                   <span className="sm:inline md:pl-14 lg:p-0"> account</span>
@@ -129,7 +129,7 @@ function Login() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="col-span-2 mt-4 grid space-y-4 bg-white p-5 md:col-span-6"
+                className="col-span-2 mt-4 grid bg-white p-5 md:col-span-6"
               >
                 <FormField
                   control={form.control}
@@ -172,29 +172,30 @@ function Login() {
                   }
                   isDisabled={isPending}
                 />
-                <div>
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={isLogin ? "login-submit" : "signup-submit"}
-                      variants={fadeVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                    >
-                      <Button
-                        type="button"
-                        onClick={() => setIsLogin(!isLogin)}
-                        label={
-                          isLogin
-                            ? "Non hai un account? Registrati"
-                            : "Hai già un account? Login"
-                        }
-                        variant="primary"
-                        isDisabled={isPending}
-                      />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
+
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={isLogin ? "login-submit" : "signup-submit"}
+                    variants={fadeVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    className="col-span-2 flex justify-center md:col-span-6 lg:col-span-4"
+                  >
+                    <Button
+                      type="button"
+                      onClick={() => setIsLogin(!isLogin)}
+                      label={
+                        isLogin
+                          ? "Non hai un account? Registrati"
+                          : "Hai già un account? Login"
+                      }
+                      variant="primary"
+                      isDisabled={isPending}
+                      className="mt-4"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </form>
             </Form>
 

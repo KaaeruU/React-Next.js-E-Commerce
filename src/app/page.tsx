@@ -23,8 +23,11 @@ import {
 } from "@/src/lib/motion/variants";
 import { formSchema } from "@/src/utils/constants/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useIsFirstRender } from "@uidotdev/usehooks";
 
 function Login() {
+  const isFirstRender = useIsFirstRender();
+
   const [isLogin, setIsLogin] = useState(true);
   const [isPending, handleLogIn] = useTransition();
 
@@ -74,11 +77,11 @@ function Login() {
             className="col-span-2 flex flex-col flex-wrap content-center md:col-span-6 md:col-start-2
               lg:col-span-5 lg:col-start-4 xl:col-start-4 xl:min-w-[833px]"
           >
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence mode="wait">
               <motion.div
                 key={isLogin ? "login" : "signup"}
                 variants={fadeInUpVariants}
-                initial="hidden"
+                initial={isFirstRender ? false : "hidden"}
                 animate="visible"
                 exit="exit"
                 className="align-center flex justify-center text-center"
@@ -103,7 +106,7 @@ function Login() {
             <motion.div
               className="mb-6"
               variants={slideUpVariants}
-              initial="hidden"
+              initial={isFirstRender ? false : "hidden"}
               animate="visible"
             >
               <Button
@@ -177,7 +180,7 @@ function Login() {
                   <motion.div
                     key={isLogin ? "login-submit" : "signup-submit"}
                     variants={fadeVariants}
-                    initial="hidden"
+                    initial={isFirstRender ? false : "hidden"}
                     animate="visible"
                     exit="exit"
                     className="col-span-2 flex justify-center md:col-span-6 lg:col-span-4"

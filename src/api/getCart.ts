@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { cache } from "react";
 import { Cart } from "@/src/types/cart.type";
 import { createClient } from "@/src/utils/supabase/server";
@@ -11,8 +10,10 @@ const getCachedCart = async (): Promise<Cart> => {
     error,
   } = await supabase.auth.getUser();
 
+  //BETTER HANDLE ERRORS
   if (error || !user) {
-    redirect("/");
+    console.error("Supabase auth error:", error);
+    return null as unknown as Cart;
   }
 
   const { data, error: cartError } = await supabase

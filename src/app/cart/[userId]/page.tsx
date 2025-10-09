@@ -71,7 +71,7 @@ export default function Home() {
             />
           ))}
           <div className="mt-6">
-            <CartCleaner userId={1} itemsLenght={products?.length} />
+            <CartCleaner itemsLenght={products?.length} />
           </div>
         </div>
 

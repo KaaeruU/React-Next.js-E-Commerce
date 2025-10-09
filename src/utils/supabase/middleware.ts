@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
@@ -32,14 +31,24 @@ export async function updateSession(request: NextRequest) {
 
   // Refresh session if expired
   const {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     data: { user },
   } = await supabase.auth.getUser();
 
   const isProtectedRoute = request.nextUrl.pathname.startsWith("/cart/1");
+  const isLoginPage = request.nextUrl.pathname === "/";
 
+  // No access to shop if not logged in
   if (!user && isProtectedRoute) {
-    redirect("/");
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
+  // Logo redirect to shop if logged in
+  if (user && isLoginPage) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/shop";
+    return NextResponse.redirect(url);
   }
 
   return supabaseResponse;

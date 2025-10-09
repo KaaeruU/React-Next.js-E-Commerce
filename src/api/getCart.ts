@@ -12,7 +12,6 @@ const getCachedCart = async (): Promise<Cart> => {
 
   //BETTER HANDLE ERRORS
   if (error || !user) {
-    console.error("Supabase auth error:", error);
     return null as unknown as Cart;
   }
 

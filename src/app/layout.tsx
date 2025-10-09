@@ -42,8 +42,7 @@ export default async function RootLayout({
         </body>
       </html>
     );
-  } catch (error) {
-    console.error("Error fetching cart:", error);
+  } catch {
     const itemsCount = 0;
     return (
       <html lang="en">

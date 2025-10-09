@@ -43,9 +43,12 @@ export async function removeCartItem(
     const currentCart: Cart = userData?.cart;
 
     // Remove item from cart
-    currentCart.items = currentCart.items.filter(
-      (item) => item.productId !== productId
-    );
+    currentCart.items = currentCart.items.filter((item) => {
+      if (item.productId === productId && item.quantity > 1) {
+        return item.quantity--;
+      }
+      return item.productId !== productId;
+    });
 
     // Update cart in database
     const { error: updateError } = await supabase

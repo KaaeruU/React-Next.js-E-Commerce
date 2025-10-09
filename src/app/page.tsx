@@ -74,7 +74,7 @@ function Login() {
             className="col-span-2 flex flex-col flex-wrap content-center md:col-span-6 md:col-start-2
               lg:col-span-5 lg:col-start-4 xl:col-start-4 xl:min-w-[833px]"
           >
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={isLogin ? "login" : "signup"}
                 variants={fadeInUpVariants}

@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import type z from "zod";
-import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { Background } from "../components/atom/orbs/Orb";
@@ -23,24 +22,19 @@ import {
 } from "@/src/lib/motion/variants";
 import { formSchema } from "@/src/utils/constants/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useIsFirstRender } from "@uidotdev/usehooks";
 
-function Login() {
-  const isFirstRender = useIsFirstRender();
-
+const Login = () => {
+  const [isRendered, setIsRendered] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [isPending, handleLogIn] = useTransition();
 
   const [loginState, loginAction] = useActionState(login, null);
   const [signupState, signupAction] = useActionState(signup, null);
 
-  const router = useRouter();
-
+  //check if client is rendered to avoid motion hidden animation on load
   useEffect(() => {
-    if (loginState?.success) {
-      router.push("/shop");
-    }
-  }, [loginState?.success, router]);
+    setIsRendered(true);
+  }, []);
 
   type FormValues = z.infer<typeof formSchema>;
   const form = useForm({
@@ -81,7 +75,7 @@ function Login() {
               <motion.div
                 key={isLogin ? "login" : "signup"}
                 variants={fadeInUpVariants}
-                initial={isFirstRender ? false : "hidden"}
+                initial={isRendered ? false : "hidden"}
                 animate="visible"
                 exit="exit"
                 className="align-center flex justify-center text-center"
@@ -106,7 +100,7 @@ function Login() {
             <motion.div
               className="mb-6"
               variants={slideUpVariants}
-              initial={isFirstRender ? false : "hidden"}
+              initial={isRendered ? false : "hidden"}
               animate="visible"
             >
               <Button
@@ -180,7 +174,7 @@ function Login() {
                   <motion.div
                     key={isLogin ? "login-submit" : "signup-submit"}
                     variants={fadeVariants}
-                    initial={isFirstRender ? false : "hidden"}
+                    initial={isRendered ? false : "hidden"}
                     animate="visible"
                     exit="exit"
                     className="col-span-2 flex justify-center md:col-span-6 lg:col-span-4"
@@ -228,6 +222,6 @@ function Login() {
       </div>
     </>
   );
-}
+};
 
 export default Login;

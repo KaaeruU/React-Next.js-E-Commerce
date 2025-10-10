@@ -9,4 +9,6 @@ export interface CardProps extends ComponentProps<"article"> {
   mountOfReview: number;
   className?: string;
   discount?: number;
+  images?: string[];
+  description?: string;
 }

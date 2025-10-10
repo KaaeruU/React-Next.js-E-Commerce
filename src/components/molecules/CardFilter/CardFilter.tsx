@@ -80,7 +80,10 @@ export const CardFilter = ({
   }
 
   return (
-    <div className="col-span-12 flex flex-col bg-neutral-50 px-6 py-4 lg:col-span-3 lg:px-5 lg:py-8">
+    <div
+      className="col-span-12 flex flex-col rounded-xl border border-black bg-neutral-50 px-6 py-4
+        lg:col-span-3 lg:px-5 lg:py-8"
+    >
       <div className="flex justify-between lg:mb-6">
         <Heading as={"h2"} styledAs={"h2"}>
           Filtra i PRODOTTI

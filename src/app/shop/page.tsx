@@ -88,6 +88,7 @@ export default function Home() {
                 rating,
                 reviews,
                 discountPercentage,
+                description,
               }) => (
                 <Card
                   key={id}
@@ -98,6 +99,8 @@ export default function Home() {
                   score={rating}
                   mountOfReview={reviews.length}
                   discount={discountPercentage}
+                  images={images}
+                  description={description}
                 />
               )
             )}

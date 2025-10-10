@@ -100,7 +100,10 @@ export const Star = (props: IconDetailedProps) => {
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...rest}>
       {weight === "regular" && (
         <path
-          fill="currentColor"
+          fill="#FFE234"
+          stroke="#000000"
+          strokeWidth="0.5"
+          strokeLinejoin="round"
           d="m8 .8 2.274 5.282L16 6.613l-4.32 3.795 1.264 5.61L8 13.082l-4.944 2.936 1.264-5.61L0 6.613l5.726-.53L8 .8Z"
         />
       )}

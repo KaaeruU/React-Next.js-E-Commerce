@@ -16,9 +16,6 @@ import {
 interface ModalProps {
   children?: React.ReactNode;
   productId: number;
-  productImages?: string[];
-  title?: string;
-  description?: string;
   isOpen: boolean;
   onClose: () => void;
 }

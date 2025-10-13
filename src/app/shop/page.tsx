@@ -5,6 +5,7 @@ import { Suspense, startTransition, useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { Modal } from "@/src/components/atom/modal/Modal";
 import PaginationBar from "@/src/components/atom/paginationBar/PaginationBar";
+import { PortalWrapper } from "@/src/components/atom/portalWrapper/PortalWrapper";
 import { useProducts } from "@/src/components/atom/productsProvider/ProductsProvider";
 import { CardFilter } from "@/src/components/molecules/CardFilter/CardFilter";
 import Card from "@/src/components/molecules/card/Card";
@@ -121,11 +122,13 @@ export default function Home() {
             )}
           </div>
           {selectedProductId && (
-            <Modal
-              productId={Number(selectedProductId)}
-              onClose={closeModal}
-              isOpen={!!selectedProductId}
-            />
+            <PortalWrapper wrapperId="modal-root">
+              <Modal
+                productId={Number(selectedProductId)}
+                onClose={closeModal}
+                isOpen={!!selectedProductId}
+              />
+            </PortalWrapper>
           )}
 
           <Suspense fallback={<div>Loading...</div>}>

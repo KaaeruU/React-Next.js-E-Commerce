@@ -3,7 +3,6 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, startTransition, useActionState } from "react";
 import { useForm } from "react-hook-form";
-import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
 import { Modal } from "@/src/components/atom/modal/Modal";
 import PaginationBar from "@/src/components/atom/paginationBar/PaginationBar";
 import { useProducts } from "@/src/components/atom/productsProvider/ProductsProvider";
@@ -16,7 +15,7 @@ import { useShopStore } from "@/src/store/shop-store";
 export default function Home() {
   const { selectedFilters } = useShopStore();
   const searchParams = useSearchParams();
-  const [formState, formAction] = useActionState(updateFiltersAction, null);
+  const [, formAction] = useActionState(updateFiltersAction, null);
   const router = useRouter();
 
   const productFilterForm = useForm({
@@ -50,10 +49,9 @@ export default function Home() {
 
     startTransition(() => {
       formAction(formData);
+      router.refresh();
     });
   };
-
-  if (formState?.success) return <ErrorHandler message={formState.message} />;
 
   const selectedProductId = searchParams.get("modalId");
 
@@ -89,7 +87,7 @@ export default function Home() {
                 form={productFilterForm}
                 onFilterChange={handleFilterUpdate}
                 categories={categories || []}
-                isFormDisabled={formState?.success}
+                isFormDisabled={!!categories}
               />
             </Suspense>
           </div>

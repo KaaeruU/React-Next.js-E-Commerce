@@ -75,7 +75,7 @@ export const CardFilter = ({
     setIsFilterOpen(() => !isFilterOpen);
   };
 
-  if (isFormDisabled) {
+  if (!isFormDisabled) {
     return <ErrorHandler message={"Error loading categories"} />;
   }
 

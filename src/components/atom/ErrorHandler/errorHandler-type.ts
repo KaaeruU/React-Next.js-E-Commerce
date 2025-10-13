@@ -1,5 +1,5 @@
 export type ErrorHandlerProps = {
-  message: string;
+  message?: string;
   cause?: unknown;
   stack?: string;
 };

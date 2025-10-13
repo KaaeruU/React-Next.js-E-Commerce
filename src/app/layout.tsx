@@ -20,7 +20,6 @@ export default async function RootLayout({
   try {
     const cookieStore = await cookies();
 
-    // This handles both regular tokens
     const allCookies = cookieStore.getAll();
     const hasAuthToken = allCookies.some(
       (cookie) =>
@@ -36,6 +35,7 @@ export default async function RootLayout({
 
     return (
       <html lang="en">
+        <head />
         <body>
           <Navbar cartItemsCount={itemsCount} isLoggedIn={isUserLogged} />
           {children}
@@ -46,6 +46,7 @@ export default async function RootLayout({
     const itemsCount = 0;
     return (
       <html lang="en">
+        <head />
         <body>
           <Navbar cartItemsCount={itemsCount} isLoggedIn={false} />
           {children}

@@ -18,9 +18,9 @@ export const PortalWrapper = ({
       newElement.setAttribute("id", wrapperId);
       document.body.appendChild(newElement);
       setContainer(newElement);
+    } else {
+      setContainer(element);
     }
-
-    setContainer(element);
   }, [wrapperId]);
 
   if (!container) return null;

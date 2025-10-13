@@ -1,8 +1,10 @@
 "use client";
 
-import { Suspense, useActionState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, startTransition, useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
+import { Modal } from "@/src/components/atom/modal/Modal";
 import PaginationBar from "@/src/components/atom/paginationBar/PaginationBar";
 import { useProducts } from "@/src/components/atom/productsProvider/ProductsProvider";
 import { CardFilter } from "@/src/components/molecules/CardFilter/CardFilter";
@@ -13,8 +15,9 @@ import { useShopStore } from "@/src/store/shop-store";
 
 export default function Home() {
   const { selectedFilters } = useShopStore();
-
+  const searchParams = useSearchParams();
   const [formState, formAction] = useActionState(updateFiltersAction, null);
+  const router = useRouter();
 
   const productFilterForm = useForm({
     mode: "onChange",
@@ -45,10 +48,26 @@ export default function Home() {
     if (filters.limit) formData.append("limit", filters.limit);
     if (filters.page) formData.append("page", filters.page);
 
-    formAction(formData);
+    startTransition(() => {
+      formAction(formData);
+    });
   };
 
   if (formState?.success) return <ErrorHandler message={formState.message} />;
+
+  const selectedProductId = searchParams.get("modalId");
+
+  const openModal = (productId: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("modalId", productId);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  const closeModal = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("modalId");
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <>
@@ -64,7 +83,7 @@ export default function Home() {
         </div>
 
         <div className="default-grid grid-container">
-          <div className="col-span-12 lg:col-span-3">
+          <div className="col-span-12 mt-4 lg:col-span-3">
             <Suspense fallback={<div>Loading...</div>}>
               <CardFilter
                 form={productFilterForm}
@@ -88,7 +107,6 @@ export default function Home() {
                 rating,
                 reviews,
                 discountPercentage,
-                description,
               }) => (
                 <Card
                   key={id}
@@ -99,12 +117,18 @@ export default function Home() {
                   score={rating}
                   mountOfReview={reviews.length}
                   discount={discountPercentage}
-                  images={images}
-                  description={description}
+                  onCardClick={() => openModal(id.toString())}
                 />
               )
             )}
           </div>
+          {selectedProductId && (
+            <Modal
+              productId={Number(selectedProductId)}
+              onClose={closeModal}
+              isOpen={!!selectedProductId}
+            />
+          )}
 
           <Suspense fallback={<div>Loading...</div>}>
             <div className="col-span-12">

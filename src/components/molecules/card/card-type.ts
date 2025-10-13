@@ -11,4 +11,5 @@ export interface CardProps extends ComponentProps<"article"> {
   discount?: number;
   images?: string[];
   description?: string;
+  onCardClick?: () => void;
 }

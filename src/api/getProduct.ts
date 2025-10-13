@@ -1,6 +1,5 @@
-"use server";
-
-import { createClient } from "@/src/utils/supabase/server";
+import { cache } from "react";
+import { createClient } from "@/src/utils/supabase/client";
 
 export interface ProductDetails {
   id: number;
@@ -9,7 +8,7 @@ export interface ProductDetails {
   images: string[];
 }
 
-export async function getProductDetails(
+export async function getCachedProduct(
   productId: number
 ): Promise<ProductDetails | null> {
   try {
@@ -31,9 +30,16 @@ export async function getProductDetails(
       return null;
     }
 
-    return data;
+    return {
+      id: data.id,
+      title: data.title,
+      description: data.description,
+      images: data.images || [],
+    };
   } catch (error) {
     console.error("Error fetching product details:", error);
     return null;
   }
 }
+
+export const getProductDetails = cache(getCachedProduct);

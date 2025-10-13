@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useActionState, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { Modal } from "../../atom/modal/Modal";
 import { CardProps } from "./card-type";
 import { Button } from "@/src/components/atom/buttons/Button";
 import CounterButton from "@/src/components/atom/counterButton/CounterButton";
@@ -20,8 +19,7 @@ const Card = ({
   score,
   mountOfReview,
   discount,
-  description,
-  images,
+  onCardClick,
   className = "",
 }: CardProps) => {
   const [count, setCount] = useState(0);
@@ -53,61 +51,54 @@ const Card = ({
         border-neutral-500 border-opacity-30 hover:shadow-lg`}
     >
       <div className="bg-white">
-        <Modal title={title} description={description} productImages={images}>
-          <div className="contents">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-b-xl">
-              <Image
-                src={img}
-                alt={"image of the product"}
-                className="object-cover"
-                fill
-                quality={70}
-              />
-              {discount && (
-                <div className="absolute left-0 top-5 z-10 rounded-br-lg bg-accent-yellow p-3">
-                  <Text as={"span"} styledAs={"body-xs"} className="!font-bold">
-                    In offerta -{discount}%
-                  </Text>
-                </div>
-              )}
+        <div className="contents cursor-pointer" onClick={onCardClick}>
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-b-xl">
+            <Image
+              src={img}
+              alt={"image of the product"}
+              className="object-cover"
+              fill
+              quality={70}
+            />
+            {discount && (
+              <div className="absolute left-0 top-5 z-10 rounded-br-lg bg-accent-yellow p-3">
+                <Text as={"span"} styledAs={"body-xs"} className="!font-bold">
+                  In offerta -{discount}%
+                </Text>
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col">
+            <div className="mx-4 flex h-24 items-center justify-start border-b-2 border-gray-300/20">
+              <Heading as={"h3"} styledAs={"h2"} className="py-4 !capitalize">
+                {title}
+              </Heading>
             </div>
 
-            <div className="flex flex-col">
-              <div className="mx-4 flex h-24 items-center justify-start border-b-2 border-gray-300/20">
-                <Heading as={"h3"} styledAs={"h2"} className="py-4 !capitalize">
-                  {title}
+            <div className="mx-4 pt-4">
+              <div className="pb-2">
+                <Heading as={"h4"} styledAs={"h4"}>
+                  {"$ " + price}
                 </Heading>
               </div>
-
-              <div className="mx-4 pt-4">
-                <div className="pb-2">
-                  <Heading as={"h4"} styledAs={"h4"}>
-                    {"$ " + price}
-                  </Heading>
-                </div>
-                <div className="flex justify-start text-gray-500">
-                  <Icon name={"Star"} size={"16"} weight={"regular"} />
-                  <Text as={"p"} styledAs={"body-xs"} className="pl-2">
-                    {score}
-                  </Text>
-                  <Text as={"p"} styledAs={"body-xs"} className="pl-1">
-                    {`(${mountOfReview} recensioni)`}
-                  </Text>
-                </div>
+              <div className="flex justify-start text-gray-500">
+                <Icon name={"Star"} size={"16"} weight={"regular"} />
+                <Text as={"p"} styledAs={"body-xs"} className="pl-2">
+                  {score}
+                </Text>
+                <Text as={"p"} styledAs={"body-xs"} className="pl-1">
+                  {`(${mountOfReview} recensioni)`}
+                </Text>
               </div>
             </div>
           </div>
-        </Modal>
+        </div>
         <div className="flex flex-col">
           <div className="flex flex-nowrap justify-between p-4">
             <CounterButton count={count} setCount={setCount} />
 
-            <form
-              ref={formRef}
-              method="POST"
-              action={formAction}
-              className="contents"
-            >
+            <form ref={formRef} action={formAction} className="contents">
               <input type="hidden" name="productId" value={productId} />
               <input type="hidden" name="title" value={title} />
               <input type="hidden" name="price" value={price} />

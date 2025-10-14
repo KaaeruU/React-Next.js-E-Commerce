@@ -28,15 +28,15 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   return (
     <div className="relative">
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex touch-pan-x select-none">
+        <div className="flex select-none">
           {slides.map((item, index) => (
             <div
-              className="relative min-w-0 flex-[0_0_100%] transform-gpu pl-4"
+              className="relative min-w-0 flex-[0_0_100%] transform-gpu"
               key={index}
             >
               <div className="relative aspect-square w-full">
                 <Image
-                  className="select-none object-cover"
+                  className="select-none rounded-2xl object-cover"
                   src={item}
                   alt="Product image"
                   fill

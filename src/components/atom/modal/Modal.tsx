@@ -53,39 +53,50 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="bg-neutral-buttonPrimary text-white">
+      <DialogContent className="rounded-xl bg-neutral-buttonPrimary text-white">
         <DialogHeader>
           <>
             <EmblaCarousel slides={product?.images || []} />
             <DialogTitle>
               <div className="contents">
                 <Heading as={"h3"} styledAs={"h2"}>
-                  {product?.title}
+                  {product?.title ? product.title : "Product Title"}
                 </Heading>
               </div>
             </DialogTitle>
             <DialogDescription>
               <div className="mb-4 mt-2 flex flex-wrap">
-                {product?.tags?.map((item) => (
-                  <button
-                    className="mr-2 inline-block rounded-full border border-black bg-neutral-background px-3
-                      py-1 text-black transition-colors duration-300 ease-in-out
-                      hover:bg-primary-orange"
-                    key={item}
-                  >
-                    <Text as={"span"} styledAs={"body-xs"}>
-                      {item}
-                    </Text>
-                  </button>
-                ))}
+                {product?.tags ? (
+                  product.tags.map((item) => (
+                    <button
+                      className="mr-2 inline-block rounded-full border border-black bg-neutral-background px-3
+                        py-1 text-black transition-colors duration-300 ease-in-out
+                        hover:bg-primary-orange"
+                      key={item}
+                    >
+                      <Text as={"span"} styledAs={"body-xs"}>
+                        {item}
+                      </Text>
+                    </button>
+                  ))
+                ) : (
+                  // skeletons
+                  <>
+                    <div className="mr-2 h-8 w-16 animate-pulse rounded-full bg-gray-300"></div>
+                    <div className="mr-2 h-8 w-20 animate-pulse rounded-full bg-gray-300"></div>
+                    <div className="mr-2 h-8 w-14 animate-pulse rounded-full bg-gray-300"></div>
+                  </>
+                )}
               </div>
               <Text as={"label"} styledAs={"body"} className="!mt-4">
-                {product?.description}
+                {product?.description || (
+                  <div className="h-20 w-full animate-pulse rounded bg-gray-300"></div>
+                )}
               </Text>
             </DialogDescription>
             <div className="!mt-10 flex items-center justify-around">
               <Heading as={"h5"} styledAs={"h2"}>
-                {"$ " + product?.price}
+                {product?.price ? "$ " + product?.price : "$"}
               </Heading>
               <form action={formAction} className="contents">
                 <input type="hidden" name="productId" value={productId} />
@@ -94,7 +105,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 <input type="hidden" name="quantity" value={1} />
                 <SubmitButton
                   isDisabled={false}
-                  className="bg-accent-yellow text-black hover:bg-primary-purple"
+                  className="rounded-full bg-accent-yellow text-black hover:bg-primary-purple"
                   aria-label="Add to cart"
                 />
               </form>

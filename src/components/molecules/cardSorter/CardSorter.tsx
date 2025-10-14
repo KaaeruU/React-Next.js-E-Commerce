@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CheckboxField } from "../../atom/checkbox/Checkbox";
 import { Form, FormControl, FormField, FormItem } from "../Form";
 import { CardSorterProps } from "./cardSorter.type";
 import { Button } from "@/src/components/atom/buttons/Button";
@@ -82,52 +83,16 @@ const CardSorter = ({
                     <FormItem className="contents">
                       <FormControl className="contents">
                         <div className="flex flex-col space-y-2">
-                          <label
-                            className="flex cursor-pointer items-center"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                field.onChange(
-                                  field.value === "title" ? "" : "title"
-                                );
-                              }
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              className="mr-2 h-4 w-4 accent-purple-500"
-                              checked={field.value === "title"}
-                              onChange={() =>
-                                field.onChange(
-                                  field.value === "title" ? "" : "title"
-                                )
-                              }
-                            />
-                            <span>Titolo</span>
-                          </label>
-                          <label
-                            className="flex cursor-pointer items-center"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                field.onChange(
-                                  field.value === "price" ? "" : "price"
-                                );
-                              }
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              className="mr-2 h-4 w-4 accent-purple-500"
-                              checked={field.value === "price"}
-                              onChange={() =>
-                                field.onChange(
-                                  field.value === "price" ? "" : "price"
-                                )
-                              }
-                            />
-                            <span>Prezzo</span>
-                          </label>
+                          <CheckboxField
+                            field={field}
+                            value="title"
+                            label="Titolo"
+                          />
+                          <CheckboxField
+                            field={field}
+                            value="price"
+                            label="Prezzo"
+                          />
                         </div>
                       </FormControl>
                     </FormItem>
@@ -140,52 +105,16 @@ const CardSorter = ({
                     <FormItem className="contents">
                       <FormControl className="contents">
                         <div className="flex flex-col space-y-2">
-                          <label
-                            className="flex cursor-pointer items-center"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                field.onChange(
-                                  field.value === "asc" ? "" : "asc"
-                                );
-                              }
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              className="mr-2 h-4 w-4 accent-purple-500"
-                              checked={field.value === "asc"}
-                              onChange={() =>
-                                field.onChange(
-                                  field.value === "asc" ? "" : "asc"
-                                )
-                              }
-                            />
-                            <span>Crescente</span>
-                          </label>
-                          <label
-                            className="flex cursor-pointer items-center"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                field.onChange(
-                                  field.value === "desc" ? "" : "desc"
-                                );
-                              }
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              className="mr-2 h-4 w-4 accent-purple-500"
-                              checked={field.value === "desc"}
-                              onChange={() =>
-                                field.onChange(
-                                  field.value === "desc" ? "" : "desc"
-                                )
-                              }
-                            />
-                            <span>Decrescente</span>
-                          </label>
+                          <CheckboxField
+                            field={field}
+                            value="asc"
+                            label="Crescente"
+                          />
+                          <CheckboxField
+                            field={field}
+                            value="desc"
+                            label="Decrescente"
+                          />
                         </div>
                       </FormControl>
                     </FormItem>

@@ -57,6 +57,7 @@ export default function Home() {
 
     startTransition(() => {
       formAction(formData);
+
       router.refresh();
     });
   };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Suspense, startTransition, useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { Modal } from "@/src/components/atom/modal/Modal";
@@ -10,14 +10,20 @@ import { useProducts } from "@/src/components/atom/productsProvider/ProductsProv
 import { CardFilter } from "@/src/components/molecules/CardFilter/CardFilter";
 import Card from "@/src/components/molecules/card/Card";
 import CardSorter from "@/src/components/molecules/cardSorter/CardSorter";
+import { useModal } from "@/src/hooks/useModal";
 import { updateFiltersAction } from "@/src/lib/actions/updateFilter";
 import { useShopStore } from "@/src/store/shop-store";
 
 export default function Home() {
   const { selectedFilters } = useShopStore();
-  const searchParams = useSearchParams();
   const [, formAction] = useActionState(updateFiltersAction, null);
   const router = useRouter();
+  const {
+    selectedId: selectedProductId,
+    openModal,
+    closeModal,
+    isOpen,
+  } = useModal("modalId");
 
   const productFilterForm = useForm({
     mode: "onChange",
@@ -52,20 +58,6 @@ export default function Home() {
       formAction(formData);
       router.refresh();
     });
-  };
-
-  const selectedProductId = searchParams.get("modalId");
-
-  const openModal = (productId: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("modalId", productId);
-    router.push(`?${params.toString()}`, { scroll: false });
-  };
-
-  const closeModal = () => {
-    const params = new URLSearchParams(searchParams);
-    params.delete("modalId");
-    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   return (
@@ -126,7 +118,7 @@ export default function Home() {
               <Modal
                 productId={Number(selectedProductId)}
                 onClose={closeModal}
-                isOpen={!!selectedProductId}
+                isOpen={isOpen}
               />
             </PortalWrapper>
           )}

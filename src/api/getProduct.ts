@@ -7,6 +7,7 @@ export interface ProductDetails {
   description: string;
   images: string[];
   price: number;
+  tags?: string[];
 }
 
 export async function getCachedProduct(
@@ -17,7 +18,7 @@ export async function getCachedProduct(
 
     const { data, error } = await supabase
       .from("products")
-      .select("id, title, price, description, images")
+      .select("id, title, price, description, tags, images")
       .eq("id", productId)
       .single();
 
@@ -37,6 +38,7 @@ export async function getCachedProduct(
       description: data.description,
       images: data.images || [],
       price: data.price,
+      tags: data.tags || [],
     };
   } catch (error) {
     console.error("Error fetching product details:", error);

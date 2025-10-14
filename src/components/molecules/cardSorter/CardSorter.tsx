@@ -26,6 +26,7 @@ const CardSorter = ({
     appliedFilter({ sortBy: sortByFromUrl, order: orderFromUrl });
 
     form.setValue("order", orderFromUrl);
+    form.setValue("sortBy", sortByFromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCurrentOrder, getCurrentSortBy]);
 
@@ -39,24 +40,22 @@ const CardSorter = ({
     }
     appliedFilter({ sortBy: values.sortBy, order: values.order });
     updateParams({ sortBy: values.sortBy, order: values.order });
+
+    setIsFilterOpen(false);
   };
 
   return (
     <div
-      className="lg:mt:0 col-span-2 my-6 flex cursor-pointer flex-col items-center md:col-span-8
-        md:flex-row md:justify-between lg:col-span-9 lg:mb-6"
-      onClick={() => toggleFilter()}
+      className="lg:mt:0 col-span-2 my-6 flex flex-col items-center md:col-span-8 md:flex-row
+        md:justify-between lg:col-span-9 lg:mb-6"
     >
-      <Heading
-        as={"h2"}
-        styledAs={"h2"}
-        className="cursor-pointer whitespace-nowrap pr-2"
-      >
+      <Heading as={"h2"} styledAs={"h2"} className="whitespace-nowrap pr-2">
         {numberOfProducts} PRODOTTI presenti
       </Heading>
       <div
-        className="mt-5 w-full justify-center border-2 border-black bg-neutral-50 p-4 md:mt-0
-          md:w-1/3 md:px-4 md:py-2"
+        className="mt-5 w-full cursor-pointer justify-center border-2 border-black bg-neutral-50
+          p-4 md:mt-0 md:w-1/3 md:px-4 md:py-2"
+        onClick={() => toggleFilter()}
       >
         <Text as={"label"} styledAs={"body"}>
           Filtra per:...

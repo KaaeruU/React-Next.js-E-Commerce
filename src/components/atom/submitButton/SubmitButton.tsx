@@ -1,13 +1,13 @@
 import { useFormStatus } from "react-dom";
 import { Button } from "@/src/components/atom/buttons/Button";
 
-export const SubmitButton = ({
-  isDisabled,
-  className,
-}: {
+interface SubmitButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isDisabled: boolean;
   className?: string;
-}) => {
+}
+
+export const SubmitButton = ({ isDisabled, className }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
 
   return (

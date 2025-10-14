@@ -54,7 +54,7 @@ const DialogContent = React.forwardRef<
     >
       {children}
       <DialogPrimitive.Close
-        tabIndex={-1}
+        tabIndex={-2}
         className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent
           data-[state=open]:text-muted-foreground absolute right-1 top-1 rounded-sm
           opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2

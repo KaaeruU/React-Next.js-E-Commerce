@@ -48,9 +48,10 @@ export default function Home() {
     page?: string;
   }) => {
     const formData = new FormData();
-    if (filters.category) formData.append("category", filters.category);
-    if (filters.sortBy) formData.append("sortBy", filters.sortBy);
-    if (filters.order) formData.append("order", filters.order);
+    if (filters.category !== undefined)
+      formData.append("category", filters.category);
+    if (filters.sortBy !== undefined) formData.append("sortBy", filters.sortBy);
+    if (filters.order !== undefined) formData.append("order", filters.order);
     if (filters.limit) formData.append("limit", filters.limit);
     if (filters.page) formData.append("page", filters.page);
 

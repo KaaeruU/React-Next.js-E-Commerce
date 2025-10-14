@@ -65,21 +65,40 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
               </div>
             </DialogTitle>
             <DialogDescription>
+              <div className="mb-4 mt-2 flex flex-wrap">
+                {product?.tags?.map((item) => (
+                  <button
+                    className="mr-2 inline-block rounded-full border border-black bg-neutral-background px-3
+                      py-1 text-black transition-colors duration-300 ease-in-out
+                      hover:bg-primary-orange"
+                    key={item}
+                  >
+                    <Text as={"span"} styledAs={"body-xs"}>
+                      {item}
+                    </Text>
+                  </button>
+                ))}
+              </div>
               <Text as={"label"} styledAs={"body"} className="!mt-4">
                 {product?.description}
               </Text>
             </DialogDescription>
-
-            <form action={formAction} className="contents">
-              <input type="hidden" name="productId" value={productId} />
-              <input type="hidden" name="title" value={product?.title} />
-              <input type="hidden" name="price" value={product?.price} />
-              <input type="hidden" name="quantity" value={1} />
-              <SubmitButton
-                isDisabled={false}
-                className="bg-accent-yellow text-black"
-              />
-            </form>
+            <div className="!mt-10 flex items-center justify-around">
+              <Heading as={"h5"} styledAs={"h2"}>
+                {"$ " + product?.price}
+              </Heading>
+              <form action={formAction} className="contents">
+                <input type="hidden" name="productId" value={productId} />
+                <input type="hidden" name="title" value={product?.title} />
+                <input type="hidden" name="price" value={product?.price} />
+                <input type="hidden" name="quantity" value={1} />
+                <SubmitButton
+                  isDisabled={false}
+                  className="bg-accent-yellow text-black hover:bg-primary-purple"
+                  aria-label="Add to cart"
+                />
+              </form>
+            </div>
           </>
         </DialogHeader>
       </DialogContent>

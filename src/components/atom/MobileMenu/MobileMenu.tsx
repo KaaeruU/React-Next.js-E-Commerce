@@ -1,6 +1,5 @@
 "use client";
 
-// filepath: [MobileMenu.tsx](http://_vscodecontentref_/2)
 import MenuItem from "../menuItem/MenuItem";
 import { BodyScrollLocker } from "@/src/components/atom/bodyScrollLocker/BodyScrollLocker";
 import MenuLogin from "@/src/components/atom/menuLogin/MenuLogin";

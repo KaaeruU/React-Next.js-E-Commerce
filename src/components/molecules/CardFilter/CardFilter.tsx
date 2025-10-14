@@ -66,6 +66,7 @@ export const CardFilter = ({
     });
     form.setValue("page", "1");
     form.setValue("skip", 0);
+
     setIsFilterOpen(false);
 
     window?.scrollTo({ top: 0, behavior: "smooth" });

@@ -1,6 +1,5 @@
 import { ControllerRenderProps } from "react-hook-form";
 
-// Create: src/components/molecules/cardSorter/CheckboxField.tsx
 interface CheckboxFieldProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   field: ControllerRenderProps<any, any>;

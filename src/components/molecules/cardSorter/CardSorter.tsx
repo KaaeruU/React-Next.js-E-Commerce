@@ -53,17 +53,19 @@ const CardSorter = ({
       <Heading as={"h2"} styledAs={"h2"} className="whitespace-nowrap pr-2">
         {numberOfProducts} PRODOTTI presenti
       </Heading>
+
       <div
         className="mt-5 w-full cursor-pointer justify-center border-2 border-black bg-neutral-50
           p-4 md:mt-0 md:w-1/3 md:px-4 md:py-2"
-        onClick={() => toggleFilter()}
       >
-        <Text as={"label"} styledAs={"body"}>
-          Filtra per:...
-        </Text>
-        <button aria-label="sortlist">
-          <Icon name={"Arrow"} size={"14"} weight={"bold"} />
-        </button>
+        <div className="contents" onClick={() => toggleFilter()}>
+          <Text as={"label"} styledAs={"body"}>
+            Filtra per:...
+          </Text>
+          <button aria-label="sortlist">
+            <Icon name={"Arrow"} size={"14"} weight={"bold"} />
+          </button>
+        </div>
         <motion.div
           initial="closed"
           animate={isFilterOpen ? "open" : "closed"}

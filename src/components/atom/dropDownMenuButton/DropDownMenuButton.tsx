@@ -12,7 +12,7 @@ import { logout } from "@/src/lib/actions/login";
 import { createClient } from "@/src/utils/supabase/client";
 
 export const DropDownMenuButton = () => {
-  const [userInitials, setUserInitials] = useState<string>("??");
+  const [userInitials, setUserInitials] = useState<string>("");
   useEffect(() => {
     const getUser = async () => {
       const supabase = createClient();
@@ -40,17 +40,21 @@ export const DropDownMenuButton = () => {
   };
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>{userInitials}</DropdownMenuTrigger>
+      <DropdownMenuTrigger className="min-h-5 min-w-5">
+        {userInitials}
+      </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-slate-800 text-white">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Link href="/shop" className="contents">
-          <DropdownMenuItem>Shop</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">Shop</DropdownMenuItem>
         </Link>
         <Link href="/cart/1" className="contents">
-          <DropdownMenuItem>Cart</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">Cart</DropdownMenuItem>
         </Link>
-        <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+          Logout
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

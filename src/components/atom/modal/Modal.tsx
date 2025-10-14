@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import EmblaCarousel from "../carousel/Carousel";
 import { Heading } from "../heading/Heading";
+import { SubmitButton } from "../submitButton/SubmitButton";
 import { Text } from "../text/Text";
 import { ProductDetails, getProductDetails } from "@/src/api/getProduct";
 import {
@@ -12,6 +13,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/src/components/atom/modal/dialog";
+import { addCartItem } from "@/src/lib/actions/addCartItem";
 
 interface ModalProps {
   children?: React.ReactNode;
@@ -21,6 +23,10 @@ interface ModalProps {
 }
 
 export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
+  const [, formAction] = useActionState(addCartItem, {
+    success: false,
+    message: "",
+  });
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       onClose();
@@ -63,6 +69,17 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 {product?.description}
               </Text>
             </DialogDescription>
+
+            <form action={formAction} className="contents">
+              <input type="hidden" name="productId" value={productId} />
+              <input type="hidden" name="title" value={product?.title} />
+              <input type="hidden" name="price" value={product?.price} />
+              <input type="hidden" name="quantity" value={1} />
+              <SubmitButton
+                isDisabled={false}
+                className="bg-accent-yellow text-black"
+              />
+            </form>
           </>
         </DialogHeader>
       </DialogContent>

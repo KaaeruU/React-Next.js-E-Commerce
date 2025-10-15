@@ -32,7 +32,7 @@ const Card = ({
   return (
     <article
       className={`col-span-3 my-5 w-full md:col-span-4 lg:col-span-3 ${className} border
-        border-neutral-500 border-opacity-30 hover:shadow-lg`}
+        border-neutral-500 border-opacity-30 bg-white hover:shadow-lg`}
     >
       <div className="bg-white">
         <div className="contents cursor-pointer" onClick={onCardClick}>
@@ -66,7 +66,7 @@ const Card = ({
                   {"$ " + price}
                 </Heading>
               </div>
-              <div className="flex justify-start text-gray-500">
+              <div className="mb-6 flex justify-start text-gray-500">
                 <Icon name={"Star"} size={"16"} weight={"regular"} />
                 <Text as={"p"} styledAs={"body-xs"} className="pl-2">
                   {score}

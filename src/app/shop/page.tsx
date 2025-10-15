@@ -18,6 +18,7 @@ export default function Home() {
   const { selectedFilters } = useShopStore();
   const [, formAction] = useActionState(updateFiltersAction, null);
   const router = useRouter();
+
   const {
     selectedId: selectedProductId,
     openModal,
@@ -114,6 +115,7 @@ export default function Home() {
               )
             )}
           </div>
+
           {selectedProductId && (
             <PortalWrapper wrapperId="modal-root">
               <Modal

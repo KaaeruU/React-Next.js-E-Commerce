@@ -66,10 +66,10 @@ const Login = () => {
     <>
       <div className="flex min-h-screen items-center">
         <Background />
-        <div className="default-grid grid-container">
+        <div className="default-grid grid-container mt-16">
           <div
             className="col-span-2 flex flex-col flex-wrap content-center md:col-span-6 md:col-start-2
-              lg:col-span-5 lg:col-start-4 xl:col-start-5 xl:min-w-[833px]"
+              lg:col-span-5 lg:col-start-3 xl:col-start-4 xl:min-w-[833px]"
           >
             <AnimatePresence mode="wait">
               <motion.div

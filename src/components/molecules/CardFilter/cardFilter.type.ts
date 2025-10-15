@@ -25,6 +25,8 @@ export interface CardFilterProps {
     sortBy?: string;
     order?: string;
     limit?: string;
+    page?: string;
+    skip?: number;
   }) => void;
   categories?: Categories[];
   isFormDisabled?: boolean;

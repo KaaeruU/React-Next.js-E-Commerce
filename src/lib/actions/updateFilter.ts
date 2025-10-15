@@ -12,8 +12,6 @@ export async function updateFiltersAction(
   prevState: FormState | null,
   formData: FormData
 ): Promise<FormState | null> {
-  const params = new URLSearchParams();
-
   try {
     const cookieStore = await cookies();
 
@@ -36,17 +34,7 @@ export async function updateFiltersAction(
       skip,
     };
 
-    cookieStore.set("shop_filters", filtersToString(updatedFilters), {
-      httpOnly: true,
-      path: "/",
-      maxAge: 300,
-    });
-
-    if (category) params.set("category", category);
-    if (sortBy) params.set("sortBy", sortBy);
-    if (order) params.set("order", order);
-    if (limit) params.set("limit", String(limit));
-    params.set("page", page || "1");
+    cookieStore.set("shop_filters", filtersToString(updatedFilters));
     return {
       success: true,
       message: "Filters updated successfully",

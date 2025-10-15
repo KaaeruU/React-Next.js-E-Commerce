@@ -88,7 +88,7 @@ export default function Home() {
 
           <div
             className="col-span-12 grid gap-x-5 md:grid-cols-8 lg:col-start-4 lg:grid-cols-9
-              2xl:grid-cols-12"
+              min-[2000px]:grid-cols-12"
           >
             {products?.map(
               ({

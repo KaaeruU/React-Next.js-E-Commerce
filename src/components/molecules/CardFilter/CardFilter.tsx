@@ -50,13 +50,27 @@ export const CardFilter = ({
 
   const handleAppliedFilter = (values: {
     category: string;
+    sortBy?: string;
+    order?: string;
     skip?: number;
     page?: string;
   }) => {
     if (onFilterChange) {
-      onFilterChange(values);
+      onFilterChange({
+        category: values.category,
+        sortBy: "",
+        order: "",
+        skip: 0,
+        page: "1",
+      });
     }
-    appliedFilter({ category: values.category, skip: 0, page: 1 });
+    appliedFilter({
+      category: values.category,
+      skip: 0,
+      page: 1,
+      sortBy: "",
+      order: "",
+    });
     updateParams({
       category: values.category,
       sortBy: "",
@@ -64,8 +78,6 @@ export const CardFilter = ({
       skip: "0",
       page: "1",
     });
-    form.setValue("page", "1");
-    form.setValue("skip", 0);
 
     setIsFilterOpen(false);
 

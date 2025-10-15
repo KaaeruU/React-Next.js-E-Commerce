@@ -57,7 +57,7 @@ const PaginationBar = ({
       Number(getCurrentPage()) === totalPages || totalPages === 1,
   };
 
-  return (
+  return totalPages === 1 ? null : (
     <div className="flex justify-center py-10">
       <PaginationForm
         page={Number(getCurrentPage()) - 1}
@@ -83,8 +83,8 @@ const PaginationBar = ({
           page={Number(page)}
           disabled={page === "..."}
           className={`p-3 hover:text-primary-purple hover:underline hover:underline-offset-4
-          focus:text-primary-purple focus:underline focus:underline-offset-4 ${
-          page === "..." ? "cursor-default" : "" }`}
+            focus:text-primary-purple focus:underline focus:underline-offset-4 ${
+            page === "..." ? "cursor-default" : "" }`}
           limit={limit}
           onPageChange={handlePageChange}
         >

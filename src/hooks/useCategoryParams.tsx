@@ -9,9 +9,6 @@ export const useCategoryParams = () => {
     //Record<string | enum>??????
     (params: Record<string, string | null>) => {
       const urlParams = new URLSearchParams(searchParams);
-      if (urlParams.has("modalId")) {
-        urlParams.delete("modalId");
-      }
       for (const key in params) {
         const value = params[key];
         if (value) {

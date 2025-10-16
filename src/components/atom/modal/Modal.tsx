@@ -67,9 +67,9 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="rounded-xl bg-neutral-buttonPrimary text-white">
-        <DialogHeader>
-          <>
-            <EmblaCarousel slides={product?.images || []} />
+        <DialogHeader className="default-grid">
+          <EmblaCarousel slides={product?.images || []} />
+          <div className="col-span-2 flex flex-col justify-center md:col-span-8 lg:col-span-6">
             <DialogTitle>
               <div className="contents">
                 <Heading as={"h3"} styledAs={"h2"}>
@@ -77,6 +77,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 </Heading>
               </div>
             </DialogTitle>
+
             <DialogDescription>
               <div className="mb-4 mt-2 flex flex-wrap">
                 {product?.tags ? (
@@ -123,43 +124,46 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 />
               </form>
             </div>
-          </>
+          </div>
         </DialogHeader>
 
         <div className="w-full">
           <div className="flex justify-center">
-            <Heading as={"h4"} styledAs={"h4"} className="mt-4">
+            <Heading as={"h4"} styledAs={"h2"} className="mt-8 md:mt-14">
               You may also like
             </Heading>
           </div>
 
           <div className="mt-6 flex w-full">
             {taggedProducts && (
-              <div className="flex w-full flex-nowrap justify-around gap-4 overflow-x-auto">
+              <div className="flex w-full flex-nowrap justify-evenly gap-4 overflow-x-auto">
                 {taggedProducts.map(({ id, images, title, price }) => (
                   <div
                     className="flex min-w-0 flex-shrink-0 flex-col items-center space-y-2"
                     key={id}
                   >
-                    <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg 2xl:h-32 2xl:w-32">
+                    <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg xl:h-40 xl:w-40">
                       <Image
                         src={images[0]}
                         alt={title}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 768px) 96px, 128px"
                       />
                     </div>
 
-                    <div className="flex w-24 flex-col items-center justify-start space-y-1 2xl:w-32">
+                    <div className="flex w-32 items-center space-y-1">
                       <Text
                         as="p"
-                        styledAs="body-xs"
-                        className="line-clamp-2 w-full text-center text-white"
+                        styledAs="body"
+                        className="line-clamp-1 text-white"
                       >
                         {title}
                       </Text>
-                      <Text as="p" styledAs="body-xs">
+                      <Text
+                        as="p"
+                        styledAs="body"
+                        className="pl-5 font-bold text-gray-300"
+                      >
                         ${price}
                       </Text>
                     </div>

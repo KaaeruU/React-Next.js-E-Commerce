@@ -62,8 +62,7 @@ export const PrevButton: React.FC<PropType> = (props) => {
       className={`z-10 m-0 flex h-10 w-10 cursor-pointer touch-manipulation appearance-none
         items-center justify-center rounded-full border-0 bg-transparent p-0
         text-gray-700 no-underline shadow-[inset_0_0_0_0.2rem_rgb(148_163_184)]
-        transition-colors duration-200 hover:bg-gray-100 active:bg-gray-200
-        disabled:cursor-not-allowed disabled:opacity-50`}
+        transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50`}
       type="button"
       disabled={disabled}
       {...restProps}
@@ -87,8 +86,7 @@ export const NextButton: React.FC<PropType> = (props) => {
       className={`z-10 m-0 flex h-10 w-10 cursor-pointer touch-manipulation appearance-none
         items-center justify-center rounded-full border-0 bg-transparent p-0
         text-gray-700 no-underline shadow-[inset_0_0_0_0.2rem_rgb(148_163_184)]
-        transition-colors duration-200 hover:bg-gray-100 active:bg-gray-200
-        disabled:cursor-not-allowed disabled:opacity-50`}
+        transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50`}
       type="button"
       disabled={disabled}
       {...restProps}

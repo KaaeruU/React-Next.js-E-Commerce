@@ -31,15 +31,15 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   } = usePrevNextButtons(emblaApi);
 
   return (
-    <div className="relative">
+    <div
+      className="col-span-2 h-full w-full md:col-span-8 lg:col-span-6 lg:flex lg:flex-col
+        lg:justify-center"
+    >
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex select-none">
+        <div className="flex h-full w-full select-none">
           {slides.map((item, index) => (
-            <div
-              className="relative min-w-0 flex-[0_0_100%] transform-gpu"
-              key={index}
-            >
-              <div className="relative aspect-video w-full">
+            <div className="relative min-w-0 flex-[0_0_100%]" key={index}>
+              <div className="relative w-full sm:aspect-video md:aspect-square xl:aspect-[4/3]">
                 <Image
                   className="select-none rounded-2xl object-cover"
                   src={item}

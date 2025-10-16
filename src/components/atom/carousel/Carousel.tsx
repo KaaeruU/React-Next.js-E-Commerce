@@ -39,7 +39,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         <div className="flex h-full w-full select-none">
           {slides.map((item, index) => (
             <div className="relative min-w-0 flex-[0_0_100%]" key={index}>
-              <div className="relative w-full sm:aspect-video md:aspect-square xl:aspect-[4/3]">
+              <div className="relative aspect-square w-full xl:aspect-[4/3]">
                 <Image
                   className="select-none rounded-2xl object-cover"
                   src={item}

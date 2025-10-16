@@ -83,8 +83,8 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 {product?.tags ? (
                   product.tags.map((item) => (
                     <div
-                      className="mr-2 inline-block rounded-full border border-black bg-neutral-background px-3
-                        py-1 text-black transition-colors duration-300 ease-in-out
+                      className="mr-2 mt-2 inline-block rounded-full border border-black bg-neutral-background
+                        px-3 py-1 text-black transition-colors duration-300 ease-in-out
                         hover:bg-primary-orange"
                       key={item}
                     >
@@ -108,7 +108,10 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 )}
               </Text>
             </DialogDescription>
-            <div className="!mt-10 flex items-center justify-around">
+            <div
+              className="mt-5 flex items-center justify-around rounded-2xl border border-white py-4 pl-2
+                md:!mt-10"
+            >
               <Heading as={"h5"} styledAs={"h2"}>
                 {product?.price ? "$ " + product?.price : "$"}
               </Heading>
@@ -129,7 +132,11 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
 
         <div className="w-full">
           <div className="flex justify-center">
-            <Heading as={"h4"} styledAs={"h2"} className="mt-8 md:mt-14">
+            <Heading
+              as={"h4"}
+              styledAs={"h2"}
+              className="mt-8 whitespace-nowrap md:mt-14 md:whitespace-normal"
+            >
               You may also like
             </Heading>
           </div>

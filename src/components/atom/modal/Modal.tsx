@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useActionState, useEffect, useState } from "react";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import EmblaCarousel from "../carousel/Carousel";
 import { Heading } from "../heading/Heading";
 import { SubmitButton } from "../submitButton/SubmitButton";
+import { TaggedProductsList } from "../tagProductsList/TaggedProductsList";
 import { Text } from "../text/Text";
 import { ProductDetails, getProductDetails } from "@/src/api/getProduct";
 import { TaggedDetails, getTaggedProducts } from "@/src/api/getProductsByTag";
@@ -129,57 +129,22 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
             </div>
           </div>
         </DialogHeader>
-
-        <div className="w-full">
-          <div className="flex justify-center">
-            <Heading
-              as={"h4"}
-              styledAs={"h2"}
-              className="mt-8 whitespace-nowrap md:mt-14 md:whitespace-normal"
-            >
-              You may also like
-            </Heading>
+        {taggedProducts && taggedProducts?.length > 0 && (
+          <div className="w-full">
+            <div className="flex justify-center">
+              <Heading
+                as={"h4"}
+                styledAs={"h2"}
+                className="mt-8 whitespace-nowrap md:mt-14 md:whitespace-normal"
+              >
+                You may also like
+              </Heading>
+            </div>
+            <TaggedProductsList
+              taggedProducts={taggedProducts ? taggedProducts : []}
+            />
           </div>
-
-          <div className="mt-6 flex w-full">
-            {taggedProducts && (
-              <div className="flex w-full flex-nowrap justify-evenly gap-4 overflow-x-auto">
-                {taggedProducts.map(({ id, images, title, price }) => (
-                  <div
-                    className="flex min-w-0 flex-shrink-0 flex-col items-center space-y-2"
-                    key={id}
-                  >
-                    <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg xl:h-40 xl:w-40">
-                      <Image
-                        src={images[0]}
-                        alt={title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-
-                    <div className="flex w-32 items-center space-y-1">
-                      <Text
-                        as="p"
-                        styledAs="body"
-                        className="line-clamp-1 text-white"
-                      >
-                        {title}
-                      </Text>
-                      <Text
-                        as="p"
-                        styledAs="body"
-                        className="pl-5 font-bold text-gray-300"
-                      >
-                        ${price}
-                      </Text>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+        )}
       </DialogContent>
     </Dialog>
   );

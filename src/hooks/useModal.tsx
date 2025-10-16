@@ -1,6 +1,6 @@
 import { useRouter, useSearchParams } from "next/navigation";
 
-export function useModal(paramName: string = "modalId") {
+export const useModal = (paramName: string = "modalId") => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -24,4 +24,4 @@ export function useModal(paramName: string = "modalId") {
     closeModal,
     isOpen: !!selectedId,
   };
-}
+};

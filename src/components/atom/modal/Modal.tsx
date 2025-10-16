@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useActionState, useEffect, useState } from "react";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import EmblaCarousel from "../carousel/Carousel";
@@ -7,6 +8,7 @@ import { Heading } from "../heading/Heading";
 import { SubmitButton } from "../submitButton/SubmitButton";
 import { Text } from "../text/Text";
 import { ProductDetails, getProductDetails } from "@/src/api/getProduct";
+import { TaggedDetails, getTaggedProducts } from "@/src/api/getProductsByTag";
 import {
   Dialog,
   DialogContent,
@@ -33,11 +35,22 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
     }
   };
   const [product, setProduct] = useState<ProductDetails | null>(null);
+  const [taggedProducts, setTaggedProducts] = useState<TaggedDetails[] | null>(
+    null
+  );
 
   const handleCallProduct = async (productId: number) => {
     try {
       const productData = await getProductDetails(productId);
       setProduct(productData);
+      if (productData) {
+        const tagged = await getTaggedProducts(
+          productId,
+          3,
+          productData.tags || []
+        );
+        setTaggedProducts(tagged ? tagged : null);
+      }
     } catch (error) {
       console.error("Failed to fetch product:", error);
       setProduct(null);
@@ -68,7 +81,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
               <div className="mb-4 mt-2 flex flex-wrap">
                 {product?.tags ? (
                   product.tags.map((item) => (
-                    <button
+                    <div
                       className="mr-2 inline-block rounded-full border border-black bg-neutral-background px-3
                         py-1 text-black transition-colors duration-300 ease-in-out
                         hover:bg-primary-orange"
@@ -77,7 +90,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                       <Text as={"span"} styledAs={"body-xs"}>
                         {item}
                       </Text>
-                    </button>
+                    </div>
                   ))
                 ) : (
                   // skeletons
@@ -112,6 +125,50 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
             </div>
           </>
         </DialogHeader>
+
+        <div className="w-full">
+          <div className="flex justify-center">
+            <Heading as={"h4"} styledAs={"h4"} className="mt-4">
+              You may also like
+            </Heading>
+          </div>
+
+          <div className="mt-6 flex w-full">
+            {taggedProducts && (
+              <div className="flex w-full flex-nowrap justify-around gap-4 overflow-x-auto">
+                {taggedProducts.map(({ id, images, title, price }) => (
+                  <div
+                    className="flex min-w-0 flex-shrink-0 flex-col items-center space-y-2"
+                    key={id}
+                  >
+                    <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg 2xl:h-32 2xl:w-32">
+                      <Image
+                        src={images[0]}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 96px, 128px"
+                      />
+                    </div>
+
+                    <div className="flex w-24 flex-col items-center justify-start space-y-1 2xl:w-32">
+                      <Text
+                        as="p"
+                        styledAs="body-xs"
+                        className="line-clamp-2 w-full text-center text-white"
+                      >
+                        {title}
+                      </Text>
+                      <Text as="p" styledAs="body-xs">
+                        ${price}
+                      </Text>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -39,7 +39,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
               className="relative min-w-0 flex-[0_0_100%] transform-gpu"
               key={index}
             >
-              <div className="relative aspect-square w-full">
+              <div className="relative aspect-video w-full">
                 <Image
                   className="select-none rounded-2xl object-cover"
                   src={item}

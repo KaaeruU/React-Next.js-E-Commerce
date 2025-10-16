@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Suspense, startTransition, useActionState } from "react";
 import { useForm } from "react-hook-form";
+import { LoadingSpinner } from "@/src/components/atom/loadingSpinner/LoadingSpinner";
 import { Modal } from "@/src/components/atom/modal/Modal";
 import PaginationBar from "@/src/components/atom/paginationBar/PaginationBar";
 import { PortalWrapper } from "@/src/components/atom/portalWrapper/PortalWrapper";
@@ -66,7 +67,7 @@ export default function Home() {
     <>
       <div className="relative min-h-screen overflow-hidden pt-28">
         <div className="flex w-[97%] justify-center md:justify-end">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
             <CardSorter
               form={productFilterForm}
               numberOfProducts={products?.length || 0}
@@ -77,7 +78,7 @@ export default function Home() {
 
         <div className="default-grid grid-container">
           <div className="col-span-12 mt-4 lg:col-span-3">
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<LoadingSpinner />}>
               <CardFilter
                 form={productFilterForm}
                 onFilterChange={handleFilterUpdate}
@@ -126,7 +127,7 @@ export default function Home() {
             </PortalWrapper>
           )}
 
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
             <div className="col-span-12">
               <PaginationBar limit={limit} skip={skip} total={total ?? 0} />
             </div>

@@ -24,7 +24,7 @@ const Card = ({
   const [count, setCount] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [, formAction] = useActionState(addCartItem, {
+  const [formstate, formAction] = useActionState(addCartItem, {
     success: false,
     message: "",
   });
@@ -87,7 +87,19 @@ const Card = ({
               <input type="hidden" name="title" value={title} />
               <input type="hidden" name="price" value={price} />
               <input type="hidden" name="quantity" value={count} />
-              <SubmitButton isDisabled={count === 0} />
+              <SubmitButton
+                isDisabled={count === 0}
+                formState={formstate}
+
+                /*               onClick={() =>
+        toast("Event has been created", {
+          description: state.message,
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        }*/
+              />
             </form>
           </div>
         </div>

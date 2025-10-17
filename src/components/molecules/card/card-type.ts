@@ -1,4 +1,5 @@
 import { ComponentProps } from "react";
+import { FieldValues } from "react-hook-form";
 
 export interface CardProps extends ComponentProps<"article"> {
   productId: number;
@@ -12,4 +13,10 @@ export interface CardProps extends ComponentProps<"article"> {
   images?: string[];
   description?: string;
   onCardClick?: () => void;
+}
+
+export interface TFieldValues extends FieldValues {
+  success: boolean;
+  message: string;
+  error?: string | undefined;
 }

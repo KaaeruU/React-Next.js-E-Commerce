@@ -69,7 +69,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
       <DialogContent className="rounded-xl bg-neutral-buttonPrimary text-white">
         <DialogHeader className="default-grid">
           <EmblaCarousel slides={product?.images || []} />
-          <div className="col-span-2 flex flex-col justify-center md:col-span-8 lg:col-span-6">
+          <div className="col-span-2 flex flex-col md:col-span-8 lg:col-span-6 lg:!mt-0">
             <DialogTitle>
               <div className="contents">
                 <Heading as={"h3"} styledAs={"h2"}>
@@ -122,7 +122,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 <input type="hidden" name="quantity" value={1} />
                 <SubmitButton
                   isDisabled={false}
-                  className="rounded-full bg-accent-yellow text-black hover:bg-primary-purple"
+                  className="rounded-full bg-accent-yellow p-3 text-black hover:bg-primary-purple"
                   aria-label="Add to cart"
                 />
               </form>

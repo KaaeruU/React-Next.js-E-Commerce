@@ -37,7 +37,7 @@ export async function updateSession(request: NextRequest) {
   const isProtectedRoute = request.nextUrl.pathname.startsWith("/cart/1");
   const isLoginPage = request.nextUrl.pathname === "/";
 
-  // No access to shop if not logged in
+  // No access to cart if not logged in
   if (!user && isProtectedRoute) {
     const url = request.nextUrl.clone();
     url.pathname = "/";

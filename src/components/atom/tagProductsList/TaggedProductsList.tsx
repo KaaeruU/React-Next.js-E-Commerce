@@ -36,7 +36,7 @@ export const TaggedProductsList = ({
                   styledAs="body-xs"
                   className="pl-5 font-bold text-gray-300"
                 >
-                  ${price}
+                  {"$" + price}
                 </Text>
               </div>
             </div>

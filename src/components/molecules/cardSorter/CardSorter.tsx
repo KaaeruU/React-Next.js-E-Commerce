@@ -55,11 +55,11 @@ const CardSorter = ({
       </Heading>
 
       <div
-        className="mt-5 w-full cursor-pointer justify-center border-2 border-black bg-neutral-50
-          p-4 md:mt-0 md:w-1/3 md:px-4 md:py-2"
+        className="mt-5 w-full justify-center border-2 border-black bg-neutral-50 p-4 md:mt-0
+          md:w-1/3 md:px-4 md:py-2"
       >
         <div className="contents" onClick={() => toggleFilter()}>
-          <Text as={"label"} styledAs={"body"}>
+          <Text as={"label"} styledAs={"body"} className="cursor-pointer">
             Filtra per:...
           </Text>
           <button aria-label="sortlist">

@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getCart } from "../api/getCart";
@@ -37,6 +38,7 @@ export default async function RootLayout({
       <html lang="en">
         <head />
         <body>
+          <Toaster />
           <Navbar cartItemsCount={itemsCount} isLoggedIn={isUserLogged} />
           {children}
         </body>
@@ -48,6 +50,7 @@ export default async function RootLayout({
       <html lang="en">
         <head />
         <body>
+          <Toaster />
           <Navbar cartItemsCount={itemsCount} isLoggedIn={false} />
           {children}
         </body>

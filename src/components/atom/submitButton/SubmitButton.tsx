@@ -17,7 +17,6 @@ export const SubmitButton = ({
   formState,
 }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
-  //usare pending per il toast.promise
 
   useEffect(() => {
     if (formState?.success === true) {

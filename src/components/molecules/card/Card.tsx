@@ -87,19 +87,7 @@ const Card = ({
               <input type="hidden" name="title" value={title} />
               <input type="hidden" name="price" value={price} />
               <input type="hidden" name="quantity" value={count} />
-              <SubmitButton
-                isDisabled={count === 0}
-                formState={formstate}
-
-                /*               onClick={() =>
-        toast("Event has been created", {
-          description: state.message,
-          action: {
-            label: "Undo",
-            onClick: () => console.log("Undo"),
-          },
-        }*/
-              />
+              <SubmitButton isDisabled={count === 0} formState={formstate} />
             </form>
           </div>
         </div>

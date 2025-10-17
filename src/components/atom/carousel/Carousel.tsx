@@ -2,7 +2,7 @@ import { EmblaOptionsType } from "embla-carousel";
 import Fade from "embla-carousel-fade";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   NextButton,
   PrevButton,
@@ -12,12 +12,14 @@ import {
 type PropType = {
   slides: string[];
   options?: EmblaOptionsType;
+  productId?: number;
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props;
   const defaultOptions: EmblaOptionsType = {
     loop: true,
+    duration: 30,
     ...options,
   };
 
@@ -29,6 +31,11 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     onPrevButtonClick,
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi);
+
+  useEffect(() => {
+    emblaApi?.scrollTo(0, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slides]);
 
   return (
     <div

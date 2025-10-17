@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Text } from "../text/Text";
 import { TaggedDetails } from "@/src/api/getProductsByTag";
+import { useModal } from "@/src/hooks/useModal";
 
 interface TaggedProductsListProps {
   taggedProducts: TaggedDetails[];
@@ -9,14 +10,17 @@ interface TaggedProductsListProps {
 export const TaggedProductsList = ({
   taggedProducts,
 }: TaggedProductsListProps) => {
+  const { openModal } = useModal("modalId");
+
   return (
     <div className="mt-6 flex w-full">
       {taggedProducts && (
         <div className="flex w-full flex-nowrap justify-evenly gap-4 overflow-x-auto">
           {taggedProducts.map(({ id, images, title, price }) => (
             <div
-              className="flex min-w-0 flex-shrink-0 flex-col items-center space-y-2"
+              className="flex min-w-0 flex-shrink-0 cursor-pointer flex-col items-center space-y-2"
               key={id}
+              onClick={() => openModal(id.toString())}
             >
               <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg xl:h-40 xl:w-40">
                 <Image

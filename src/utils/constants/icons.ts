@@ -13,6 +13,8 @@ const iconName = [
   "Logo",
   "RightArrow",
   "LeftArrow",
+  "Favorite",
+  "FilledFavorite",
 ] as const;
 
 const iconsWeights = ["regular", "bold"] as const;

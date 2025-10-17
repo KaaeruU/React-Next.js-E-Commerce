@@ -25,7 +25,7 @@ interface ModalProps {
 }
 
 export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
-  const [, formAction] = useActionState(addCartItem, {
+  const [modalFormState, formAction] = useActionState(addCartItem, {
     success: false,
     message: "",
   });
@@ -108,12 +108,9 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 )}
               </Text>
             </DialogDescription>
-            <div
-              className="mt-5 flex items-center justify-around rounded-2xl border border-white py-4 pl-2
-                md:!mt-10"
-            >
-              <Heading as={"h5"} styledAs={"h2"}>
-                {product?.price ? "$ " + product?.price : "$"}
+            <div className="mt-5 flex flex-col py-4 pl-2 md:!mt-10">
+              <Heading as={"h5"} styledAs={"h1"}>
+                {product?.price ? "$" + product?.price : "$"}
               </Heading>
               <form action={formAction} className="contents">
                 <input type="hidden" name="productId" value={productId} />
@@ -122,8 +119,10 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
                 <input type="hidden" name="quantity" value={1} />
                 <SubmitButton
                   isDisabled={false}
-                  className="rounded-full bg-accent-yellow p-3 text-black hover:bg-primary-purple"
+                  className="mt-3 !w-full rounded-full bg-accent-yellow p-3 text-black
+                    hover:bg-primary-purple"
                   aria-label="Add to cart"
+                  formState={modalFormState}
                 />
               </form>
             </div>

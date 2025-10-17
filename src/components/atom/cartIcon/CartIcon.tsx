@@ -9,11 +9,11 @@ const CartIcon = ({ items, className }: CartIconProps) => {
         ${className}`}
     >
       <Link href={"/cart/1"}>
-        <Icon name="Union" size="24" weight="regular" />
+        <Icon name="Union" size="32" weight="regular" />
       </Link>
       <div
         className="absolute right-3 top-5 -z-10 flex h-4 w-4 items-center justify-center
-          rounded-full bg-black text-xs text-white"
+          rounded-full bg-black text-xs text-white md:h-5 md:w-5"
       >
         <p className="z-10">{items}</p>
       </div>

@@ -24,7 +24,7 @@ export const CartCleaner = ({ itemsLenght }: { itemsLenght?: number }) => {
         variant="default_accent"
         label="Svuota il carrello"
         isDisabled={itemsLenght === 0}
-      ></Button>
+      />
     </form>
   );
 };

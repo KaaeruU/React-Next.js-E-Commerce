@@ -22,13 +22,11 @@ export default async function RootLayout({
     const cookieStore = await cookies();
 
     const allCookies = cookieStore.getAll();
-    const hasAuthToken = allCookies.some(
+    const isUserLogged = allCookies.some(
       (cookie) =>
         cookie.name.startsWith("sb-cijmnzjidhbknfhpensb-auth-token") ||
         cookie.name.startsWith("sb-cijmnzjidhbknfhpensb-anon-token=")
     );
-
-    const isUserLogged = hasAuthToken;
 
     const { items } = await getCart();
     const itemsCount =
@@ -40,6 +38,7 @@ export default async function RootLayout({
         <body>
           <Toaster position="top-center" theme="dark" />
           <Navbar cartItemsCount={itemsCount} isLoggedIn={isUserLogged} />
+
           {children}
         </body>
       </html>

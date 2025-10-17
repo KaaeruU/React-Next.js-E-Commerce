@@ -4,6 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import EmblaCarousel from "../carousel/Carousel";
 import { Heading } from "../heading/Heading";
+import { ModalSkeleton } from "../modalSkeleton/ModalSkeleton";
 import { SubmitButton } from "../submitButton/SubmitButton";
 import { TaggedProductsList } from "../tagProductsList/TaggedProductsList";
 import { Text } from "../text/Text";
@@ -38,6 +39,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
   const [taggedProducts, setTaggedProducts] = useState<TaggedDetails[] | null>(
     null
   );
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleCallProduct = async (productId: number) => {
     try {
@@ -51,6 +53,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
         );
         setTaggedProducts(tagged ? tagged : null);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Failed to fetch product:", error);
       setProduct(null);
@@ -67,6 +70,7 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="rounded-xl bg-neutral-buttonPrimary text-white">
+        {isLoading && <ModalSkeleton />}
         <DialogHeader className="default-grid">
           <EmblaCarousel slides={product?.images || []} />
           <div className="col-span-2 flex flex-col md:col-span-8 lg:col-span-6 lg:!mt-0">
@@ -80,27 +84,18 @@ export const Modal = ({ children, productId, isOpen, onClose }: ModalProps) => {
 
             <DialogDescription>
               <div className="mb-4 mt-2 flex flex-wrap">
-                {product?.tags ? (
-                  product.tags.map((item) => (
-                    <div
-                      className="mr-2 mt-2 inline-block rounded-full border border-black bg-neutral-background
-                        px-3 py-1 text-black transition-colors duration-300 ease-in-out
-                        hover:bg-primary-orange"
-                      key={item}
-                    >
-                      <Text as={"span"} styledAs={"body-xs"}>
-                        {item}
-                      </Text>
-                    </div>
-                  ))
-                ) : (
-                  // skeletons
-                  <>
-                    <div className="mr-2 h-8 w-16 animate-pulse rounded-full bg-gray-300"></div>
-                    <div className="mr-2 h-8 w-20 animate-pulse rounded-full bg-gray-300"></div>
-                    <div className="mr-2 h-8 w-14 animate-pulse rounded-full bg-gray-300"></div>
-                  </>
-                )}
+                {product?.tags?.map((item) => (
+                  <div
+                    className="mr-2 mt-2 inline-block rounded-full border border-black bg-neutral-background
+                      px-3 py-1 text-black transition-colors duration-300 ease-in-out
+                      hover:bg-primary-orange"
+                    key={item}
+                  >
+                    <Text as={"span"} styledAs={"body-xs"}>
+                      {item}
+                    </Text>
+                  </div>
+                ))}
               </div>
               <Text as={"label"} styledAs={"body"} className="!mt-4">
                 {product?.description || (

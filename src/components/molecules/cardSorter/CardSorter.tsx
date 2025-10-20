@@ -46,7 +46,7 @@ const CardSorter = ({
       className="lg:mt:0 col-span-2 my-6 flex flex-col items-center md:col-span-8 md:flex-row
         md:justify-between lg:col-span-9 lg:mb-6"
     >
-      <Heading as={"h2"} styledAs={"h2"} className="whitespace-nowrap">
+      <Heading as={"h2"} styledAs={"h2"} className="whitespace-nowrap pr-2">
         {numberOfProducts} PRODOTTI presenti
       </Heading>
       <div

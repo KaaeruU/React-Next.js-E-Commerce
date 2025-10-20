@@ -49,12 +49,12 @@ const Card = ({
       className={`col-span-3 my-5 h-full w-full md:col-span-4 lg:col-span-3 ${className}`}
     >
       <div className="bg-white">
-        <div className="relative h-auto w-auto">
+        <div className="relative aspect-[4/3] w-full overflow-hidden">
           <Image
             src={img}
             alt={"image of the product"}
-            width={398}
-            height={155}
+            className="object-cover"
+            fill
             quality={70}
           />
           {discount && (

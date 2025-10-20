@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getCart } from "../api/getCart";
-import Providers from "@/src/components/atom/providers/Providers";
 import Navbar from "@/src/components/molecules/navbar/Navbar";
 import "@/src/styles/global.css";
 
@@ -18,19 +17,40 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
+  try {
+    const cookieStore = await cookies();
 
-  const userId = cookieStore.get("user_id")?.value || "1";
+    // This handles both regular tokens
+    const allCookies = cookieStore.getAll();
+    const hasAuthToken = allCookies.some(
+      (cookie) =>
+        cookie.name.startsWith("sb-cijmnzjidhbknfhpensb-auth-token") ||
+        cookie.name.startsWith("sb-cijmnzjidhbknfhpensb-anon-token=")
+    );
 
-  const { items } = await getCart(Number(userId));
-  const itemsCount = items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+    const isUserLogged = hasAuthToken;
 
-  return (
-    <html lang="en">
-      <body>
-        <Navbar cartItemsCount={itemsCount} />
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  );
+    const { items } = await getCart();
+    const itemsCount =
+      items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+
+    return (
+      <html lang="en">
+        <body>
+          <Navbar cartItemsCount={itemsCount} isLoggedIn={isUserLogged} />
+          {children}
+        </body>
+      </html>
+    );
+  } catch {
+    const itemsCount = 0;
+    return (
+      <html lang="en">
+        <body>
+          <Navbar cartItemsCount={itemsCount} isLoggedIn={false} />
+          {children}
+        </body>
+      </html>
+    );
+  }
 }

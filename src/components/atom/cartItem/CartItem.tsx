@@ -1,11 +1,9 @@
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { Icon } from "../icon/Icon";
 import { CartItemProps } from "./cartItem.type";
 import { Text } from "@/src/components/atom/text/Text";
 import { removeCartItem } from "@/src/lib/actions/deleteCartItem";
-import { cartQueryKey } from "@/src/utils/constants/query-key";
-import { useQueryClient } from "@tanstack/react-query";
 
 const CartItem = ({
   productId,
@@ -14,17 +12,10 @@ const CartItem = ({
   quantity,
   classname,
 }: CartItemProps) => {
-  const [state, formAction] = useActionState(removeCartItem, {
+  const [, formAction] = useActionState(removeCartItem, {
     success: false,
     message: "",
   });
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (state.success) {
-      queryClient.invalidateQueries({ queryKey: [cartQueryKey] });
-    }
-  }, [state.success, queryClient]);
 
   const DeleteIconButton = () => {
     const { pending } = useFormStatus();

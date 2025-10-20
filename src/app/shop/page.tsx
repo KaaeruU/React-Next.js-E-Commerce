@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <>
       <div className="relative min-h-screen overflow-hidden pt-28">
-        <div className="flex justify-end">
+        <div className="flex w-[97%] justify-center md:justify-end">
           <Suspense fallback={<div>Loading...</div>}>
             <CardSorter
               form={productFilterForm}

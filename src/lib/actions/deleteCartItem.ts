@@ -1,40 +1,71 @@
 "use server";
 
 import { revalidatePath, revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
+import { Cart } from "@/src/types/cart.type";
 import { FormState } from "@/src/types/formState";
+import { createClient } from "@/src/utils/supabase/server";
 
 export async function removeCartItem(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
   try {
-    const productId = formData.get("productId");
-    const userId = 1;
+    const supabase = await createClient();
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ROUTE_API}/cart/${userId}/items/${productId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // Get authenticated user
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
-    if (!response.ok) {
-      const errorData = await response
-        .json()
-        .catch(() => ({ error: "Unknown error" }));
+    if (authError || !user) {
+      redirect("/");
+    }
 
+    const productId = Number(formData.get("productId"));
+
+    // Get current cart
+    const { data: userData, error: fetchError } = await supabase
+      .from("users")
+      .select("cart")
+      .eq("id", user.id)
+      .single();
+
+    if (fetchError) {
       return {
         success: false,
-        message: "Errore nella rimozione dal carrello",
-        error: errorData.error || "Failed to remove item from cart",
+        message: "Errore nel recupero del carrello",
+        error: fetchError.message,
       };
     }
 
-    revalidatePath(`/cart/${userId}`, "page");
-    revalidateTag(`cart-${userId}`);
+    const currentCart: Cart = userData?.cart;
+
+    // Remove item from cart
+    currentCart.items = currentCart.items.filter((item) => {
+      if (item.productId === productId && item.quantity > 1) {
+        return item.quantity--;
+      }
+      return item.productId !== productId;
+    });
+
+    // Update cart in database
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({ cart: currentCart })
+      .eq("id", user.id);
+
+    if (updateError) {
+      return {
+        success: false,
+        message: "Errore nella rimozione dal carrello",
+        error: updateError.message,
+      };
+    }
+
+    revalidatePath("/cart", "page");
+    revalidateTag(`cart-${user.id}`);
 
     return {
       success: true,

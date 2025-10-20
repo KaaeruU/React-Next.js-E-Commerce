@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { getCart } from "@/src/api/getCart";
 import { CartProvider } from "@/src/components/atom/cartProvider/CartProvider";
 import "@/src/styles/global.css";
@@ -17,11 +16,7 @@ export default async function CartLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-
-  const userId = cookieStore.get("user_id")?.value || "1";
-
-  const cart = await getCart(Number(userId));
+  const cart = await getCart();
 
   return <CartProvider initialCart={cart}>{children}</CartProvider>;
 }

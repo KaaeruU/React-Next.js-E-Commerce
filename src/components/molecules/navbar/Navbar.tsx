@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { MobileMenu } from "../../atom/MobileMenu/MobileMenu";
+import { DropDownMenuButton } from "../../atom/dropDownMenuButton/DropDownMenuButton";
 import { NavbarProps } from "./navbar-type";
 import { Button } from "@/src/components/atom/buttons/Button";
 import CartIcon from "@/src/components/atom/cartIcon/CartIcon";
@@ -11,7 +12,11 @@ import Menu from "@/src/components/atom/menu/Menu";
 import { useGlobalStore } from "@/src/store/global-store";
 import { useMeasure } from "@uidotdev/usehooks";
 
-const Navbar = ({ cartItemsCount, className = "" }: NavbarProps) => {
+const Navbar = ({
+  cartItemsCount,
+  className = "",
+  isLoggedIn = false,
+}: NavbarProps) => {
   const [ref, { height }] = useMeasure();
   const setNavHeight = useGlobalStore((state) => state.setNavHeight);
 
@@ -19,8 +24,7 @@ const Navbar = ({ cartItemsCount, className = "" }: NavbarProps) => {
     if (height) {
       setNavHeight(height);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [height]);
+  }, [height, setNavHeight]);
 
   return (
     <div
@@ -35,14 +39,25 @@ const Navbar = ({ cartItemsCount, className = "" }: NavbarProps) => {
         <CartIcon items={cartItemsCount || 0} />
 
         <div className="hidden justify-end border-black md:flex">
-          <Link href={"/shop"} className="contents">
-            <Button
-              label={"Accedi"}
-              isDisabled={false}
-              variant={"accent"}
-              className="mx-10"
-            />
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <div
+                className="mx-3 flex items-center justify-center rounded-full border border-black
+                  bg-accent-yellow p-5 font-bold md:h-10 md:w-10 lg:h-full lg:w-full"
+              >
+                <DropDownMenuButton />
+              </div>
+            </>
+          ) : (
+            <Link href="/" className="contents">
+              <Button
+                label="Accedi"
+                isDisabled={false}
+                variant="accent"
+                className="mx-10"
+              />
+            </Link>
+          )}
         </div>
         <div className="flex justify-end border-black px-5 md:hidden">
           <Menu />

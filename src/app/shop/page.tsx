@@ -1,20 +1,31 @@
 "use client";
 
-import { Suspense, useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { Suspense, startTransition, useActionState } from "react";
 import { useForm } from "react-hook-form";
-import { ErrorHandler } from "@/src/components/atom/ErrorHandler/ErrorHandler";
+import { LoadingSpinner } from "@/src/components/atom/loadingSpinner/LoadingSpinner";
+import { Modal } from "@/src/components/atom/modal/Modal";
 import PaginationBar from "@/src/components/atom/paginationBar/PaginationBar";
+import { PortalWrapper } from "@/src/components/atom/portalWrapper/PortalWrapper";
 import { useProducts } from "@/src/components/atom/productsProvider/ProductsProvider";
 import { CardFilter } from "@/src/components/molecules/CardFilter/CardFilter";
 import Card from "@/src/components/molecules/card/Card";
 import CardSorter from "@/src/components/molecules/cardSorter/CardSorter";
+import { useModal } from "@/src/hooks/useModal";
 import { updateFiltersAction } from "@/src/lib/actions/updateFilter";
 import { useShopStore } from "@/src/store/shop-store";
 
 export default function Home() {
   const { selectedFilters } = useShopStore();
+  const [, formAction] = useActionState(updateFiltersAction, null);
+  const router = useRouter();
 
-  const [formState, formAction] = useActionState(updateFiltersAction, null);
+  const {
+    selectedId: selectedProductId,
+    openModal,
+    closeModal,
+    isOpen,
+  } = useModal("modalId");
 
   const productFilterForm = useForm({
     mode: "onChange",
@@ -39,22 +50,24 @@ export default function Home() {
     page?: string;
   }) => {
     const formData = new FormData();
-    if (filters.category) formData.append("category", filters.category);
-    if (filters.sortBy) formData.append("sortBy", filters.sortBy);
-    if (filters.order) formData.append("order", filters.order);
+    if (filters.category !== undefined)
+      formData.append("category", filters.category);
+    if (filters.sortBy !== undefined) formData.append("sortBy", filters.sortBy);
+    if (filters.order !== undefined) formData.append("order", filters.order);
     if (filters.limit) formData.append("limit", filters.limit);
     if (filters.page) formData.append("page", filters.page);
 
-    formAction(formData);
+    startTransition(() => {
+      formAction(formData);
+      router.refresh();
+    });
   };
-
-  if (formState?.success) return <ErrorHandler message={formState.message} />;
 
   return (
     <>
       <div className="relative min-h-screen overflow-hidden pt-28">
         <div className="flex w-[97%] justify-center md:justify-end">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
             <CardSorter
               form={productFilterForm}
               numberOfProducts={products?.length || 0}
@@ -64,20 +77,20 @@ export default function Home() {
         </div>
 
         <div className="default-grid grid-container">
-          <div className="col-span-12 lg:col-span-3">
-            <Suspense fallback={<div>Loading...</div>}>
+          <div className="col-span-12 mt-4 lg:col-span-3">
+            <Suspense fallback={<LoadingSpinner />}>
               <CardFilter
                 form={productFilterForm}
                 onFilterChange={handleFilterUpdate}
                 categories={categories || []}
-                isFormDisabled={formState?.success}
+                isFormDisabled={!!categories}
               />
             </Suspense>
           </div>
 
           <div
             className="col-span-12 grid gap-x-5 md:grid-cols-8 lg:col-start-4 lg:grid-cols-9
-              2xl:grid-cols-12"
+              min-[2000px]:grid-cols-12"
           >
             {products?.map(
               ({
@@ -98,12 +111,23 @@ export default function Home() {
                   score={rating}
                   mountOfReview={reviews.length}
                   discount={discountPercentage}
+                  onCardClick={() => openModal(id.toString())}
                 />
               )
             )}
           </div>
 
-          <Suspense fallback={<div>Loading...</div>}>
+          {selectedProductId && (
+            <PortalWrapper wrapperId="modal-root">
+              <Modal
+                productId={Number(selectedProductId)}
+                onClose={closeModal}
+                isOpen={isOpen}
+              />
+            </PortalWrapper>
+          )}
+
+          <Suspense fallback={<LoadingSpinner />}>
             <div className="col-span-12">
               <PaginationBar limit={limit} skip={skip} total={total ?? 0} />
             </div>

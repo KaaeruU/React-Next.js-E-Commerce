@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import { useActionState, useRef, useState } from "react";
-import { useFormStatus } from "react-dom";
 import { CardProps } from "./card-type";
-import { Button } from "@/src/components/atom/buttons/Button";
 import CounterButton from "@/src/components/atom/counterButton/CounterButton";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Icon } from "@/src/components/atom/icon/Icon";
+import { SubmitButton } from "@/src/components/atom/submitButton/SubmitButton";
 import { Text } from "@/src/components/atom/text/Text";
 import { addCartItem } from "@/src/lib/actions/addCartItem";
 
@@ -19,89 +18,76 @@ const Card = ({
   score,
   mountOfReview,
   discount,
+  onCardClick,
   className = "",
 }: CardProps) => {
   const [count, setCount] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [state, formAction] = useActionState(addCartItem, {
+  const [formstate, formAction] = useActionState(addCartItem, {
     success: false,
     message: "",
   });
 
-  function SubmitButton({ isDisabled }: { isDisabled: boolean }) {
-    const { pending } = useFormStatus();
-
-    return (
-      <Button
-        type="submit"
-        label={pending ? "Aggiungendo..." : "Aggiungi al carrello"}
-        isDisabled={isDisabled || pending}
-        variant="secondary"
-        className="md:w-1/2 md:text-14 lg:px-0"
-      />
-    );
-  }
-
   return (
     <article
-      className={`col-span-3 my-5 h-full w-full md:col-span-4 lg:col-span-3 ${className}`}
+      className={`col-span-3 my-5 w-full md:col-span-4 lg:col-span-3 ${className} border
+        border-neutral-500 border-opacity-30 bg-white hover:shadow-lg`}
     >
       <div className="bg-white">
-        <div className="relative aspect-[4/3] w-full overflow-hidden">
-          <Image
-            src={img}
-            alt={"image of the product"}
-            className="object-cover"
-            fill
-            quality={70}
-          />
-          {discount && (
-            <div className="absolute left-0 top-5 z-10 rounded-br-lg bg-accent-yellow p-3">
-              <Text as={"span"} styledAs={"body-xs"} className="!font-bold">
-                In offerta -{discount}%
-              </Text>
-            </div>
-          )}
-        </div>
-        <div className="flex flex-col">
-          <div className="mx-4 h-24 border-b-2 border-gray-300/20">
-            <Heading as={"h3"} styledAs={"h4"} className="py-4">
-              {title}
-            </Heading>
+        <div className="contents cursor-pointer" onClick={onCardClick}>
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-b-xl">
+            <Image
+              src={img}
+              alt={"image of the product"}
+              className="object-cover"
+              fill
+              quality={70}
+            />
+            {discount && (
+              <div className="absolute left-0 top-5 z-10 rounded-br-lg bg-accent-yellow p-3">
+                <Text as={"span"} styledAs={"body-xs"} className="!font-bold">
+                  In offerta -{discount}%
+                </Text>
+              </div>
+            )}
           </div>
 
-          <div className="mx-4 pt-4">
-            <div className="pb-2">
-              <Heading as={"h4"} styledAs={"h4"}>
-                {"$ " + price}
+          <div className="flex flex-col">
+            <div className="mx-4 flex h-24 items-center justify-start border-b-2 border-gray-300/20">
+              <Heading as={"h3"} styledAs={"h2"} className="py-4 !capitalize">
+                {title}
               </Heading>
             </div>
-            <div className="flex justify-start text-gray-500">
-              <Icon name={"Star"} size={"16"} weight={"regular"} />
-              <Text as={"p"} styledAs={"body-xs"} className="pl-2">
-                {score}
-              </Text>
-              <Text as={"p"} styledAs={"body-xs"} className="pl-1">
-                {`(${mountOfReview} recensioni)`}
-              </Text>
+
+            <div className="mx-4 pt-4">
+              <div className="pb-2">
+                <Heading as={"h4"} styledAs={"h4"}>
+                  {"$ " + price}
+                </Heading>
+              </div>
+              <div className="mb-6 flex justify-start text-gray-500">
+                <Icon name={"Star"} size={"16"} weight={"regular"} />
+                <Text as={"p"} styledAs={"body-xs"} className="pl-2">
+                  {score}
+                </Text>
+                <Text as={"p"} styledAs={"body-xs"} className="pl-1">
+                  {`(${mountOfReview} recensioni)`}
+                </Text>
+              </div>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col">
           <div className="flex flex-nowrap justify-between p-4">
             <CounterButton count={count} setCount={setCount} />
 
-            <form
-              ref={formRef}
-              method="POST"
-              action={formAction}
-              className="contents"
-            >
+            <form ref={formRef} action={formAction} className="contents">
               <input type="hidden" name="productId" value={productId} />
               <input type="hidden" name="title" value={title} />
               <input type="hidden" name="price" value={price} />
               <input type="hidden" name="quantity" value={count} />
-              <SubmitButton isDisabled={count === 0} />
+              <SubmitButton isDisabled={count === 0} formState={formstate} />
             </form>
           </div>
         </div>

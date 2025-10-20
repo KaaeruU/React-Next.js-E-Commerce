@@ -1,7 +1,6 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { FormState } from "@/src/types/formState";
 import {
   ShopFilters,
@@ -12,7 +11,7 @@ import {
 export async function updateFiltersAction(
   prevState: FormState | null,
   formData: FormData
-): Promise<FormState> {
+): Promise<FormState | null> {
   try {
     const cookieStore = await cookies();
 
@@ -35,20 +34,11 @@ export async function updateFiltersAction(
       skip,
     };
 
-    cookieStore.set("shop_filters", filtersToString(updatedFilters), {
-      httpOnly: true,
-      path: "/",
-      maxAge: 300,
-    });
-
-    const params = new URLSearchParams();
-    if (category) params.set("category", category);
-    if (sortBy) params.set("sortBy", sortBy);
-    if (order) params.set("order", order);
-    if (limit) params.set("limit", String(limit));
-    params.set("page", page || "1");
-
-    redirect(`/shop?${params.toString()}`);
+    cookieStore.set("shop_filters", filtersToString(updatedFilters));
+    return {
+      success: true,
+      message: "Filters updated successfully",
+    };
   } catch (error) {
     return {
       success: false,

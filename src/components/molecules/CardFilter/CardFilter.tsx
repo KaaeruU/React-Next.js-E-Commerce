@@ -50,13 +50,27 @@ export const CardFilter = ({
 
   const handleAppliedFilter = (values: {
     category: string;
+    sortBy?: string;
+    order?: string;
     skip?: number;
     page?: string;
   }) => {
     if (onFilterChange) {
-      onFilterChange(values);
+      onFilterChange({
+        category: values.category,
+        sortBy: "",
+        order: "",
+        skip: 0,
+        page: "1",
+      });
     }
-    appliedFilter({ category: values.category, skip: 0, page: 1 });
+    appliedFilter({
+      category: values.category,
+      skip: 0,
+      page: 1,
+      sortBy: "",
+      order: "",
+    });
     updateParams({
       category: values.category,
       sortBy: "",
@@ -64,8 +78,7 @@ export const CardFilter = ({
       skip: "0",
       page: "1",
     });
-    form.setValue("page", "1");
-    form.setValue("skip", 0);
+
     setIsFilterOpen(false);
 
     window?.scrollTo({ top: 0, behavior: "smooth" });
@@ -75,13 +88,19 @@ export const CardFilter = ({
     setIsFilterOpen(() => !isFilterOpen);
   };
 
-  if (isFormDisabled) {
+  if (!isFormDisabled) {
     return <ErrorHandler message={"Error loading categories"} />;
   }
 
   return (
-    <div className="col-span-12 flex flex-col bg-neutral-50 px-6 py-4 lg:col-span-3 lg:px-5 lg:py-8">
-      <div className="flex justify-between lg:mb-6">
+    <div
+      className="col-span-12 flex flex-col rounded-xl border border-black bg-neutral-50 px-6 py-4
+        lg:col-span-3 lg:px-5 lg:py-8"
+    >
+      <div
+        className="flex justify-between lg:mb-6"
+        onClick={() => toggleFilter()}
+      >
         <Heading as={"h2"} styledAs={"h2"}>
           Filtra i PRODOTTI
         </Heading>

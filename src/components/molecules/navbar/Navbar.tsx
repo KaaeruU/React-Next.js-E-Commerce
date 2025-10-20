@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { MobileMenu } from "../../atom/MobileMenu/MobileMenu";
 import { DropDownMenuButton } from "../../atom/dropDownMenuButton/DropDownMenuButton";
@@ -19,6 +20,7 @@ const Navbar = ({
 }: NavbarProps) => {
   const [ref, { height }] = useMeasure();
   const setNavHeight = useGlobalStore((state) => state.setNavHeight);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (height) {
@@ -49,12 +51,15 @@ const Navbar = ({
               </div>
             </>
           ) : (
-            <Link href="/" className="contents">
+            <Link
+              href={pathname.includes("/shop") ? "/" : "/shop"}
+              className="contents"
+            >
               <Button
-                label="Accedi"
+                label={pathname.includes("/shop") ? "Log In" : "Shop"}
                 isDisabled={false}
                 variant="accent"
-                className="mx-10"
+                className="mx-10 md:whitespace-nowrap"
               />
             </Link>
           )}

@@ -91,7 +91,10 @@ export async function addCartItem(
 
     return {
       success: true,
-      message: "Prodotto aggiunto al carrello!",
+      message:
+        validatedFields.quantity > 1
+          ? "Prodotti aggiunti al carrello con successo!"
+          : "Prodotto aggiunto al carrello con successo!",
     };
   } catch (error) {
     if (error instanceof z.ZodError) {

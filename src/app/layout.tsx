@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getCart } from "../api/getCart";
@@ -20,15 +21,12 @@ export default async function RootLayout({
   try {
     const cookieStore = await cookies();
 
-    // This handles both regular tokens
     const allCookies = cookieStore.getAll();
-    const hasAuthToken = allCookies.some(
+    const isUserLogged = allCookies.some(
       (cookie) =>
         cookie.name.startsWith("sb-cijmnzjidhbknfhpensb-auth-token") ||
         cookie.name.startsWith("sb-cijmnzjidhbknfhpensb-anon-token=")
     );
-
-    const isUserLogged = hasAuthToken;
 
     const { items } = await getCart();
     const itemsCount =
@@ -36,8 +34,11 @@ export default async function RootLayout({
 
     return (
       <html lang="en">
+        <head />
         <body>
+          <Toaster position="top-center" theme="dark" />
           <Navbar cartItemsCount={itemsCount} isLoggedIn={isUserLogged} />
+
           {children}
         </body>
       </html>
@@ -46,7 +47,9 @@ export default async function RootLayout({
     const itemsCount = 0;
     return (
       <html lang="en">
+        <head />
         <body>
+          <Toaster position="top-center" theme="dark" />
           <Navbar cartItemsCount={itemsCount} isLoggedIn={false} />
           {children}
         </body>

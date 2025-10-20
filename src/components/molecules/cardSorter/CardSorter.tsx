@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CheckboxField } from "../../atom/checkbox/Checkbox";
 import { Form, FormControl, FormField, FormItem } from "../Form";
 import { CardSorterProps } from "./cardSorter.type";
 import { Button } from "@/src/components/atom/buttons/Button";
@@ -26,6 +27,7 @@ const CardSorter = ({
     appliedFilter({ sortBy: sortByFromUrl, order: orderFromUrl });
 
     form.setValue("order", orderFromUrl);
+    form.setValue("sortBy", sortByFromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCurrentOrder, getCurrentSortBy]);
 
@@ -39,6 +41,8 @@ const CardSorter = ({
     }
     appliedFilter({ sortBy: values.sortBy, order: values.order });
     updateParams({ sortBy: values.sortBy, order: values.order });
+
+    setIsFilterOpen(false);
   };
 
   return (
@@ -49,16 +53,19 @@ const CardSorter = ({
       <Heading as={"h2"} styledAs={"h2"} className="whitespace-nowrap pr-2">
         {numberOfProducts} PRODOTTI presenti
       </Heading>
+
       <div
         className="mt-5 w-full justify-center border-2 border-black bg-neutral-50 p-4 md:mt-0
           md:w-1/3 md:px-4 md:py-2"
       >
-        <Text as={"label"} styledAs={"body"}>
-          Filtra per:...
-        </Text>
-        <button onClick={() => toggleFilter()} aria-label="sortlist">
-          <Icon name={"Arrow"} size={"14"} weight={"bold"} />
-        </button>
+        <div className="contents" onClick={() => toggleFilter()}>
+          <Text as={"label"} styledAs={"body"} className="cursor-pointer">
+            Filtra per:...
+          </Text>
+          <button aria-label="sortlist">
+            <Icon name={"Arrow"} size={"14"} weight={"bold"} />
+          </button>
+        </div>
         <motion.div
           initial="closed"
           animate={isFilterOpen ? "open" : "closed"}
@@ -78,52 +85,16 @@ const CardSorter = ({
                     <FormItem className="contents">
                       <FormControl className="contents">
                         <div className="flex flex-col space-y-2">
-                          <label
-                            className="flex cursor-pointer items-center"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                field.onChange(
-                                  field.value === "title" ? "" : "title"
-                                );
-                              }
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              className="mr-2 h-4 w-4 accent-purple-500"
-                              checked={field.value === "title"}
-                              onChange={() =>
-                                field.onChange(
-                                  field.value === "title" ? "" : "title"
-                                )
-                              }
-                            />
-                            <span>Titolo</span>
-                          </label>
-                          <label
-                            className="flex cursor-pointer items-center"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                field.onChange(
-                                  field.value === "price" ? "" : "price"
-                                );
-                              }
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              className="mr-2 h-4 w-4 accent-purple-500"
-                              checked={field.value === "price"}
-                              onChange={() =>
-                                field.onChange(
-                                  field.value === "price" ? "" : "price"
-                                )
-                              }
-                            />
-                            <span>Prezzo</span>
-                          </label>
+                          <CheckboxField
+                            field={field}
+                            value="title"
+                            label="Titolo"
+                          />
+                          <CheckboxField
+                            field={field}
+                            value="price"
+                            label="Prezzo"
+                          />
                         </div>
                       </FormControl>
                     </FormItem>
@@ -136,52 +107,16 @@ const CardSorter = ({
                     <FormItem className="contents">
                       <FormControl className="contents">
                         <div className="flex flex-col space-y-2">
-                          <label
-                            className="flex cursor-pointer items-center"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                field.onChange(
-                                  field.value === "asc" ? "" : "asc"
-                                );
-                              }
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              className="mr-2 h-4 w-4 accent-purple-500"
-                              checked={field.value === "asc"}
-                              onChange={() =>
-                                field.onChange(
-                                  field.value === "asc" ? "" : "asc"
-                                )
-                              }
-                            />
-                            <span>Crescente</span>
-                          </label>
-                          <label
-                            className="flex cursor-pointer items-center"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                field.onChange(
-                                  field.value === "desc" ? "" : "desc"
-                                );
-                              }
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              className="mr-2 h-4 w-4 accent-purple-500"
-                              checked={field.value === "desc"}
-                              onChange={() =>
-                                field.onChange(
-                                  field.value === "desc" ? "" : "desc"
-                                )
-                              }
-                            />
-                            <span>Decrescente</span>
-                          </label>
+                          <CheckboxField
+                            field={field}
+                            value="asc"
+                            label="Crescente"
+                          />
+                          <CheckboxField
+                            field={field}
+                            value="desc"
+                            label="Decrescente"
+                          />
                         </div>
                       </FormControl>
                     </FormItem>

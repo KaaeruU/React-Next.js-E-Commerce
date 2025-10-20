@@ -3,6 +3,7 @@
 A modern, full-stack e-commerce application built with Next.js 15, React 19, TypeScript, and Supabase. Features a sleek user interface with advanced animations, comprehensive product management, shopping cart functionality, and secure authentication.
 
 # Check on the link the deployed version!
+http://ecommerce-next-app-black.vercel.app/
 
 ## Features
 

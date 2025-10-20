@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Flavio Shop - Modern E-Commerce Application
 
-## Getting Started
+A modern, full-stack e-commerce application built with Next.js 15, React 19, TypeScript, and Supabase. Features a sleek user interface with advanced animations, comprehensive product management, shopping cart functionality, and secure authentication.
 
-First, run the development server:
+# Check on the link the deployed version!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Core Functionality
+- **Product Catalog**: Browse products with filtering, sorting, and pagination
+- **Product Details**: Modal-based product details with image carousel
+- **Shopping Cart**: Add, remove, and manage cart items with persistent storage
+- **User Authentication**: Login/signup with email or Google OAuth
+- **Responsive Design**: Mobile-first design with Tailwind CSS
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Technical Features
+- **Modern React**: Built with React 19 and Next.js 15 App Router
+- **Type Safety**: Full TypeScript implementation
+- **State Management**: Zustand for global state management
+- **Database**: Supabase for backend and authentication
+- **Animations**: Framer Motion for smooth UI transitions
+- **Form Handling**: React Hook Form with Zod validation
+- **Code Quality**: ESLint, Prettier, and Husky pre-commit hooks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
 
-## Learn More
+### Frontend
+- **Framework**: Next.js 15.4.2
+- **UI Library**: React 19.1.0
+- **Styling**: Tailwind CSS 3.4.17
+- **Animations**: Framer Motion (Motion 12.23.12)
+- **Icons**: Lucide React
+- **Components**: Radix UI primitives
 
-To learn more about Next.js, take a look at the following resources:
+### Backend & Database
+- **Database**: Supabase
+- **Authentication**: Supabase Auth with Google OAuth
+- **API**: Next.js API routes with Server Actions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### State Management & Forms
+- **Global State**: Zustand 5.0.6
+- **Forms**: React Hook Form 7.60.0
+- **Validation**: Zod 4.0.5
+- **Data Fetching**: TanStack Query 5.84.1
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Development Tools
+- **Language**: TypeScript 5.8.3
+- **Linting**: ESLint with multiple plugins
+- **Formatting**: Prettier with plugin ecosystem
+- **Git Hooks**: Husky with lint-staged
+- **Commits**: Commitizen with conventional commits
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Installation
+
+
+
+## Authentication
+
+The app supports multiple authentication methods:
+- Email/password authentication
+- Google OAuth integration
+- Secure session management with Supabase
+
+## E-Commerce Features
+
+### Product Management
+- Product listing with images and details
+- Category-based filtering
+- Price-based sorting
+- Pagination for large product sets
+- Product search functionality
+
+### Shopping Cart
+- Add/remove items from cart
+- Quantity management
+- Persistent cart storage
+- User-specific cart management
+
+### User Experience
+- Responsive design for all devices
+- Smooth animations and transitions
+- Loading states and error handling
+- Optimized images and performance
+
+## State Management
+
+### Global Store (Zustand)
+- **Shop Store**: Product filters, pagination, cart state
+- **Global Store**: User authentication, theme preferences
+
+### Local State
+- Form state with React Hook Form
+- Modal state with custom hooks
+- Component-specific state with useState
+
+
+
+
+---
+
+**Made with ❤️ by Flavio**

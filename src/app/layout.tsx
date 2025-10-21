@@ -34,7 +34,7 @@ export default async function RootLayout({
 
     return (
       <html lang="en">
-        <head />
+        <head></head>
         <body>
           <Toaster position="top-center" theme="dark" />
           <Navbar cartItemsCount={itemsCount} isLoggedIn={isUserLogged} />

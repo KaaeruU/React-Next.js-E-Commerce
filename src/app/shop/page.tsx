@@ -50,12 +50,16 @@ export default function Home() {
     page?: string;
   }) => {
     const formData = new FormData();
-    if (filters.category !== undefined)
-      formData.append("category", filters.category);
-    if (filters.sortBy !== undefined) formData.append("sortBy", filters.sortBy);
-    if (filters.order !== undefined) formData.append("order", filters.order);
+    const category = filters.category ?? selectedFilters.category;
+    const sortBy = filters.sortBy ?? selectedFilters.sortBy;
+    const order = filters.order ?? selectedFilters.order;
+    const page = filters.page ?? selectedFilters.page?.toString();
+
+    if (category) formData.append("category", category);
+    if (sortBy) formData.append("sortBy", sortBy);
+    if (order) formData.append("order", order);
     if (filters.limit) formData.append("limit", filters.limit);
-    if (filters.page) formData.append("page", filters.page);
+    if (page) formData.append("page", page);
 
     startTransition(() => {
       formAction(formData);
@@ -129,7 +133,12 @@ export default function Home() {
 
           <Suspense fallback={<LoadingSpinner />}>
             <div className="col-span-12">
-              <PaginationBar limit={limit} skip={skip} total={total ?? 0} />
+              <PaginationBar
+                limit={limit}
+                skip={skip}
+                total={total ?? 0}
+                onFilterChange={handleFilterUpdate}
+              />
             </div>
           </Suspense>
         </div>

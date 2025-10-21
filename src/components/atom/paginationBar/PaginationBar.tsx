@@ -12,7 +12,12 @@ type PaginationProps = {
   limit?: number;
   skip?: number;
   total: number;
-  onFilterChange?: (filters: { page?: string; skip?: string }) => void;
+  onFilterChange?: (filters: {
+    page?: string;
+    skip?: string;
+    sortBy?: string;
+    order?: string;
+  }) => void;
 };
 
 const PaginationBar = ({
@@ -22,6 +27,7 @@ const PaginationBar = ({
 }: PaginationProps) => {
   const { appliedFilter, calcTotalPages } = useShopStore();
   const { getCurrentPage, updateParams } = useCategoryParams();
+  const { selectedFilters } = useShopStore();
 
   const totalPages = calcTotalPages(total);
   const currentPages = usePagination(Number(getCurrentPage()), totalPages, 2);
@@ -40,15 +46,29 @@ const PaginationBar = ({
   }, []);
 
   const handlePageChange = (page: number, skip: number) => {
+    const updatedFilters = {
+      page: page.toString(),
+      skip: skip.toString(),
+      sortBy: selectedFilters.sortBy,
+      order: selectedFilters.order,
+    };
+
     if (onFilterChange) {
-      onFilterChange({
-        page: page.toString(),
-        skip: skip.toString(),
-      });
+      onFilterChange(updatedFilters);
     }
 
-    appliedFilter({ page, skip });
-    updateParams({ page: page.toString(), skip: skip.toString() });
+    appliedFilter({
+      ...selectedFilters,
+      page,
+      skip,
+    });
+
+    updateParams({
+      page: page.toString(),
+      skip: skip.toString(),
+      ...(selectedFilters.sortBy && { sortBy: selectedFilters.sortBy }),
+      ...(selectedFilters.order && { order: selectedFilters.order }),
+    });
   };
 
   const { isFirstPage, isLastPageOrSinglePage } = {

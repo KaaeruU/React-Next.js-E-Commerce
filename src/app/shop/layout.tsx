@@ -4,7 +4,6 @@ import React from "react";
 import { getCategories } from "@/src/api/getCategories";
 import { getProducts } from "@/src/api/getProducts";
 import { ProductsProvider } from "@/src/components/atom/productsProvider/ProductsProvider";
-import "@/src/styles/global.css";
 import { getFiltersFromCookie } from "@/src/utils/getFiltersFromCoockie";
 
 export const metadata: Metadata = {

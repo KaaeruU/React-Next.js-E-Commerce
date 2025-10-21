@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getCart } from "@/src/api/getCart";
 import { CartProvider } from "@/src/components/atom/cartProvider/CartProvider";
-import "@/src/styles/global.css";
 
 export const metadata: Metadata = {
   title: {

@@ -19,6 +19,7 @@ import * as motion from "motion/react-client";
 const MenuLogin = () => {
   const router = useRouter();
   const [userInitials, setUserInitials] = useState<string>("");
+  const [email, setEmail] = useState<string>("flaviogiovannipatti@gmail.com");
   useEffect(() => {
     const getUser = async () => {
       const supabase = createClient();
@@ -30,6 +31,8 @@ const MenuLogin = () => {
       if (!error && user?.email) {
         const initial = user.email.substring(0, 2).toUpperCase();
         setUserInitials(initial);
+        setEmail(user.email);
+
         return;
       }
     };
@@ -41,24 +44,36 @@ const MenuLogin = () => {
     router.push("/");
   };
 
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/");
+  };
+
   return (
     <div className="contents">
-      {userInitials ? (
+      {!userInitials ? (
         <motion.div
           className="flex flex-col justify-center gap-4"
           variants={slideFromRightVariants}
         >
-          <div
-            className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-black
-              bg-accent-yellow font-bold"
-          >
-            {userInitials}
+          <div className="flex items-center">
+            <div
+              className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-black
+                bg-accent-yellow font-bold"
+            >
+              {userInitials}
+            </div>
+            <Heading as={"h4"} styledAs={"h4"} className="px-5 text-white">
+              {email}
+            </Heading>
           </div>
+
           <Button
             label={"log out"}
             isDisabled={false}
             variant={"primary"}
-            onClick={handleLogin}
+            onClick={handleLogout}
           />
         </motion.div>
       ) : (

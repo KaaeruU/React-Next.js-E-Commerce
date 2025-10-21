@@ -9,6 +9,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/src/components/atom/avatar/avatar";
+import { logout } from "@/src/lib/actions/login";
 import {
   buttonWrapperVariants,
   slideFromRightVariants,
@@ -19,7 +20,7 @@ import * as motion from "motion/react-client";
 const MenuLogin = () => {
   const router = useRouter();
   const [userInitials, setUserInitials] = useState<string>("");
-  const [email, setEmail] = useState<string>("flaviogiovannipatti@gmail.com");
+  const [email, setEmail] = useState<string>("");
   useEffect(() => {
     const getUser = async () => {
       const supabase = createClient();
@@ -45,9 +46,11 @@ const MenuLogin = () => {
   };
 
   const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push("/");
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (

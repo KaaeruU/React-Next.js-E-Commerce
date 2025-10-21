@@ -48,6 +48,7 @@ const MenuLogin = () => {
   const handleLogout = async () => {
     try {
       await logout();
+      setUserInitials("");
     } catch (error) {
       console.error("Logout failed:", error);
     }

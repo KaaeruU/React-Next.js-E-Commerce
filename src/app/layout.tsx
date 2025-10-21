@@ -47,7 +47,7 @@ export default async function RootLayout({
     const itemsCount = 0;
     return (
       <html lang="en">
-        <head />
+        <head></head>
         <body>
           <Toaster position="top-center" theme="dark" />
           <Navbar cartItemsCount={itemsCount} isLoggedIn={false} />

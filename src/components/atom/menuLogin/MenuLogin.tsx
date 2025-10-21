@@ -52,7 +52,7 @@ const MenuLogin = () => {
 
   return (
     <div className="contents">
-      {!userInitials ? (
+      {userInitials ? (
         <motion.div
           className="flex flex-col justify-center gap-4"
           variants={slideFromRightVariants}

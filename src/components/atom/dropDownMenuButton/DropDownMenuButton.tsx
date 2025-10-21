@@ -12,7 +12,7 @@ import { logout } from "@/src/lib/actions/login";
 import { createClient } from "@/src/utils/supabase/client";
 
 export const DropDownMenuButton = () => {
-  const [userInitials, setUserInitials] = useState<string>("");
+  const [userInitials, setUserInitials] = useState<string>("_");
   useEffect(() => {
     const getUser = async () => {
       const supabase = createClient();

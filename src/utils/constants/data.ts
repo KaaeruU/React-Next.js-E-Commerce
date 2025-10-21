@@ -1,7 +1,5 @@
 export const menuItems = [
   { label: "SHOP", href: "/shop" },
-  { label: "CART", href: "/cart" },
+  { label: "CART", href: "/cart/1" },
   { label: "LOGIN", href: "/" },
-  { label: "SEARCH", href: "/" },
-  { label: "INFO", href: "/" },
 ];

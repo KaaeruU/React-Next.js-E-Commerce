@@ -3,11 +3,13 @@
 A modern, full-stack e-commerce application built with Next.js 15, React 19, TypeScript, and Supabase. Features a sleek user interface with advanced animations, comprehensive product management, shopping cart functionality, and secure authentication.
 
 # Check on the link the deployed version!
+
 http://ecommerce-next-app-black.vercel.app/
 
 ## Features
 
 ### Core Functionality
+
 - **Product Catalog**: Browse products with filtering, sorting, and pagination
 - **Product Details**: Modal-based product details with image carousel
 - **Shopping Cart**: Add, remove, and manage cart items with persistent storage
@@ -15,6 +17,7 @@ http://ecommerce-next-app-black.vercel.app/
 - **Responsive Design**: Mobile-first design with Tailwind CSS
 
 ### Technical Features
+
 - **Modern React**: Built with React 19 and Next.js 15 App Router
 - **Type Safety**: Full TypeScript implementation
 - **State Management**: Zustand for global state management
@@ -26,6 +29,7 @@ http://ecommerce-next-app-black.vercel.app/
 ## Tech Stack
 
 ### Frontend
+
 - **Framework**: Next.js 15.4.2
 - **UI Library**: React 19.1.0
 - **Styling**: Tailwind CSS 3.4.17
@@ -34,32 +38,32 @@ http://ecommerce-next-app-black.vercel.app/
 - **Components**: Radix UI primitives
 
 ### Backend & Database
+
 - **Database**: Supabase
 - **Authentication**: Supabase Auth with Google OAuth
 - **API**: Next.js API routes with Server Actions
 
 ### State Management & Forms
+
 - **Global State**: Zustand 5.0.6
 - **Forms**: React Hook Form 7.60.0
 - **Validation**: Zod 4.0.5
 - **Data Fetching**: TanStack Query 5.84.1
 
 ### Development Tools
+
 - **Language**: TypeScript 5.8.3
 - **Linting**: ESLint with multiple plugins
 - **Formatting**: Prettier with plugin ecosystem
 - **Git Hooks**: Husky with lint-staged
 - **Commits**: Commitizen with conventional commits
 
-
-
 ### Installation
-
-
 
 ## Authentication
 
 The app supports multiple authentication methods:
+
 - Email/password authentication
 - Google OAuth integration
 - Secure session management with Supabase
@@ -67,6 +71,7 @@ The app supports multiple authentication methods:
 ## E-Commerce Features
 
 ### Product Management
+
 - Product listing with images and details
 - Category-based filtering
 - Price-based sorting
@@ -74,12 +79,14 @@ The app supports multiple authentication methods:
 - Product search functionality
 
 ### Shopping Cart
+
 - Add/remove items from cart
 - Quantity management
 - Persistent cart storage
 - User-specific cart management
 
 ### User Experience
+
 - Responsive design for all devices
 - Smooth animations and transitions
 - Loading states and error handling
@@ -88,16 +95,15 @@ The app supports multiple authentication methods:
 ## State Management
 
 ### Global Store (Zustand)
+
 - **Shop Store**: Product filters, pagination, cart state
 - **Global Store**: User authentication, theme preferences
 
 ### Local State
+
 - Form state with React Hook Form
 - Modal state with custom hooks
 - Component-specific state with useState
-
-
-
 
 ---
 

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { UseUserStore } from "@/src/store/user";
 import { createClient } from "@/src/utils/supabase/server";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,6 +53,7 @@ export async function signup(prevState: any, formData: FormData) {
 
 export async function loginWithGoogle() {
   const supabase = await createClient();
+  const { setIsLoggedIn } = UseUserStore();
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
@@ -66,6 +68,7 @@ export async function loginWithGoogle() {
   }
 
   if (data.url) {
+    setIsLoggedIn(true);
     redirect(data.url);
   }
 }

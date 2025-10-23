@@ -37,11 +37,6 @@ const PaginationBar = ({
     const pageNumber = Number(pageFromURL) || 1;
     const skipValue = (pageNumber - 1) * limit;
 
-    appliedFilter({
-      page: pageNumber,
-      skip: skipValue,
-    });
-
     updateParams({ page: pageNumber.toString(), skip: skipValue.toString() });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -24,7 +24,6 @@ export const CardFilter = ({
 
   useEffect(() => {
     const categoryFromUrl = getCurrentCategory();
-    appliedFilter({ category: categoryFromUrl });
     onFilterChange?.({ category: categoryFromUrl });
 
     form.setValue("category", categoryFromUrl);

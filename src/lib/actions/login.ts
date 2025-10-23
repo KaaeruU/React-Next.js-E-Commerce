@@ -46,7 +46,7 @@ export async function signup(prevState: any, formData: FormData) {
 
   return {
     success: true,
-    message: "Check your email to confirm your account",
+    message: "You can login now with your credentials!",
   };
 }
 

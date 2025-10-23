@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button } from "../buttons/Button";
 import { Heading } from "../heading/Heading";
 import {
@@ -14,13 +14,15 @@ import {
   buttonWrapperVariants,
   slideFromRightVariants,
 } from "@/src/lib/motion/variants";
+import { UseUserStore } from "@/src/store/user";
 import { createClient } from "@/src/utils/supabase/client";
 import * as motion from "motion/react-client";
 
 const MenuLogin = () => {
   const router = useRouter();
-  const [userInitials, setUserInitials] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  const { isLoggedIn, setIsLoggedIn, initial, setInitial, email, setEmail } =
+    UseUserStore();
+
   useEffect(() => {
     const getUser = async () => {
       const supabase = createClient();
@@ -30,8 +32,9 @@ const MenuLogin = () => {
       } = await supabase.auth.getUser();
 
       if (!error && user?.email) {
-        const initial = user.email.substring(0, 2).toUpperCase();
-        setUserInitials(initial);
+        const initials = user.email.substring(0, 2).toUpperCase();
+
+        setInitial(initials);
         setEmail(user.email);
 
         return;
@@ -39,7 +42,8 @@ const MenuLogin = () => {
     };
 
     getUser();
-  }, []);
+  }, [isLoggedIn, setIsLoggedIn]);
+  //fare shop user context per gestire login state globally
 
   const handleLogin = async () => {
     router.push("/");
@@ -48,15 +52,16 @@ const MenuLogin = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      setUserInitials("");
     } catch (error) {
       console.error("Logout failed:", error);
+    } finally {
+      setIsLoggedIn(false);
     }
   };
 
   return (
     <div className="contents">
-      {userInitials ? (
+      {isLoggedIn && email ? (
         <motion.div
           className="flex flex-col justify-center gap-4"
           variants={slideFromRightVariants}
@@ -66,7 +71,7 @@ const MenuLogin = () => {
               className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-black
                 bg-accent-yellow font-bold"
             >
-              {userInitials}
+              {initial}
             </div>
             <Heading as={"h4"} styledAs={"h4"} className="px-5 text-white">
               {email}

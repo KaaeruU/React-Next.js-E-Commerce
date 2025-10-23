@@ -5,6 +5,7 @@ import type z from "zod";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { Background } from "../components/atom/orbs/Orb";
+import { UseUserStore } from "../store/user";
 import { Button } from "@/src/components/atom/buttons/Button";
 import { Heading } from "@/src/components/atom/heading/Heading";
 import { Input } from "@/src/components/atom/input/Input";
@@ -25,11 +26,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const Login = () => {
   const [isRendered, setIsRendered] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLoginButton, setisLoginButton] = useState(true);
   const [isPending, handleLogIn] = useTransition();
 
   const [loginState, loginAction] = useActionState(login, null);
   const [signupState, signupAction] = useActionState(signup, null);
+  const { setIsLoggedIn } = UseUserStore();
 
   //check if client is rendered to avoid motion hidden animation on load
   useEffect(() => {
@@ -48,7 +50,8 @@ const Login = () => {
     formData.append("password", data.password);
 
     handleLogIn(() => {
-      if (isLogin) {
+      if (isLoginButton) {
+        setIsLoggedIn(true);
         loginAction(formData);
       } else {
         signupAction(formData);
@@ -73,7 +76,7 @@ const Login = () => {
           >
             <AnimatePresence mode="wait">
               <motion.div
-                key={isLogin ? "login" : "signup"}
+                key={isLoginButton ? "login" : "signup"}
                 variants={fadeInUpVariants}
                 initial={isRendered ? false : "hidden"}
                 animate="visible"
@@ -85,7 +88,7 @@ const Login = () => {
                   styledAs="h1"
                   className="mb-2 md:text-wrap lg:whitespace-nowrap"
                 >
-                  {isLogin ? "Accedi al tuo " : "Crea il tuo "}
+                  {isLoginButton ? "Accedi al tuo " : "Crea il tuo "}
                   <span className="sm:inline md:pl-14 lg:p-0"> account</span>
                 </Heading>
               </motion.div>
@@ -163,7 +166,7 @@ const Login = () => {
                   label={
                     isPending
                       ? "Caricamento..."
-                      : isLogin
+                      : isLoginButton
                         ? "Login"
                         : "Registrati"
                   }
@@ -172,7 +175,7 @@ const Login = () => {
 
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={isLogin ? "login-submit" : "signup-submit"}
+                    key={isLoginButton ? "login-submit" : "signup-submit"}
                     variants={fadeVariants}
                     initial={isRendered ? false : "hidden"}
                     animate="visible"
@@ -181,9 +184,9 @@ const Login = () => {
                   >
                     <Button
                       type="button"
-                      onClick={() => setIsLogin(!isLogin)}
+                      onClick={() => setisLoginButton(!isLoginButton)}
                       label={
-                        isLogin
+                        isLoginButton
                           ? "Non hai un account? Registrati"
                           : "Hai già un account? Login"
                       }

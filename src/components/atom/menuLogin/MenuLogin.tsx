@@ -61,7 +61,7 @@ const MenuLogin = () => {
 
   return (
     <div className="contents">
-      {isLoggedIn && email ? (
+      {isLoggedIn ? (
         <motion.div
           className="flex flex-col justify-center gap-4"
           variants={slideFromRightVariants}

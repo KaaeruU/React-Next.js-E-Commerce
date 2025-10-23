@@ -61,6 +61,8 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     handleLogIn(() => {
+      setIsLoggedIn(true);
+
       loginWithGoogle();
     });
   };

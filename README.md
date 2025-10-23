@@ -48,7 +48,7 @@ http://ecommerce-next-app-black.vercel.app/
 - **Global State**: Zustand 5.0.6
 - **Forms**: React Hook Form 7.60.0
 - **Validation**: Zod 4.0.5
-- **Data Fetching**: TanStack Query 5.84.1
+- **Data Fetching**: Next Server Actions
 
 ### Development Tools
 

@@ -40,8 +40,8 @@ export default function Home() {
         </div>
 
         <div
-          className="col-span-4 my-4 flex flex-col justify-between bg-neutral-50 p-4 md:col-span-8
-            lg:col-span-7"
+          className="col-span-4 my-4 flex flex-col justify-between text-balance bg-neutral-50 p-4
+            md:col-span-8 lg:col-span-7"
         >
           <div className="flex justify-between border-b border-gray-200 pb-2 text-gray-400">
             <Text as="p" styledAs="label">

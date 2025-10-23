@@ -41,6 +41,7 @@ const PaginationBar = ({
       page: pageNumber,
       skip: skipValue,
     });
+
     updateParams({ page: pageNumber.toString(), skip: skipValue.toString() });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

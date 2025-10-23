@@ -25,11 +25,11 @@ const CardSorter = ({
     const sortByFromUrl = getCurrentSortBy();
     const orderFromUrl = getCurrentOrder();
     appliedFilter({ sortBy: sortByFromUrl, order: orderFromUrl });
-
+    onSortChange?.({ sortBy: sortByFromUrl, order: orderFromUrl });
     form.setValue("order", orderFromUrl);
     form.setValue("sortBy", sortByFromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getCurrentOrder, getCurrentSortBy]);
+  }, []);
 
   const toggleFilter = () => {
     setIsFilterOpen(() => !isFilterOpen);

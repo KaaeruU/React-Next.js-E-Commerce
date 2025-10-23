@@ -25,9 +25,11 @@ export const CardFilter = ({
   useEffect(() => {
     const categoryFromUrl = getCurrentCategory();
     appliedFilter({ category: categoryFromUrl });
+    onFilterChange?.({ category: categoryFromUrl });
+
     form.setValue("category", categoryFromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appliedFilter, getCurrentCategory]);
+  }, []);
 
   const formFieldMemo = useMemo(() => {
     return categories?.map(({ slug }) => (
